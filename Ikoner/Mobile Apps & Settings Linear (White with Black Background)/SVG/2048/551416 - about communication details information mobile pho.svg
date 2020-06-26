@@ -1,0 +1,8 @@
+<?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg height="2048px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 2048 2048" width="2048px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css">
+   <![CDATA[
+    .fil1 {fill:none}
+    .fil0 {fill:#424242}
+    .fil3 {fill:#FFFFFE}
+    .fil2 {fill:#FFFFFE;fill-rule:nonzero}
+   ]]>
+  </style></defs><rect class="fil0" height="2048" width="2048"/><g id="Layer_x0020_1"><rect class="fil1" height="2048" width="2048"/><path class="fil2" d="M1020 260c212,0 404,86 543,225 139,139 225,331 225,543 0,212 -86,404 -225,543 -139,139 -331,225 -543,225 -212,0 -404,-86 -543,-225 -139,-139 -225,-331 -225,-543 0,-212 86,-404 225,-543 139,-139 331,-225 543,-225zm498 270c-127,-127 -303,-206 -498,-206 -194,0 -370,79 -498,206 -127,127 -206,303 -206,498 0,194 79,370 206,498 127,127 303,206 498,206 194,0 370,-79 498,-206 127,-127 206,-303 206,-498 0,-194 -79,-370 -206,-498z"/><polygon class="fil2" points="1052,739 1052,1413 988,1413 988,739 "/><circle class="fil3" cx="1020" cy="643" r="32"/></g></svg>
