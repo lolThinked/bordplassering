@@ -1124,3 +1124,21 @@ function setNameForTable(e){
     selected[0].setDescriptor(document.getElementById("name-for-table").value);
     update();
 }
+
+function generateID(){
+    let id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    if(checkID(id)){
+        return id;
+    }else{
+        return generateID();
+    }
+}
+
+function checkID(id){
+    for(let i=0; i<IDList.length;i++){
+        if(IDList[i] === id){
+            return false;
+        }
+    }
+    return true;
+}

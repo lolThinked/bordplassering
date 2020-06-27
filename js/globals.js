@@ -81,3 +81,4 @@ let statistics2 ={
 };
 let addTableStacking =0;
 
+let IDList =[];
