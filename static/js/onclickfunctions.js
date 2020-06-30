@@ -88,3 +88,8 @@ function saveCurrentTableSetupToText(){
     }
     sendSaveToServer(save);
 }
+
+function loadPresetByClick(e){
+    getLoadByID("ABS0");
+    console.log("LOADED");
+}

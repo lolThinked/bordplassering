@@ -22,7 +22,17 @@ def saveData():
     #print(inData)
     dic = eval(inData)
     print(dic)
-    return jsonify(message = "OK") 
+    return jsonify(message = "OK")
+
+
+@app.route("/loadJsonSave", methods=["post"])
+def loadJsonSave():
+    inData = request.data
+    print(inData)
+    dic = eval(inData)
+    print(dic)
+    return openJsonSave(dic["id"])
+    
 
 
 #json function
@@ -58,3 +68,23 @@ if __name__ =='__main__':
     #app.run(debug=True)
     #threading.Thread(target=app.run).start()
 ##############                   For Compiling Only               ###########################
+
+
+
+def openJsonSave(identifier):
+    with open("Saved/"+identifier+".json") as f:
+        jsonData = json.load(f)
+        return jsonData
+
+def saveJsonSave(jsonData):
+    with open("Saved/"+jsonData["id"]+".json", "w") as f:
+        json.dump(jsonData, f)
+
+
+
+def updateJsonOverview(jsonData):
+    identifier = jsonData["id"]
+    with open("Saved/overView.json", "w") as f:
+        previousData = json.load(f)
+        previousData[identifier] = jsonData
+        json.dump(jsonData, f)

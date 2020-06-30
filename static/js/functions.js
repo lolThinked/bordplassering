@@ -1174,4 +1174,24 @@ function sendSaveToServer(save){
     // xhr.send(document);
 
         console.log(saved);
+    
+
+}
+
+function getLoadByID(id){
+    let sendPackage = {"id":id};
+    let xhr = new XMLHttpRequest();
+    let url = "http://localhost:5000/loadJsonSave";
+    url = "/loadJsonSave";
+    xhr.open("POST", url, true);
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Request finished. Do processing here.
+        }
+    }
+    xhr.send(JSON.stringify(sendPackage));
+    //xhr.send(id);
+    //xhr.send(sendPackage);
 }
