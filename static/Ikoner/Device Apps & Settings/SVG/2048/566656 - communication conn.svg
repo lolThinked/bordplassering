@@ -1,0 +1,7 @@
+<?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg height="2048px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 2048 2048" width="2048px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css">
+   <![CDATA[
+    .fil0 {fill:none}
+    .fil2 {fill:#212121}
+    .fil1 {fill:#212121;fill-rule:nonzero}
+   ]]>
+  </style></defs><g id="Layer_x0020_1"><g id="_272175632"><rect class="fil0" height="2048" id="_272172344" width="2048"/><rect class="fil0" height="1536" id="_272169848" width="1536" x="255.999" y="255.999"/></g><path class="fil1" d="M352.001 319.997l1344 0 32.0008 0 0 32.0008 0 1344 0 32.0008 -32.0008 0 -1344 0 -32.0008 0 0 -32.0008 0 -1344 0 -32.0008 32.0008 0zm1312 64.0016l-1280 0 0 1280 1280 0 0 -1280z"/><polygon class="fil2" points="1279.4,832.204 1279.4,992.272 1504,992.272 1504,1056 1279.4,1056 1279.4,1216 1568,1216 1568,1280 1216,1280 1216,767.998 1567.66,767.998 1567.66,832.204 "/><polygon class="fil2" points="959.541,831.999 959.541,1280 896,1280 896,831.999 703.812,831.999 703.812,767.998 1151.81,767.998 1151.81,831.999 "/><polygon class="fil2" points="544,1216 832.001,1216 832.001,1280 480,1280 480,767.998 544,767.998 "/></g></svg>
