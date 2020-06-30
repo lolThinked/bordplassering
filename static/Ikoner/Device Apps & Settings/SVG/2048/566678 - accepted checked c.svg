@@ -1,0 +1,6 @@
+<?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg height="2048px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 2048 2048" width="2048px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css">
+   <![CDATA[
+    .fil0 {fill:none}
+    .fil1 {fill:#212121;fill-rule:nonzero}
+   ]]>
+  </style></defs><g id="Layer_x0020_1"><g id="_189803184"><rect class="fil0" height="2048" id="_189798216" width="2048"/><rect class="fil0" height="1536" id="_189801240" width="1536" x="255.999" y="255.999"/></g><path class="fil1" d="M358.625 1305.38c-12.4949,-12.4949 -32.7555,-12.4949 -45.2504,0 -12.4949,12.4949 -12.4949,32.7555 0,45.2504l287.999 288 -0.00236221 0.00236221c12.4961,12.4961 32.7591,12.4961 45.2552,0 0.810237,-0.810237 1.56732,-1.65473 2.27244,-2.52638l1086.6 -1182.48c11.9421,-12.978 11.1024,-33.1831 -1.87559,-45.1252 -12.978,-11.9421 -33.1831,-11.1024 -45.1252,1.87559l-1065.43 1159.44 -264.441 -264.442z"/></g></svg>
