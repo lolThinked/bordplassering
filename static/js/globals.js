@@ -86,3 +86,7 @@ var modal = document.getElementById("myModal");
 let modalContentRightELs = document.getElementsByClassName("modalStats");
 let modalSaveBtnEL = document.getElementById("savebtnModal");
 let modalCancelBtnEL = document.getElementsByClassName("cancelbtnModal");
+
+let canvasVariablesSet= false;
+let canvasEl;
+let ctx;

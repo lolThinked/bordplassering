@@ -112,7 +112,27 @@ function openSaveDialog(){
     }
     modalCancelBtnEL.onclick = function(){
         modal.style.display ="none";
+    }    
+}
+
+
+//Takes Screenshot
+function takeScreenshot(){
+    let image = canvasEl.toDataURL("image/jpg");
+    //"data:image/png;base64,"
+    imageElement = document.createElement("img");
+    //imageElement.src = "data:image/png;base64," + image;
+    imageElement.src = image;
+    imageElement.className = "screenshotElement";
+    let screnSContainerEl = document.getElementById("screenshots-container-inner");
+    screnSContainerEl.appendChild(imageElement);
+    let lengde = document.getElementsByClassName("screenshotElement");
+    for(let i = 0; i<lengde.length; i++){
+        if(i == lengde.length-1){
+            break;
+        }
+        lengde[i].style.display = "none";
     }
-    
+    console.log(image);
 }
 

@@ -1,6 +1,14 @@
 from flask import Flask, render_template, jsonify, url_for, send_from_directory, request
 import json
 import os
+
+from threading import Thread
+#from python.screenshot import getScreenshotFromID
+from selenium import webdriver 
+from selenium.webdriver.chrome.options import Options
+
+
+
 app = Flask(__name__)
 
 
@@ -10,32 +18,37 @@ overView = {}
 idList = []
 
 
+
 def initializeMemoryData():
     print("[INITILIAZING] - Local data to Memory (overview, idlist)")
-    #print("[OVERVIEW] - Loading...")
     filesize = os.path.getsize("Saved/overView.json")
     with open("Saved/overView.json", "r") as f:
         if(filesize !=0):
             overView = json.load(f)
+            return overView
     print("[OVERVIEW] - Complete!")
 
-
-    #print("[IDLIST] - Loading...")
+def initializeIDList():
     filesize = os.path.getsize("Saved/idList.txt")
-    with open("Saved/idList.txt", "r") as f:
-        for ids in f:
-            idList += ids
+    with open("Saved/idList.txt", "r") as inList:
+        #listIDS = list(inList)
+        listIDS = [line.rstrip('\n') for line in inList]
+        #print(listIDS)
     print("[IDLIST] - Complete!")
     print("[INITIALIZATION] - Done!")
+    return listIDS
 
 
-initializeMemoryData()
+overView = initializeMemoryData()
+idList = initializeIDList()
+#print(idList)
+#print(overView)
 
 #HOME DEFAULT ROUTE
 @app.route("/")
 @app.route("/index")
 def home():
-    return render_template("index_flaskpage.html")
+    return render_template("index_flaskpage.html", obj=0)
 
 @app.route("/save", methods=["post"])
 def saveData():
@@ -57,6 +70,11 @@ def loadJsonSave():
     dic = eval(inData)
     print(dic)
     return openJsonSave(dic["id"])
+
+
+@app.route('/<identifier>')
+def found(identifier):
+  return render_template("index_flaskpage.html", obj=overView[identifier])
 
 
 @app.route("/getData/idList")
@@ -99,6 +117,9 @@ def saveJsonSave(jsonData):
 def updateJsonOverview(jsonData):
     identifier = jsonData["id"]
     idList.append(identifier)
+    process = Thread(target=getScreenshotFromID, args=[identifier])
+    process.start()
+    #getScreenshotFromID(identifier)
     overView[identifier] = jsonData
     filesize = os.path.getsize("Saved/overView.json")
     print("[PRINT] - IDLIST:")
@@ -109,6 +130,7 @@ def updateJsonOverview(jsonData):
 
     }
     with open("Saved/overView.json", "w") as f:
+        '''
         if(filesize !=0):
             print("[FILESIZE] : ")
             print(filesize)
@@ -118,13 +140,27 @@ def updateJsonOverview(jsonData):
         #print(type(identifier))
         #print(type(jsonData))
         data[identifier] = jsonData
-        json.dump(data, f)
+        '''
+        json.dump(overView, f)
     with open("Saved/idList.txt", "w") as f:
-        f.write(identifier+'\n')
+        for ids in idList:
+            f.write(ids+'\n')
 
     
         
-
+def getScreenshotFromID(id):
+    print("[SCREENSHOT] - Running...")
+    #SCREENSHOT FUNCTION
+    DRIVER = 'chromedriver'
+    chrome_options = Options()
+    chrome_options.add_argument("--window-size=1920,1080")
+    driver = webdriver.Chrome(DRIVER, chrome_options=chrome_options)
+    #SCREENSHOT FUNCTION
+    print(["[SCREENSHOT] - taking screenshot of save"])
+    driver.get('http://localhost:5000/'+id) 
+    screenshot = driver.save_screenshot('Saved/IDImages/'+id+'.png') 
+    driver.quit()
+    print("[SCREENSHOT] - Done!")
 
 
 

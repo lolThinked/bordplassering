@@ -6,6 +6,11 @@
   <meta name="description" content="The HTML5 Herald">
   <meta name="author" content="SitePoint">
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+  <script>
+    //var preLoaded = JSON.parse({{obj|safe}});
+    let preLoaded = {{obj|safe}};
+    console.log(preLoaded);
+  </script>
 
 
   <script src={{ url_for('static', filename='js/globals.js')}} ></script>
@@ -16,7 +21,9 @@
   <script src={{ url_for('static', filename='js/hideshowfunctions.js')}} ></script>
   <script src={{ url_for('static', filename='js/onclickfunctions.js')}} ></script>
   <script src={{ url_for('static', filename='js/roomDrawing.js')}} ></script>
-  
+  <script>
+      
+  </script>
     <!-- Old scripts 
   <script src="js/globals.js"></script>
   
@@ -34,6 +41,7 @@
   <link rel="stylesheet" href={{ url_for('static', filename='css/header.css')}} ></link>
   <link rel="stylesheet" href={{ url_for('static', filename='css/modal.css')}} ></link>
   <link rel="stylesheet" href={{ url_for('static', filename='css/weddingStyle.css')}} ></link>
+  <link rel="stylesheet" href={{ url_for('static', filename='css/newGui.css')}} ></link>
   <!-- Old Stylesheets 
   <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/newApp.css">
@@ -210,13 +218,13 @@
                         <h1>Verktøy</h1>
                     </div>
                     <div class="gui-container">
-                        <h2 onclick="openSaveDialog()">LagreMeny</h2>
-                        <h2 onclick="saveCurrentTableSetupToText()">Lagre</h2>
+                        <h2 onclick="openSaveDialog()">Lagre</h2>
+                    <!--<h2 onclick="saveCurrentTableSetupToText()">Lagre</h2>-->
                         <h2 onclick="drawFrameForPrinting()">Skriv ut</h2>
                         <h2 onclick="takeScreenshot()">Ta skjermbilde</h2>
                         <br>
-                        <h2 onclick="addTable('lang')">Legg til langbord</h2>
-                        <h2 onclick="addTable('rund')">Legg til rundbord</h2>
+                        <h2 onclick="addTable('lang')">Langbord [+]</h2>
+                        <h2 onclick="addTable('rund')">Rundbord [+]</h2>
                     </div>
                 </div>
                 <div class="table-utility" id="table-utility">
@@ -232,6 +240,14 @@
                     </div>
                 </div>
                 <h5 id="lagredeBord" ></h5>
+                <div class="screenshots-container" id="screenshots-container">
+                    <div class="gui-header">
+                        <h1>Screenhots</h1>
+                    </div>
+                    <div class="gui-container" id="screenshots-container-inner">
+
+                    </div>
+                </div>
             </div>
         </div>
           <!-- FOOTER -->
@@ -334,6 +350,11 @@
     </div>
     
   <script src="static/js/index.js"></script>
+  <script>
+    if(preLoaded != 0){
+        loadSaveParam(preLoaded);
+    }
+    </script>
  
   
 </body>

@@ -2,8 +2,8 @@ var bodyEl = document.querySelector("body");
 
 
 var backgroundImg = false;
-var canvasEl = document.querySelector(".canvas");
-var ctx = canvasEl.getContext("2d");
+canvasEl = document.querySelector(".canvas");
+ctx = canvasEl.getContext("2d");
 
 initializeListeners();
 let newAppEL = document.getElementById("new-app");
@@ -73,35 +73,45 @@ function velgLokalet(e){
 }
 
 function startTegner(navn){
+    /*
     //
     canvasEl = document.querySelector(".canvas");
     ctx = canvasEl.getContext("2d");
+    setCanvasVariables();
     currentRoom = navn;
     setCurrentRoomPointer(navn);
     initializeRoom(navn);
     newAppMenuEL.style.display ="none";
-    backgroundImg = document.getElementById("background");
+    //backgroundImg = document.getElementById("background");
     bodyEl.style.overflow =  "hidden"; 
     canvasEl.style.display = "block";
-    pushTestTables();
-    if(navn =="Manehallen"){
-        bord = [];
-        loadTables(tablesListObject);
-    } 
-    guiUpdate();
+    
     console.log(navn);
-    document.querySelector(".currentHall").innerHTML = "<h1>"+ navn + "</h1>";
+    //document.querySelector(".currentHall").innerHTML = "<h1>"+ navn + "</h1>";
     translate(1,1);
     translateToCenter(currentRoomPointer);
     //callUpdateOnFPSCall(16);
-    hideshowpresets();
     setRandomTableDescriptors();
     //console.log(transformX + " : " + transformY);
     document.getElementById("new-GUI").style = "";
     setCanvasSize();
     
     update();
+    */
+    setupCanvas(navn);
+    setupCSSForDrawing();
+    pushTestTables();
+    if(navn =="Manehallen"){
+        bord = [];
+        loadTables(tablesListObject);
+    } 
+    guiUpdate();
+    update();
 }
+
+
+
+
 
 function pushTestTables(){
     bord.push(new Bord(200, 400, "langbord", 30, "A"));

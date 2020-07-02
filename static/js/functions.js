@@ -1250,3 +1250,51 @@ function modalClose(){
     let modal = document.getElementById("myModal");
     modal.style.display = "none";
 }
+
+
+//Sets the canvas variables
+function setCanvasVariables(){
+    if(!canvasVariablesSet){
+        console.log("[CANVAS VARIABLES] - Setting variables");
+        canvasEl = document.getElementById("canvas");
+        console.log(canvasEl);
+        ctx = canvasEl.getContext("2d");
+        canvasVariablesLoaded = true;
+        console.log(ctx);
+    }else{
+        console.log("[CANVAS VARIABLES] - Allready set")
+    }
+}
+//CANVAS SETUP - Sets up the neccescary info for the canvas to work input name
+function setupCanvas(navn){
+    console.log("[CANVAS] - Setting up canvas settings");
+    setCanvasVariables();
+    console.log(ctx);
+    currentRoom = navn;
+    setCurrentRoomPointer(navn);
+    initializeRoom(navn);
+    //For å unngå bug
+    translate(1,1);
+    translateToCenter(currentRoomPointer);
+    setCanvasSize();
+    update();
+}
+
+//Sets up css for drawing in canvas
+function setupCSSForDrawing(){
+    console.log("[CANVAS] - Setting up css for drawing")
+    newAppMenuEL.style.display ="none";
+    bodyEl.style.overflow =  "hidden"; 
+    canvasEl.style.display = "block";
+    document.getElementById("new-GUI").style = "";
+}
+
+//Loads save into drawing by ID
+function loadSaveParam(save){
+    navn = save.room;
+    setupCanvas(navn);
+    setupCSSForDrawing();
+    loadTables(save.tables);
+    guiUpdate();
+    update();
+}
