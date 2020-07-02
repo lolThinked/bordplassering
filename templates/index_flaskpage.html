@@ -32,6 +32,8 @@
   <link rel="stylesheet" href={{ url_for('static', filename='css/newApp.css')}} ></link>
   <link rel="stylesheet" href={{ url_for('static', filename='css/formstyle.css')}} ></link>
   <link rel="stylesheet" href={{ url_for('static', filename='css/header.css')}} ></link>
+  <link rel="stylesheet" href={{ url_for('static', filename='css/modal.css')}} ></link>
+  <link rel="stylesheet" href={{ url_for('static', filename='css/weddingStyle.css')}} ></link>
   <!-- Old Stylesheets 
   <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/newApp.css">
@@ -46,6 +48,41 @@
 
 <body onscroll="scale(event)" onresize="onDocumentResize(event)">
     <div class="new-app" id="new-app">
+        
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h2>Lagring</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-left">
+                        <h3>Instillinger:</h3>
+                        <h3>Prosjekt: <input type="text" placeholder="Navn til prosjektet" id="modalInputName"></input></h3>
+                        <h4>Andre instillinger:</h4>
+                        <input type="checkbox">forhåndsinnstilling</input>
+                    </div>
+                    <div class="modal-body-right">
+                        <h3>Info om fra lagringen:</h3>
+                        <p class="modalStats">Navn: </p>
+                        <p class="modalStats">Antall gjester: </p>
+                        <p class="modalStats">Rom: </p>
+                        <p class="modalStats">Dato:</p>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <div class="clearfix">
+                        <button type="button" class="modalbtn" id="savebtnModal" onclick="modalSave()">Lagre</button>
+                        <button type="button" class="modalbtn"id="cancelbtnModal" onclick="modalSave()">Avbryt</button>
+                      </div>
+                </div>
+            </div>
+        </div>
+        
+        
         
         <div class="topnav" id="topnav">
             <a class="active" href="#home" onclick="goHome()">Hjem</a>
@@ -72,7 +109,7 @@
                 <div style="display: none;" class="saved-setups" id="saved-setups">
                     <div class="saved-room-container" id="saved-manehallen-container">
                         <h1>Månehallen</h1>
-                        <div class="saved-room" id="saved-manehallen">
+                        <div class="saved-room" id="saved-manehallen" onclick="loadPresetByClick(event)">
                             <img src="static/images/Saved/Preset1.png" alt="Manehallen">
                             <h4>Cafeén lagret 1</h4>
                         </div>
@@ -173,6 +210,7 @@
                         <h1>Verktøy</h1>
                     </div>
                     <div class="gui-container">
+                        <h2 onclick="openSaveDialog()">LagreMeny</h2>
                         <h2 onclick="saveCurrentTableSetupToText()">Lagre</h2>
                         <h2 onclick="drawFrameForPrinting()">Skriv ut</h2>
                         <h2 onclick="takeScreenshot()">Ta skjermbilde</h2>

@@ -88,3 +88,31 @@ function saveCurrentTableSetupToText(){
     }
     sendSaveToServer(save);
 }
+
+function loadPresetByClick(e){
+    getLoadByID("1e3d");
+    console.log("LOADED");
+}
+
+//Open save dialog(MODAL)
+function openSaveDialog(){
+    let save = exportTableSetup();
+    let modal = document.getElementById("myModal");
+    modal.style.display = "block";
+    updateSaveInfo(save);
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+        modal.style.display = "none";
+      }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    modalCancelBtnEL.onclick = function(){
+        modal.style.display ="none";
+    }
+    
+}
+

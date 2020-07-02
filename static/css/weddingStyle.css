@@ -1,0 +1,15 @@
+body, .new-app{
+    background-color: #d0bdaa;
+}
+.topnav{
+    background-color:#f7f5db;
+}
+.new-content-header-menu{
+    background-color: #b3a99b;
+}
+.new-content-header-menu a.active{
+    background-color: #8c4758;
+}
+.new-content-menu{
+    background-color: #efe7d4;
+}

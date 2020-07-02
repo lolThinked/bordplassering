@@ -882,6 +882,7 @@ function exportTableSetup(name=generateID()){
     obj.room = currentRoom;
     obj.id = generateID();
     obj.tables = exportTables();
+    obj.date = getFullDate();
     
 
     return obj;
@@ -1174,4 +1175,78 @@ function sendSaveToServer(save){
     // xhr.send(document);
 
         console.log(saved);
+    
+
+}
+
+function getLoadByID(id){
+    let sendPackage = {"id":id};
+    let xhr = new XMLHttpRequest();
+    let url = "http://localhost:5000/loadJsonSave";
+    url = "/loadJsonSave";
+    xhr.open("POST", url, true);
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+
+            // Request finished. Do processing here.
+            console.log(this.responseText);
+        }
+    }
+    xhr.send(JSON.stringify(sendPackage));
+    //xhr.send(id);
+    //xhr.send(sendPackage);
+}
+
+//Updates the modal popup for save info, and populates it with new data
+function updateSaveInfo(save = exportTableSetup()){
+    let navn="";
+    if(statistics.name !== undefined){
+        navn = statistics.name;
+    }
+    modalContentRightELs[0].innerHTML ="Navn: <b>"+navn+"</b>";
+    modalContentRightELs[1].innerHTML ="Antall gjester: <b>"+statistics.gjester.antall+"</b>";
+    modalContentRightELs[2].innerHTML ="Rom: <b>"+save.room+"</b>";
+    modalContentRightELs[3].innerHTML ="Dato: <b>"+save.date.display+"</b>";
+
+}
+
+//gets the date and returns an object
+function getFullDate(){
+    let d = new Date();
+    let hours = pad(d.getHours(),2);
+    let minutes = pad(d.getMinutes(),2);
+    let display = hours+":"+minutes+" " +d.getDate()+"."+(d.getMonth()+1)+"."+d.getFullYear();
+    let date = {
+        "exact":d.getTime(),
+        "display":display
+    }
+    return date;
+}
+
+//Adds padding to numbers I.E: 1 -> 01
+function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+
+
+//Get save dialog updated info
+function retrieveSaveDialogData(){
+    let data = exportTableSetup();
+    data.name = document.getElementById("modalInputName").value;
+    data.statistics = statistics;
+    return data;
+}
+
+function modalSave(){
+    let data = retrieveSaveDialogData();
+    sendSaveToServer(data);
+    modalClose();
+}
+function modalClose(){
+    let modal = document.getElementById("myModal");
+    modal.style.display = "none";
 }

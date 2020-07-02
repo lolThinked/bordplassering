@@ -82,3 +82,7 @@ let statistics2 ={
 let addTableStacking =0;
 
 let IDList =[];
+var modal = document.getElementById("myModal");
+let modalContentRightELs = document.getElementsByClassName("modalStats");
+let modalSaveBtnEL = document.getElementById("savebtnModal");
+let modalCancelBtnEL = document.getElementsByClassName("cancelbtnModal");
