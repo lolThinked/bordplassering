@@ -7,6 +7,9 @@ body, .new-app{
 .topnav a{
     color:#cacaca;
 }
+.new-content{
+    background-color: rgb(19, 19, 19);
+}
 .new-content-header-menu{
     background-color: #343434;
 }

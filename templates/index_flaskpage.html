@@ -116,6 +116,15 @@
             
             <!-- SAVED SETUPS -->
                 <div style="display: none;" class="saved-setups" id="saved-setups">
+                    <div class="saved-room-settings-container" id="saved-room-settings-container">
+                        <h1>Settings</h1>
+                        <input type="checkbox" onclick="editOrLoad()">Rediger</input>
+                        <h2 id="visAtDuRedigerer"onclick="editOrLoad()" style="background-color: #0e0e0e;
+                        border: 1px solid #888888;
+                        border-radius: 5px;
+                        padding: 10px;">Rediger</h2>
+                        
+                    </div>
                     <div class="saved-room-container" id="saved-manehallen-container">
                         <h1>Månehallen</h1>
                         <div class="saved-room" id="saved-manehallen" onclick="loadPresetByClick(event)">

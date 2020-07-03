@@ -63,6 +63,14 @@ def saveData():
     return jsonify(message = "OK")
 
 
+@app.route("/delete", methods=["POST"])
+def deleteSaveList():
+    dic  = eval(request.data)
+    for save in dic["ids"]:
+        deleteSave(save)
+    return jsonify(message = "DELETED")
+
+
 @app.route("/loadJsonSave", methods=["post"])
 def loadJsonSave():
     inData = request.data
@@ -126,28 +134,41 @@ def updateJsonOverview(jsonData):
     print(idList)
     print("[PRINT] - OVERVIEW:")
     print(overView)
-    data = {
+    saveOverviewAndIdList()
 
-    }
+def saveOverviewAndIdList():
+    print("[SAVING] - (overView.json, idList.txt)")
     with open("Saved/overView.json", "w") as f:
-        '''
-        if(filesize !=0):
-            print("[FILESIZE] : ")
-            print(filesize)
-            print("[TYPE OF]: 'f' ")
-            print(type(f))
-            data = json.load(f)
-        #print(type(identifier))
-        #print(type(jsonData))
-        data[identifier] = jsonData
-        '''
         json.dump(overView, f)
     with open("Saved/idList.txt", "w") as f:
         for ids in idList:
             f.write(ids+'\n')
 
+def deleteSave(save):
+    identifier = save
+    print("[DELETE] - Deleting: {" +identifier +"} from system!")
+    print("[UPDATING] - (idList, overView)")
+    idList.remove(identifier)
+    overView.pop(identifier)
+
+    #JSON SAVE
+    jsonPath = "Saved/"+str(identifier)+".json"
+    if(os.path.exists(jsonPath)):
+        os.remove(jsonPath)
+    print("[DELETE] - Saved/"+identifier+".json -  REMOVED!")
+
+    #IMAGE SAVE
+    imagePath = "static/images/IDImages/"+str(identifier)+".png"
+    if(os.path.exists(imagePath)):
+        os.remove(imagePath)
+    print("[DELETE] - static/images/IDImages/"+identifier+".png -  REMOVED!")
+
+    saveOverviewAndIdList()
+
     
-        
+
+
+
 def getScreenshotFromID(id):
     print("[SCREENSHOT] - Running...")
     #SCREENSHOT FUNCTION

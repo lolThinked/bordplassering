@@ -93,13 +93,35 @@ function saveCurrentTableSetupToText(){
     sendSaveToServer(save);
 }
 
+
+//EDIT or LOAD MODE
+function editOrLoad(){
+    let visAtDuRedigererEl = document.getElementById("visAtDuRedigerer");
+    if(editingModeDelete){//IF IN DELETING MODE
+        editingModeDelete = false;
+        visAtDuRedigererEl.innerHTML = "DU er nå i lagringsmodus";
+    }else{ //IF IN LOAD MODE
+        editingModeDelete = true;
+        visAtDuRedigererEl.innerHTML = "DU er nå i slettingsmodus";
+    }
+}
+
+//LOADS Preset or send delete message
 function loadPresetByClick(e){
     console.log(e);
     //getLoadByID("1e3d");
     console.log(e.target.id);
     let id = e.target.id;
-    loadNewPageFromPreset(id);
-    console.log("LOADED");
+    
+    if(!editingModeDelete){
+        console.log("[LOADING] - save");
+        loadNewPageFromPreset(id);
+        console.log("[LOADED] - save");
+    }else{
+        console.log("[DELETING] - Deleting selectedTable!");
+        sendList = [id];
+        sendDeleteIds(sendList);
+    }
 }
 
 //Open save dialog(MODAL)

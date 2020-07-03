@@ -1385,3 +1385,25 @@ function updatePresets(){
     retrieveOverview();
 }
 
+
+//Sends a list of Ids to be deleted
+function sendDeleteIds(listOfIds){
+    let sendPackage = {"ids":listOfIds};
+    let xhr = new XMLHttpRequest();
+    let url = "http://localhost:5000/delete";
+    url = "/delete";
+    xhr.open("POST", url, true);
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Request finished. Do processing here.
+            console.log(this.responseText);
+            console.log("[RELOADING] - Presets menu!");
+            updatePresets();
+        }
+    }
+    xhr.send(JSON.stringify(sendPackage));
+    //xhr.send(id);
+    //xhr.send(sendPackage);
+}

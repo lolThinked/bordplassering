@@ -91,3 +91,4 @@ let canvasVariablesSet= false;
 let canvasEl;
 let ctx;
 let overView;
+let editingModeDelete = false;

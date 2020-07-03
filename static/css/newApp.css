@@ -66,7 +66,8 @@
 .saved-setups{
 
 }
-.saved-room-container{
+
+.saved-room-container, .saved-room-settings-container{
     width: 100%;
     border: 1px solid grey;
     padding: 0px;
@@ -202,7 +203,7 @@
 
   }
 
-  @media screen and (width: 360px, height:740px) {
+  @media screen and (width: 360px, height: 740px) {
     .navbar a {
       float: none;
       display: block;
