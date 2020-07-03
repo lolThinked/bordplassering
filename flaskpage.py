@@ -158,7 +158,8 @@ def getScreenshotFromID(id):
     #SCREENSHOT FUNCTION
     print(["[SCREENSHOT] - taking screenshot of save"])
     driver.get('http://localhost:5000/'+id) 
-    screenshot = driver.save_screenshot('Saved/IDImages/'+id+'.png') 
+    #screenshot = driver.save_screenshot('Saved/IDImages/'+id+'.png') 
+    screenshot = driver.save_screenshot('static/images/IDImages/'+id+'.png') 
     driver.quit()
     print("[SCREENSHOT] - Done!")
 

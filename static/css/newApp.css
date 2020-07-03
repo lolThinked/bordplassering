@@ -71,6 +71,7 @@
     border: 1px solid grey;
     padding: 0px;
     padding-bottom: 5px;
+    display: inline-flex;
 }
 .saved-room-container h1{
     margin: 0;
@@ -81,11 +82,18 @@
     top: -43px;
     margin: 0;
     color: grey;
+    
 }
 .saved-room{
     background-color: rgb(255, 255, 255);
     width: 20%;
     border: 1px solid #cbcbcb;
+    margin: 15px;
+    cursor: pointer;
+}
+.saved-room:hover{
+    background-color: rgb(255, 228, 216);
+    border: 1px solid #1c1c1c;
 }
 .saved-room img{
     width: 100%;

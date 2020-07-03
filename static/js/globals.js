@@ -90,3 +90,4 @@ let modalCancelBtnEL = document.getElementsByClassName("cancelbtnModal");
 let canvasVariablesSet= false;
 let canvasEl;
 let ctx;
+let overView;

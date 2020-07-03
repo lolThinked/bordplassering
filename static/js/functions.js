@@ -1179,6 +1179,7 @@ function sendSaveToServer(save){
 
 }
 
+//Loads in the requested data for the ID
 function getLoadByID(id){
     let sendPackage = {"id":id};
     let xhr = new XMLHttpRequest();
@@ -1189,7 +1190,6 @@ function getLoadByID(id){
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function() { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-
             // Request finished. Do processing here.
             console.log(this.responseText);
         }
@@ -1197,6 +1197,12 @@ function getLoadByID(id){
     xhr.send(JSON.stringify(sendPackage));
     //xhr.send(id);
     //xhr.send(sendPackage);
+}
+
+
+//Redirects to load the requested preset
+function loadNewPageFromPreset(id){
+    window.location.href = "/"+id;
 }
 
 //Updates the modal popup for save info, and populates it with new data
@@ -1298,3 +1304,84 @@ function loadSaveParam(save){
     guiUpdate();
     update();
 }
+
+
+//Gets the overview json
+function retrieveOverview(){
+    let xhr = new XMLHttpRequest();
+    let url = "http://localhost:5000/getData/overView";
+    url = "/getData/overView";
+    xhr.open("GET", url, true);
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Request finished. Do processing here.
+            overView = JSON.parse(xhr.response);
+            console.log(typeof(overView));
+            loadPresets(overView);
+        }
+    }
+    xhr.send();
+}
+
+//Creates the preset div for presets menu
+function generatePresetDOM(obj){
+    let preDiv = document.createElement("div");
+    preDiv.className = "saved-room";
+    //preDiv.onclick = 'loadPresetByClick("event")';
+    preDiv.onclick = loadPresetByClick;
+    preDiv.id = obj.id;
+    
+    let imgEl = document.createElement("img");
+    imgEl.src = "static/images/IDImages/"+obj.id+".png"; 
+    imgEl.alt = obj.name;
+    imgEl.id = obj.id;
+
+    let textEl = document.createElement("h4");
+    textEl.innerHTML = obj.name;
+
+    preDiv.appendChild(imgEl);
+    preDiv.appendChild(textEl);
+    return preDiv;
+}
+
+//Fills up the presets tab with loaded presets
+function loadPresets(objectData){
+    //objectData = overView;
+    /*
+    let presetManehallenEL = document.getElementById("saved-manehallen-container");
+    let presetSoylehallenEL = document.getElementById("saved-soylehallen-container");
+    let presetHovedhallenEL = document.getElementById("saved-hovedhallen-container");
+    let presetCafeEL = document.getElementById("saved-cafe-container");
+    let listEL = [presetManehallenEL, presetSoylehallenEL ,presetHovedhallenEL, presetCafeEL];
+    */
+    let listEL = document.getElementsByClassName("saved-room-container");
+    console.log(objectData);
+    for(let i=0; i<listEL.length; i++){
+        //console.log(listEL[i]);
+        listEL[i].innerHTML = "";
+    }
+    for(let elem in objectData){
+        let save = objectData[elem];
+        //console.log(save);
+        let createElement = generatePresetDOM(save);
+        //console.log(createElement);
+        if(save.room == "Manehallen"){
+            listEL[0].appendChild(createElement);
+        }else if(save.room == "Soylehallen"){
+            listEL[1].appendChild(createElement);
+        }else if(save.room == "Hovedhallen"){
+            listEL[2].appendChild(createElement);
+            console.log(listEL[2]);
+        }else if(save.room == "Cafe"){
+            listEL[3].appendChild(createElement);
+        }
+    }
+}
+//Container Function for creating presets
+function updatePresets(){
+    retrieveOverview();
+}
+

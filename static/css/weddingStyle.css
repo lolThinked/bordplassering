@@ -2,7 +2,10 @@ body, .new-app{
     background-color: #d0bdaa;
 }
 .topnav{
-    background-color:#f7f5db;
+    background-color:#0a0a0a;
+}
+.topnav a{
+    color:#cacaca;
 }
 .new-content-header-menu{
     background-color: #b3a99b;
@@ -12,4 +15,9 @@ body, .new-app{
 }
 .new-content-menu{
     background-color: #efe7d4;
+}
+
+.topnav .login-container button{
+    background-color: #d0bdaa;
+    border-radius: 5px;
 }

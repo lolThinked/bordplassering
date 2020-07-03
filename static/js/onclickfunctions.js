@@ -69,6 +69,10 @@ function newContentHeaderMenuSetActive(evt){
     }
     evt.target.className = "active";
     contentMenuEL[savedI].style = "";
+    //UPDATE PRESETS LIST
+    if(contentMenuEL[savedI].className == "saved-setups"){
+        updatePresets();
+    }
 }
 
 function goHome(){
@@ -90,7 +94,11 @@ function saveCurrentTableSetupToText(){
 }
 
 function loadPresetByClick(e){
-    getLoadByID("1e3d");
+    console.log(e);
+    //getLoadByID("1e3d");
+    console.log(e.target.id);
+    let id = e.target.id;
+    loadNewPageFromPreset(id);
     console.log("LOADED");
 }
 

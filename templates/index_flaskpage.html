@@ -171,8 +171,9 @@
             <!-- BLUEPRINT -->
                 <div class="user-settings" id="user-settings" style="display: none;">
                     <div class="user-settings-header" id="user-settings-header">
-                        <h1>Velg rom</h1>
-                        <h3>Her kan du velge et rom til å starte på et nytt blankt prosjekt</h3>
+                        <h1>Instillinger</h1>
+                        <h3>Instillinger kommer snart</h3>
+                        <h2>Her kommer det fargeinstillinger for programmet snart!</h2>
                     </div>
                 </div>
             <!-- LOGIN -->
@@ -240,6 +241,7 @@
                     </div>
                 </div>
                 <h5 id="lagredeBord" ></h5>
+                <h1 onclick="retrieveOverview()">Retrieve Overview</h1>
                 <div class="screenshots-container" id="screenshots-container">
                     <div class="gui-header">
                         <h1>Screenhots</h1>
@@ -354,6 +356,9 @@
     if(preLoaded != 0){
         loadSaveParam(preLoaded);
     }
+
+    //retrieveOverview();
+    updatePresets();
     </script>
  
   
