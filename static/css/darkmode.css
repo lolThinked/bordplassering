@@ -1,0 +1,35 @@
+body, .new-app{
+    background-color: #171717;
+}
+.topnav{
+    background-color:#0a0a0a;
+}
+.topnav a{
+    color:#cacaca;
+}
+.new-content-header-menu{
+    background-color: #343434;
+}
+.new-content-header-menu a.active{
+    background-color: #000000;
+}
+.new-content-menu{
+    background-color: #131313;
+}
+.topnav .login-container button{
+    background-color: #d0bdaa;
+    border-radius: 5px;
+}
+.saved-room{
+    background-color: rgb(0, 0, 0);
+}
+.newGUI{
+    background-color: #000000;
+}
+.newGUI h2{
+    background-color: #000000;
+}
+.gui-container{
+    background-color: #101010;
+    border: 1px solid #424242;
+}
