@@ -10,8 +10,11 @@ body, .new-app{
 .new-content-header-menu{
     background-color: #b3a99b;
 }
+.new-content-header-menu a:hover{
+    background-color: #867979;
+}
 .new-content-header-menu a.active{
-    background-color: #8c4758;
+    background-color: #867979;
 }
 .new-content-menu{
     background-color: #efe7d4;
