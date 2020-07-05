@@ -7,6 +7,8 @@ from threading import Thread
 from selenium import webdriver 
 from selenium.webdriver.chrome.options import Options
 
+from base64 import decodestring, decodebytes
+
 
 
 app = Flask(__name__)
@@ -148,9 +150,14 @@ def deleteSave(save):
     identifier = save
     print("[DELETE] - Deleting: {" +identifier +"} from system!")
     print("[UPDATING] - (idList, overView)")
-    idList.remove(identifier)
-    overView.pop(identifier)
-
+    try:
+        idList.remove(identifier)
+    except:
+        pass
+    try:
+        overView.pop(identifier)
+    except:
+        pass
     #JSON SAVE
     jsonPath = "Saved/"+str(identifier)+".json"
     if(os.path.exists(jsonPath)):
@@ -178,7 +185,19 @@ def getScreenshotFromID(id):
     driver = webdriver.Chrome(DRIVER, chrome_options=chrome_options)
     #SCREENSHOT FUNCTION
     print(["[SCREENSHOT] - taking screenshot of save"])
-    driver.get('http://localhost:5000/'+id) 
+    driver.get('http://localhost:5000/'+id)
+
+    driver.find_element_by_id("takeScreenshotButton").click()
+    #base64Image = driver.find_element_by_css_selector("screenshotElement")
+    base64Image = driver.find_element_by_xpath('//*[@id="screenshots-container-inner"]/img').get_attribute("src")
+    print(base64Image)
+    '''
+    with open("static/images/IDImages/imageToSave.png", "wb") as fh:
+        fh.write(base64Image.decode('base64'))
+    '''
+    with open("static/images/IDImages/imageToSave.png","wb") as f:
+        f.write(decodebytes(base64Image))
+        #f.write(decodestring(base64Image))
     #screenshot = driver.save_screenshot('Saved/IDImages/'+id+'.png') 
     screenshot = driver.save_screenshot('static/images/IDImages/'+id+'.png') 
     driver.quit()

@@ -11,7 +11,7 @@ function initializeListeners(){
 function checkKey(e){
     e = e || window.event;
     let key = e.key;
-    if(!inTyping){
+    if(!checkIfInType()){
             //console.log(e);
         if(key =="."){
             //console.log(bord);
@@ -1342,8 +1342,17 @@ function generatePresetDOM(obj){
     let textEl = document.createElement("h4");
     textEl.innerHTML = obj.name;
 
+    
+
     preDiv.appendChild(imgEl);
     preDiv.appendChild(textEl);
+    if(obj.statistics != undefined){
+        if(obj.statistics.gjester != undefined){
+            let statisticsEl = document.createElement("h4");
+            statisticsEl.innerHTML = "Gjester: " + obj.statistics.gjester.antall;
+            preDiv.appendChild(statisticsEl);
+        }
+    }
     return preDiv;
 }
 
