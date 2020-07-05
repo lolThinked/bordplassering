@@ -96,13 +96,13 @@
         
         
         <div class="topnav" id="topnav">
-            <a class="active" href="#home" onclick="goHome()">Hjem</a>
+            <a class="active" href="/" onclick="goHome()">Hjem</a>
             <a href="#about">Plantegning</a>
             <a href="#contact">Administrering</a>
             <div class="login-container">
               <form action="/action_page.php">
-                <input type="text" placeholder="Username" name="username">
-                <input type="text" placeholder="Password" name="psw">
+                <input type="text" placeholder="Username" name="username" id="usernameInput">
+                <input type="text" placeholder="Password" name="psw" id="passwordInput">
                 <button type="submit">Login</button>
               </form>
             </div>

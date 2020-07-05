@@ -1415,10 +1415,19 @@ function changeWindowSizeFunction(){
 }
 
 
-
+//Check if typing input is active
 function checkIfInType(){
     let elList =[];
 
     elList.push(document.getElementById("modalInputName"));
     elList.push(document.getElementById("name-for-table"));
+    elList.push(document.getElementById("usernameInput"));
+    elList.push(document.getElementById("passwordInput"));
+    
+    for(let i=0; i<elList.length; i++){
+        if(document.activeElement === elList[i]){
+            return true;
+        }
+    }
+    return false;
 }
