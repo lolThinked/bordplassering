@@ -221,6 +221,7 @@ class Bord{
         return false;
     }
     drawMyself(){
+        let halvparten =(ctx.measureText(this.descriptor).width/2);
         if(this.bordType =="langbord"){
             //RECTANGLE
             ctx.lineWidth = this.lineWidth;
@@ -242,7 +243,9 @@ class Bord{
             ctx.stroke();
             ctx.fill();
             ctx.fillStyle = "red";
-            ctx.fillText(this.descriptor, this.descriptorX, this.descriptorY);
+            
+            //console.log(halvparten);
+            ctx.fillText(this.descriptor, this.descriptorX-halvparten, this.descriptorY);
         }else if(this.bordType =="rundbord"){
             //CIRCLE
             ctx.lineWidth = this.lineWidth;
@@ -253,7 +256,7 @@ class Bord{
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
-            ctx.fillText(this.descriptor, this.x+(this.width/2), this.y+(this.height/2));
+            ctx.fillText(this.descriptor, this.x+(this.width/2)-halvparten, this.y+(this.height/2));
         }
         ctx.lineWidth ="7";
     }

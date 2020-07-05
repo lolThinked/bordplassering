@@ -11,53 +11,54 @@ function initializeListeners(){
 function checkKey(e){
     e = e || window.event;
     let key = e.key;
-    //console.log(e);
-    if(key =="."){
-        //console.log(bord);
-        selectPoint(mouseX, mouseY);
-        console.log("CALLSFUNCTION");
-    }
-    if(key =="Shift"){
-        if(e.type==="keydown"){
-            shiftIsPressed = true;
-        }else if(e.type ==="keyup"){
-            shiftIsPressed = false;
-        }    
-    }
-    if(key =="m"){
-        if(e.type==="keydown"){
-            rotateSelectedTables(30);
-        } 
-    }
-    if(key =="n"){
-        if(e.type==="keydown"){
-            rotateSelectedTables(-30);
-        } 
-    }
-    if(key =="l"){
-        if(e.type==="keydown"){
-            drawFrameForPrinting();
-        } 
-    }
-    if(key =="Delete"){
-        if(e.type==="keydown"){
-            deleteSelectedTables();
-        } 
-    }
-    if(key ==="Control"){
-        //console.log(e);
-        if(e.type==="keydown"){
-            canvasEl.style.cursor = "move";
-            mouseIsMove = true;
-        }else if(e.type ==="keyup"){
-            canvasEl.style.cursor = "initial";
-            mouseIsMove = false;
+    if(!inTyping){
+            //console.log(e);
+        if(key =="."){
+            //console.log(bord);
+            selectPoint(mouseX, mouseY);
+            console.log("CALLSFUNCTION");
         }
-    }else{
-        
+        if(key =="Shift"){
+            if(e.type==="keydown"){
+                shiftIsPressed = true;
+            }else if(e.type ==="keyup"){
+                shiftIsPressed = false;
+            }    
+        }
+        if(key =="m"){
+            if(e.type==="keydown"){
+                rotateSelectedTables(30);
+            } 
+        }
+        if(key =="n"){
+            if(e.type==="keydown"){
+                rotateSelectedTables(-30);
+            } 
+        }
+        if(key =="l"){
+            if(e.type==="keydown"){
+                drawFrameForPrinting();
+            } 
+        }
+        if(key =="Delete"){
+            if(e.type==="keydown"){
+                deleteSelectedTables();
+            } 
+        }
+        if(key ==="Control"){
+            //console.log(e);
+            if(e.type==="keydown"){
+                canvasEl.style.cursor = "move";
+                mouseIsMove = true;
+            }else if(e.type ==="keyup"){
+                canvasEl.style.cursor = "initial";
+                mouseIsMove = false;
+            }
+        }else{
+            
+        }
+        update();
     }
-    update();
-    
 }
 function drag(){
 
@@ -973,8 +974,6 @@ function drawPrintingLine(){
     ctx.lineTo(xValue, yValue);
     ctx.closePath();
     ctx.stroke();
-    //ctx.fill();
-
 }
 
 
@@ -1033,7 +1032,7 @@ function translateToCenter(room){
     console.log(roomInfo);
     let translateXValue = roomInfo[1][0]-centerX;
     let translateYValue = roomInfo[1][1]+centerY;
-    console.log("CenterY and translateY" +centerY +  " : " + roomInfo[1][1]);
+    console.log("[TRANSLATING CANVAS] - CenterY and translateY: (" +centerY +  " : " + roomInfo[1][1]+")");
     console.log(-translateXValue + " : " + translateYValue);
     //transformX = -(translateXValue);
     //transformY = (translateYValue);
@@ -1049,9 +1048,10 @@ function onDocumentResize(){
 function setCanvasSize(){
     let width = window.innerWidth-document.getElementById("new-GUI").offsetWidth;
     let height = window.innerHeight-document.getElementById("topnav").offsetHeight;
-    console.log(width + " : " + height);
+    console.log("[RESIZING CANVAS] - ("+width + " : " + height+")");
     ctx.canvas.width  = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
+    
     //ctx.canvas.width  = window.innerWidth*0.8;
     //ctx.canvas.height = window.innerHeight*0.8;
     //ctx.canvas.width = width;
@@ -1406,4 +1406,19 @@ function sendDeleteIds(listOfIds){
     xhr.send(JSON.stringify(sendPackage));
     //xhr.send(id);
     //xhr.send(sendPackage);
+}
+
+
+
+function changeWindowSizeFunction(){
+    setCanvasSize();
+}
+
+
+
+function checkIfInType(){
+    let elList =[];
+
+    elList.push(document.getElementById("modalInputName"));
+    elList.push(document.getElementById("name-for-table"));
 }

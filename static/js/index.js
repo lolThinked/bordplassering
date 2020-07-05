@@ -34,12 +34,13 @@ canvasEl.addEventListener("mousemove", update(event));
 canvasEl.addEventListener("mousedown", setBord(event));
 canvasEl.addEventListener("mouseup", deleteBord());
 
+window.addEventListener("resize", changeWindowSizeFunction);
 
-//console.log("TEST");
+
+
 
 
 function returnDiv(e){
-    //console.log(e.path[e.path.length-8]);
     var currentDiv = e.path[e.path.length-8];
     if(forrigeFargeDiv != 0){
         forrigeFargeDiv.style.backgroundColor = "";

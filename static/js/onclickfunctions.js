@@ -39,17 +39,14 @@ function rotateTableAngle(angle, table){
     if(!table){
         let table = tblPreview;
         if(tblPreview !== false && tblPreview !== undefined){
-            //console.log(table.returnId());
             table.rotate(angle);
         }
-        //redraw();
         update();
         return
     }
     if(tblPreview !== false && tblPreview !== undefined){
         table.rotate(angle);
     }
-    //redraw();
     update();
 }
 
@@ -84,7 +81,6 @@ function goHome(){
 }
 function saveCurrentTableSetupToText(){
     let save;
-    //let save = exportTableSetup();
     if(openSaveDialog() !== false){
         save = exportTableSetup();
     }else{
