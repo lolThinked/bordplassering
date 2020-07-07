@@ -526,15 +526,20 @@ function scale(x,y, translateX, translateY){
     translationLimit();
     
 }
+
+//SCALE ON MOUSESCROLL
 var scaler = function(evt){
-    var prevX = (evt.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0], prevY = (evt.clientY/contextMatrix[3])-contextMatrix[5]/contextMatrix[3];
+    //Mouse X and Y (Canvas reference)
+    let prevX = (evt.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0];
+    let prevY = (evt.clientY/contextMatrix[3])-contextMatrix[5]/contextMatrix[3];
     //console.log(evt);
-    var x = evt.wheelDelta/160, y = evt.wheelDelta/160;
+    var x = evt.wheelDelta/160, y = evt.wheelDelta/160; 
     x = 1/x, y = 1/y;
     if(evt.wheelDelta < 0){
         x = 1/(-(x));
         y = 1/(-(y));
     }
+    console.log(x);
     let tempX = contextMatrix[0];
     let tempY = contextMatrix[3];
     tempX *=x;
@@ -549,6 +554,7 @@ var scaler = function(evt){
     //translateX = prevX-currentX;
     //translateY = prevY- currentY;
     
+    console.log(evt.wheelDelta);
 
     //Calling zoom functions
     if(contextMatrix[0]<minimumZoom){
@@ -557,7 +563,6 @@ var scaler = function(evt){
         if(evt.wheelDelta >0){
             scale(x,y,translateX, translateY);
         }
-        
     }else if(contextMatrix[0]>maximumZoom){
         //console.log("Too Zoomed");
         //1.8
@@ -591,11 +596,12 @@ var scaler = function(evt){
     update(evt);
     return evt.preventDefault() && false;
 }
+
+
 function drawCenterRectangle(){
     ctx.fillStyle = "red";
     ctx.fillRect(((ctx.canvas.width/2-contextMatrix[4])/contextMatrix[0]), ((ctx.canvas.height/2-contextMatrix[5])/contextMatrix[0]), 20, 20);
     //ctx.fillRect(((ctx.canvas.width/2-contextMatrix[4])/contextMatrix[0]), ((ctx.canvas.height/2-contextMatrix[5])/contextMatrix[0]), 20, 20);
-
 }
 
 

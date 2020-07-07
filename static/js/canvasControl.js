@@ -13,16 +13,14 @@ function redraw(){
       // Clear the entire canvas
       var p1 = ctx.transformedPoint(0,0);
       var p2 = ctx.transformedPoint(canvas.width,canvas.height);
-      ctx.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
+      ctx.clearRect(p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);
 
       ctx.save();
       ctx.setTransform(1,0,0,1,0,0);
       ctx.clearRect(0,0,canvas.width,canvas.height);
       ctx.restore();
-
-      
-
     }
+
     redraw();
 
   var lastX=canvas.width/2, lastY=canvas.height/2;
@@ -59,7 +57,9 @@ function redraw(){
   var zoom = function(clicks){
       var pt = ctx.transformedPoint(lastX,lastY);
       ctx.translate(pt.x,pt.y);
-      var factor = Math.pow(scaleFactor,clicks);
+      var factor = Math.pow(scaleFactor,clicks); //ScaleFactor^clicks
+      console.log("[CANVAS ZOOM] - scaleFactor^clicks ("+scaleFactor+"^"+clicks);
+      console.log("[CANVAS ZOOM] - ctx.scale(factor, factor) - ("+factor+", "+factor);
       ctx.scale(factor,factor);
       ctx.translate(-pt.x,-pt.y);
       redraw();
@@ -101,6 +101,9 @@ function trackTransforms(ctx){
   var scale = ctx.scale;
   ctx.scale = function(sx,sy){
     xform = xform.scaleNonUniform(sx,sy);
+    console.log("[SCALE FUNCTION] - xform: ");
+    console.log(xform);
+    console.log("[SCALE FUNCTION] - ("+sx + " : "+sy +")");
     return scale.call(ctx,sx,sy);
           };
 
