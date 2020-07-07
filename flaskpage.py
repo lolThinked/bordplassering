@@ -8,6 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 from base64 import decodestring, decodebytes
+import base64
 
 
 
@@ -68,6 +69,7 @@ def saveData():
 @app.route("/delete", methods=["POST"])
 def deleteSaveList():
     dic  = eval(request.data)
+    print(dic)
     for save in dic["ids"]:
         deleteSave(save)
     return jsonify(message = "DELETED")
@@ -152,12 +154,15 @@ def deleteSave(save):
     print("[UPDATING] - (idList, overView)")
     try:
         idList.remove(identifier)
-    except:
-        pass
+    except Exception as e: 
+        print(e)
+        print("[DELETE] - FAILED(idList)")
     try:
         overView.pop(identifier)
-    except:
-        pass
+    except Exception as e: 
+        print(e)
+        print("[DELETE] - FAILED(overView)")
+        
     #JSON SAVE
     jsonPath = "Saved/"+str(identifier)+".json"
     if(os.path.exists(jsonPath)):
@@ -186,23 +191,70 @@ def getScreenshotFromID(id):
     #SCREENSHOT FUNCTION
     print(["[SCREENSHOT] - taking screenshot of save"])
     driver.get('http://localhost:5000/'+id)
-
     driver.find_element_by_id("takeScreenshotButton").click()
     #base64Image = driver.find_element_by_css_selector("screenshotElement")
-    base64Image = driver.find_element_by_xpath('//*[@id="screenshots-container-inner"]/img').get_attribute("src")
-    print(base64Image)
+    print("[WEBSCRAPER] - getting canvas Element (chromium)!")
+    canvas = driver.find_element_by_css_selector("#canvas")
+    # get the canvas as a PNG base64 string
+    print("[WEBSCRAPER] - Executing script (chromium)!")
+    canvas_base64 = driver.execute_script("return arguments[0].toDataURL('image/png').substring(21);", canvas)
+    # decode
+    print("[WEBSCRAPER] - Decoding(PNG)")
+    canvas_png = base64.b64decode(canvas_base64)
+    print("[WEBSCRAPER] - DONE!")
+    driver.quit()
+    #print(canvas_base64)
+    # save to a file
+    with open(r"static/images/IDImages/"+id+".png", 'wb') as f:
+        f.write(canvas_png)
+    print("[SCREENSHOT] - Done! ('static/images/IDImages/"+id+".png')")
     '''
+    base64Image = driver.find_element_by_xpath('//*[@id="screenshots-container-inner"]/img').get_attribute("src")
+    #print(base64Image)
+    #print(bytes(base64Image, "utf-8"))
+    #base64Image.encode()
+    #base64Image = bytes(base64Image,"utf-8")
+    print(base64Image)
+    base64Image += "======"
+    #base64Image = bytes(base64Image, "ASCII")
+    code = base64.b64decode(base64Image)
+    print(base64Image)
+    print(code)
     with open("static/images/IDImages/imageToSave.png", "wb") as fh:
         fh.write(base64Image.decode('base64'))
-    '''
-    with open("static/images/IDImages/imageToSave.png","wb") as f:
-        f.write(decodebytes(base64Image))
-        #f.write(decodestring(base64Image))
+    try:    
+        enc1 = base64.encodebytes(base64Image)
+        print(type(enc1))
+    except Exception as e: 
+        print(e)
+    try:
+        enc2 = base64.decodebytes(base64Image)
+        print(type(enc2))
+    except Exception as e: 
+        print(e)
+    try:
+        enc3 = base64.b64decode(base64Image)
+        print(type(enc3))
+    except Exception as e: 
+        print(e)
+    
+    
+   
+
+    try:
+        with open("static/images/IDImages/imageToSave.png","wb") as f:
+            #pass
+            f.write(base64.b64decode(base64Image))
+            #f.write(decodestring(base64Image))
+    except Exception as e: 
+        print(e)
+    
+        print("[SAVING] - Falied(Base64 to Png encoding failed!")
     #screenshot = driver.save_screenshot('Saved/IDImages/'+id+'.png') 
     screenshot = driver.save_screenshot('static/images/IDImages/'+id+'.png') 
     driver.quit()
     print("[SCREENSHOT] - Done!")
-
+    '''
 
 
 

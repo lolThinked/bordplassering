@@ -1340,6 +1340,7 @@ function generatePresetDOM(obj){
     imgEl.id = obj.id;
 
     let textEl = document.createElement("h4");
+    textEl.id = obj.id;
     textEl.innerHTML = obj.name;
 
     

@@ -6,3 +6,47 @@
 [0705/180250.899:ERROR:exception_snapshot_win.cc(98)] thread ID 19232 not found in process
 [0705/180250.964:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
 [0705/180250.964:ERROR:exception_snapshot_win.cc(98)] thread ID 16764 not found in process
+[0705/195737.660:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0705/195737.707:ERROR:exception_snapshot_win.cc(98)] thread ID 4860 not found in process
+[0705/195737.785:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0705/195737.785:ERROR:exception_snapshot_win.cc(98)] thread ID 4112 not found in process
+[0705/201513.475:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0705/201513.475:ERROR:exception_snapshot_win.cc(98)] thread ID 8520 not found in process
+[0705/201513.490:ERROR:process_info.cc(329)] VirtualQueryEx: Ingen tilgang. (0x5)
+[0705/201513.490:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0705/201513.490:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
+[0705/201513.490:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Forsøkte å få tilgang til en avsluttende prosess. (0xc000010a)
+[0705/201646.077:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0705/201646.077:ERROR:exception_snapshot_win.cc(98)] thread ID 7528 not found in process
+[0705/201646.156:ERROR:process_info.cc(329)] VirtualQueryEx: Ingen tilgang. (0x5)
+[0705/201646.156:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0705/201646.156:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
+[0705/201646.156:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Forsøkte å få tilgang til en avsluttende prosess. (0xc000010a)
+[0706/225552.777:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/225552.839:ERROR:exception_snapshot_win.cc(98)] thread ID 2356 not found in process
+[0706/225552.823:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/225552.839:ERROR:exception_snapshot_win.cc(98)] thread ID 12272 not found in process
+[0706/225905.864:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/225905.864:ERROR:exception_snapshot_win.cc(98)] thread ID 2256 not found in process
+[0706/225905.895:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/225905.895:ERROR:exception_snapshot_win.cc(98)] thread ID 7680 not found in process
+[0706/225905.911:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/225905.911:ERROR:exception_snapshot_win.cc(98)] thread ID 10124 not found in process
+[0706/235430.078:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/235430.078:ERROR:exception_snapshot_win.cc(98)] thread ID 7880 not found in process
+[0706/235430.141:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/235430.141:ERROR:exception_snapshot_win.cc(98)] thread ID 10832 not found in process
+[0706/235526.427:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/235526.427:ERROR:exception_snapshot_win.cc(98)] thread ID 5588 not found in process
+[0706/235526.458:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/235526.458:ERROR:exception_snapshot_win.cc(98)] thread ID 7648 not found in process
+[0706/235526.520:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/235526.520:ERROR:exception_snapshot_win.cc(98)] thread ID 8012 not found in process
+[0706/235753.789:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/235753.789:ERROR:exception_snapshot_win.cc(98)] thread ID 9232 not found in process
+[0706/235753.836:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/235753.836:ERROR:exception_snapshot_win.cc(98)] thread ID 6656 not found in process
+[0706/235904.598:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/235904.598:ERROR:exception_snapshot_win.cc(98)] thread ID 2692 not found in process
+[0706/235904.723:ERROR:process_reader_win.cc(123)] NtOpenThread: {Ingen tilgang.} En prosess har bedt om tilgang til et objekt, men slik tilgang er ikke innvilget. (0xc0000022)
+[0706/235904.723:ERROR:exception_snapshot_win.cc(98)] thread ID 5944 not found in process
