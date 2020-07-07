@@ -530,20 +530,29 @@ function scale(x,y, translateX, translateY){
 //SCALE ON MOUSESCROLL
 var scaler = function(evt){
     //Mouse X and Y (Canvas reference)
+    //Getting cordinates for mouse position before translation and scaling
     let prevX = (evt.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0];
     let prevY = (evt.clientY/contextMatrix[3])-contextMatrix[5]/contextMatrix[3];
+    
+    //A: Wheeldata of 160 +/-  = 1.6/0.3
+    //B: Wheeldata of   1 +/-  = 1.1/0.9
+    //C: wheeldata of  20 +/-  = 1.2/0.8
+    //
+    //A:
+    //
+    //
+    //
     //console.log(evt);
-    var x = evt.wheelDelta/160, y = evt.wheelDelta/160; 
-    x = 1/x, y = 1/y;
+    var x = evt.wheelDelta/160; //Setting x as 160th of the wheeldelta values from('1' - '1/160')
+    x = 1/x; // Divides 1 by x I.E: 1/(1/160) = 160, or 1/1
     if(evt.wheelDelta < 0){
         x = 1/(-(x));
-        y = 1/(-(y));
     }
     console.log(x);
     let tempX = contextMatrix[0];
     let tempY = contextMatrix[3];
     tempX *=x;
-    tempY *=y;
+    tempY *=x;
     
     let currentX = (evt.clientX/tempX)-contextMatrix[4]/contextMatrix[0];
     let currentY = (evt.clientY/tempY)-contextMatrix[5]/contextMatrix[3];
@@ -553,7 +562,7 @@ var scaler = function(evt){
     let translateY = (currentY-prevY);
     //translateX = prevX-currentX;
     //translateY = prevY- currentY;
-    
+    console.log("[WHEELDELTA] : "+ evt.wheelDelta);
     console.log(evt.wheelDelta);
 
     //Calling zoom functions
@@ -561,16 +570,16 @@ var scaler = function(evt){
         //console.log("Little Zoomed");
         //console.log(contextMatrix[0]);
         if(evt.wheelDelta >0){
-            scale(x,y,translateX, translateY);
+            scale(x,x,translateX, translateY);
         }
     }else if(contextMatrix[0]>maximumZoom){
         //console.log("Too Zoomed");
         //1.8
         if(evt.wheelDelta <0){
-            scale(x,y,translateX, translateY);
+            scale(x,x,translateX, translateY);
         }
     }else{
-        scale(x,y,translateX, translateY);
+        scale(x,x,translateX, translateY);
        /*  console.log(evt.wheelDelta);
         
         contextMatrix[0] *= x;
