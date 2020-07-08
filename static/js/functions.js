@@ -537,29 +537,15 @@ var scaler = function(evt){
     //A: Wheeldata of 160 +/-  = 1.6/0.3
     //B: Wheeldata of   1 +/-  = 1.1/0.9
     //C: wheeldata of  20 +/-  = 1.2/0.8
-    //
-    //A:
-    //
-    //
-    //
-    //console.log(evt);
     var x = evt.wheelDelta/160; //Setting x as 160th of the wheeldelta values from('1' - '1/160')
     /*
     x = 1/x; // Divides 1 by x I.E: 1/(1/160) = 160, or 1/1
     if(evt.wheelDelta < 0){
         x = 1/(-(x));
     }
-    console.log(x);
-    */
-   /*
-    if(evt.wheelDelta < 0){
-        x=1-x;
-    }else{
-        x=1+x;
-    }
     */
     x=x+1;
-    console.log(x);
+    //console.log(x);
     let tempX = contextMatrix[0];
     let tempY = contextMatrix[3];
     tempX *=x;
@@ -574,7 +560,7 @@ var scaler = function(evt){
     //translateX = prevX-currentX;
     //translateY = prevY- currentY;
     console.log("[WHEELDELTA] : "+ evt.wheelDelta);
-    console.log(evt.wheelDelta);
+    //console.log(evt.wheelDelta);
 
     //Calling zoom functions
     if(contextMatrix[0]<minimumZoom){
@@ -591,22 +577,6 @@ var scaler = function(evt){
         }
     }else{
         scale(x,x,translateX, translateY);
-       /*  console.log(evt.wheelDelta);
-        
-        contextMatrix[0] *= x;
-        contextMatrix[1] *= x;
-        contextMatrix[2] *= y;
-        contextMatrix[3] *= y;
-        console.log(contextMatrix);
-        var currX = (evt.clientX/contextMatrix[0])-contextMatrix[4], currY = (evt.clientY/contextMatrix[0])-contextMatrix[5];
-        ctx.scale(x,y);
-        console.log("X1 " + currX + " prevX " + prevX + " = " + (currX-prevX));
-        console.log("Translated Y: " + (currY-prevY));
-        translate((currX-prevX), (currY-prevY));
-        update(evt);
-        translationLimit(); */
-        //console.log(contextMatrix);
-
     }
     //update(evt);
     currentX = (evt.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0];
@@ -617,6 +587,37 @@ var scaler = function(evt){
     return evt.preventDefault() && false;
 }
 
+function scaleToScreen(room){
+    //Find screen size
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+    let drawingWidth;
+
+    //Find Room size
+    if(room ==="Cafe"){
+
+    }else if(room ==="Manehallen"){
+        drawRoom(manehallen);
+        drawRoomPart(manehallenToalett);
+        drawRoomPart(manehallenBar);
+        drawRoomPart(manehallenFiller);
+        drawRoomPart(manehallenInngang);
+    }else if(room ==="Soylehallen"){
+        drawRoom(soylehallen);
+        drawRoomPart(soylehallenScene);
+        drawRoomPart(soylehallenBar);
+        drawRoomObstacle(soylehallenObstacles);
+    }else if(room ==="Hovedhallen"){
+        drawRoom(hovedhallen);
+        drawRoomPart(hovedhallenScene);
+        drawRoomPart(hovedhallenBar);
+        drawRoomObstacle(hovedhallenObstacles);
+        drawingWidth;
+    }
+    returnWidthHeightCenter();
+    returnWidthHeightRoom();
+    //Roomsize = 0.8x Screen size
+}
 
 function drawCenterRectangle(){
     ctx.fillStyle = "red";
@@ -1292,7 +1293,7 @@ function setCanvasVariables(){
         console.log(canvasEl);
         ctx = canvasEl.getContext("2d");
         canvasVariablesLoaded = true;
-        console.log(ctx);
+        //console.log(ctx);
     }else{
         console.log("[CANVAS VARIABLES] - Allready set")
     }
@@ -1301,7 +1302,7 @@ function setCanvasVariables(){
 function setupCanvas(navn){
     console.log("[CANVAS] - Setting up canvas settings");
     setCanvasVariables();
-    console.log(ctx);
+    //console.log(ctx);
     currentRoom = navn;
     setCurrentRoomPointer(navn);
     initializeRoom(navn);
@@ -1410,7 +1411,6 @@ function loadPresets(objectData){
             listEL[1].appendChild(createElement);
         }else if(save.room == "Hovedhallen"){
             listEL[2].appendChild(createElement);
-            console.log(listEL[2]);
         }else if(save.room == "Cafe"){
             listEL[3].appendChild(createElement);
         }
