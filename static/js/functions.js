@@ -544,10 +544,21 @@ var scaler = function(evt){
     //
     //console.log(evt);
     var x = evt.wheelDelta/160; //Setting x as 160th of the wheeldelta values from('1' - '1/160')
+    /*
     x = 1/x; // Divides 1 by x I.E: 1/(1/160) = 160, or 1/1
     if(evt.wheelDelta < 0){
         x = 1/(-(x));
     }
+    console.log(x);
+    */
+   /*
+    if(evt.wheelDelta < 0){
+        x=1-x;
+    }else{
+        x=1+x;
+    }
+    */
+    x=x+1;
     console.log(x);
     let tempX = contextMatrix[0];
     let tempY = contextMatrix[3];
