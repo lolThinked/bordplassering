@@ -108,6 +108,7 @@ function startTegner(navn){
     } 
     guiUpdate();
     update();
+    scaleToScreen();
 }
 
 

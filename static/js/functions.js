@@ -413,7 +413,7 @@ function translationLimit(){
         }else if(centerX > ctx.canvas.width){
             diffX = ctx.canvas.width - centerX;
         }
-        console.log(diffX + " : " + diffY);
+        console.log("[TRANSLATION LIMIT] - x ("+diffX + " : " + diffY+")");
     }
     if(centerY <0 || centerY > ctx.canvas.height){
         //Y-Difference
@@ -422,6 +422,7 @@ function translationLimit(){
         }else if(centerY > ctx.canvas.height){
             diffY = ctx.canvas.height - centerY;
         }
+        console.log("[TRANSLATION LIMIT] -  y ("+diffX + " : " + diffY+")");
     }
     translateTo(diffX, diffY);
 }
@@ -588,35 +589,56 @@ var scaler = function(evt){
 }
 
 function scaleToScreen(room){
+    if(room == undefined){
+        room = currentRoom;
+    }
     //Find screen size
     let w = window.innerWidth;
     let h = window.innerHeight;
     let drawingWidth;
 
     //Find Room size
+    /*
     if(room ==="Cafe"){
 
     }else if(room ==="Manehallen"){
-        drawRoom(manehallen);
-        drawRoomPart(manehallenToalett);
-        drawRoomPart(manehallenBar);
-        drawRoomPart(manehallenFiller);
-        drawRoomPart(manehallenInngang);
+        //drawRoom(manehallen);
+        drawingWidth = returnWidthHeightRoom(manehallen);
+        //drawRoomPart(manehallenToalett);
+        ///drawRoomPart(manehallenBar);
+        //drawRoomPart(manehallenFiller);
+        //drawRoomPart(manehallenInngang);
     }else if(room ==="Soylehallen"){
-        drawRoom(soylehallen);
-        drawRoomPart(soylehallenScene);
-        drawRoomPart(soylehallenBar);
-        drawRoomObstacle(soylehallenObstacles);
+        drawingWidth = returnWidthHeightRoom(soylehallen);  
+        //drawRoom(soylehallen);
+        //drawRoomPart(soylehallenScene);
+        //drawRoomPart(soylehallenBar);
+        //drawRoomObstacle(soylehallenObstacles);
     }else if(room ==="Hovedhallen"){
-        drawRoom(hovedhallen);
-        drawRoomPart(hovedhallenScene);
-        drawRoomPart(hovedhallenBar);
-        drawRoomObstacle(hovedhallenObstacles);
-        drawingWidth;
+        drawingWidth = returnWidthHeightRoom(hovedhallen);
+        //drawRoom(hovedhallen);
+        //drawRoomPart(hovedhallenScene);
+        //drawRoomPart(hovedhallenBar);
+        //drawRoomObstacle(hovedhallenObstacles);
+        //drawingWidth;  
     }
-    returnWidthHeightCenter();
-    returnWidthHeightRoom();
+    */
+    //returnWidthHeightCenter();
+    //returnWidthHeightRoom();
     //Roomsize = 0.8x Screen size
+    drawingWidth = returnWidthHeightRoom(currentRoomPointer);
+    //MAxwith maxheight
+    let newGuiWidth = document.getElementById("new-GUI").offsetWidth;
+    let widthWithMenu = w-newGuiWidth;
+    console.log(widthWithMenu, ":",w, ":", newGuiWidth);
+    console.log(drawingWidth[0]);
+    let scalingNumber = widthWithMenu/drawingWidth[0];
+    console.log(scalingNumber);
+    console.log("[MATRIX] : " + contextMatrix);
+
+    scale(scalingNumber, scalingNumber, 0 ,0);
+    console.log("[MATRIX] : " + contextMatrix);
+
 }
 
 function drawCenterRectangle(){
