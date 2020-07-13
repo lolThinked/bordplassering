@@ -36,6 +36,7 @@
     width: 100%;
     background-color: #607d8b;
     overflow: auto;
+    display: flex;
 }
 .new-content-header-menu a{
     float: left;
@@ -165,7 +166,78 @@
 }
 
 
+.create-project-step{
+    width: 100%;
+    display: flex;
+    margin-bottom: 100px;
+    
+}
+.create-project-step-progress{
+    width: 20%;
+    margin: auto;
+}
+.create-project-step-container{
+    width: -webkit-fill-available;
+    border: 2px solid #afafaf;
+    border-radius: 20px;
+    background-color: #f7f7f7;
+    margin: 20px;
+}
+.create-project-step-info{
+    color: burlywood;
+}
+.create-project-step-content{
+    flex-wrap: wrap;
+}
+.create-project{
+    overflow: auto;
+    display: inline-flex;
+    flex-wrap: wrap;
+    color: #4d4d4d;
+}
+.create-project-header{
+    width: 100%;
+    color: #4d4d4d;
+}
+.create-project-select-room{
+    overflow: auto;
+    display: inline-flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+.create-project-room{
+    width: 44%;
+    /* padding: 5px; */
+    background-color: #ffffffbf;
+    border: 1px solid;
+    border-color: #cdcdcd;
+    contain: content;
+    margin: auto;
+    margin-bottom: 25px;
+}
+.create-project-room:hover{
+    -webkit-box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.4);
+    -moz-box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.4);
+    box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.4);
+    background-color: #ffffff;
+    cursor: pointer;
+    border: 0px solid white;
+}
+.create-project-room h2{
+    color: #656565;
+    position: relative;
+    font-size: 44px;
+    margin: 0;
+}
+.create-project img{
+    width: 100%;
 
+}
+.create-project-setups img:hover{
+    /* -webkit-box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.75); */
+}
 
 
 

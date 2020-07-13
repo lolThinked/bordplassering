@@ -1186,7 +1186,11 @@ function setNameForTable(e){
 
 //ID GENERATION
 function generateID(){
+    let id1 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    let id2 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    let id3 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     let id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    id = id+id1+id2+id3;
     if(checkID(id)){
         return id;
     }else{
@@ -1200,7 +1204,12 @@ function checkID(id){
             return false;
         }
     }
+    IDList.push(id);
     return true;
+}
+
+function makeID(){
+    return
 }
 
 

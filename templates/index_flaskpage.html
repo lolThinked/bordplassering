@@ -21,6 +21,8 @@
   <script src={{ url_for('static', filename='js/hideshowfunctions.js')}} ></script>
   <script src={{ url_for('static', filename='js/onclickfunctions.js')}} ></script>
   <script src={{ url_for('static', filename='js/roomDrawing.js')}} ></script>
+  <script src={{ url_for('static', filename='js/PersonClass.js')}} ></script>
+  <script src={{ url_for('static', filename='js/ProjectClass.js')}} ></script>
   <script>
       
   </script>
@@ -113,6 +115,7 @@
                 <a class="active" onclick="newContentHeaderMenuSetActive(event)" id="nchm-new">Nytt oppsett</a>
                 <a onclick="newContentHeaderMenuSetActive(event)" id="nchm-user-settings">Instillinger</a>
                 <a onclick="newContentHeaderMenuSetActive(event)" id="nchm-login">Login</a>
+                <a onclick="newContentHeaderMenuSetActive(event)" id="nchm-create-project">Nytt Prosjekt</a>
             </div>
             <div class="new-content-menu" id="new-content-menu" >
             
@@ -189,8 +192,8 @@
                         <img src="static/images/menublank/16/hovedhallen.jpg" alt="HovedHallen">
                         <h2>Hovedhallen</h2>
                     </div>
-
                 </div>
+
             <!-- BLUEPRINT -->
                 <div class="user-settings" id="user-settings" style="display: none;">
                     <div class="user-settings-header" id="user-settings-header">
@@ -214,6 +217,85 @@
                         </p>
                     </form>
                 </div>
+
+            
+            <!-- BLANK SETUPS -->
+                <div  class="create-project" id="create-project" style="display: none;">
+                    <div class="create-project-step" id="cp-step-0">
+                        <div class="create-project-step-progress" id="project-progress-step-0">
+                            <h2>Start</h2>
+                            <h2>Velg Rom</h2>
+                            <h2>Gi Navn</h2>
+                            <h2>Slutt</h2>
+                        </div>
+                        <div class="create-project-step-container" id="create-project-step-container-0">
+                            <div class="create-project-step-info" id="create-project-step-info-0">
+                                <h1>Prosjekt</h1>
+                                <h3>Ved å følge veiledingen vil du kunne opprette et prosjekt!</h3>
+                            </div>
+                            <div class="create-project-step-content" id="create-project-step-content-0">
+                                <a href="#cp-step-1"><h2>Neste -></h2></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="create-project-step" id="cp-step-1">
+                        <div class="create-project-step-progress" id="project-progress-step-1">
+                            <h2>Start</h2>
+                            <h2>Velg Rom</h2>
+                            <h2>Gi Navn</h2>
+                            <h2>Slutt</h2>
+                        </div>
+
+                        
+                        <div class="create-project-step-container" id="create-project-step-container-1">
+                            <div class="create-project-step-info" id="create-project-step-info-1">
+                                <h1>Velg Rom</h1>
+                                <h3>Her kan du velge rommet til prosjektet ditt.</h3>
+    
+                            </div>
+                            <div class="create-project-step-content" id="create-project-step-content-1">
+                                <div class="create-project-select-room" id="create-project-select-room">
+                                    <div class="create-project-room" id="create-project-cafe" onclick="startTegner('Cafe')">
+                                        <img src="static/images/menublank/16/cafe.jpg" alt="Cafe">
+                                        <h2>Café</h2>
+                                    </div>
+                                    <div class="create-project-room" id="create-project-manehallen" onclick="startTegner('Manehallen')">                       
+                                        <img src="static/images/menublank/16/manehallen.jpg" alt="Manehallen">
+                                        <h2>Månehallen</h2>
+                                    </div>
+                                    <div class="create-project-room" id="create-project-soylehallen" onclick="startTegner('Soylehallen')">                        
+                                        <img src="static/images/menublank/16/soylehallen.png" alt="Soylehallen">
+                                        <h2>Søylehallen</h2>
+                                    </div>
+                                    <div class="create-project-room" id="create-project-hovedhallen" onclick="startTegner('Hovedhallen')">                        
+                                        <img src="static/images/menublank/16/hovedhallen.jpg" alt="HovedHallen">
+                                        <h2>Hovedhallen</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="create-project-step" id="cp-step-2">
+                        <div class="create-project-step-progress" id="project-progress-step-2">
+                            <h2>Start</h2>
+                            <h2>Velg Rom</h2>
+                            <h2>Gi Navn</h2>
+                            <h2>Slutt</h2>
+                        </div>
+                        
+                        <div class="create-project-step-container" id="create-project-step-container-2">
+                            <div class="create-project-step-info" id="create-project-step-info-2">
+                                <h1>Navn</h1>
+                                <h3>Her kan du gi prosjektet ditt et navn.</h3>
+                            </div>
+                            <div class="create-project-step-content" id="create-project-step-content-2">
+                                <input type="text" name="create-project-name-input" id="create-project-name-input" placeholder="Ditt prosjekt">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             <!-- MANAGE USER -->
                 <div class="help-page" id="help-page">
                     

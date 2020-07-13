@@ -96,3 +96,5 @@ let editingModeDelete = false;
 let inTyping = false;
 
 let forDeleting = [];
+
+let project = {};
