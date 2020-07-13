@@ -97,6 +97,10 @@ def sendIdList():
 def sendOverview():
     return overView
 
+@app.route("/getData/specific/<identifier>")
+def getSpecificIdentifier(identifier):
+    return overView[identifier]
+
 
 #hent ikon
 @app.route('/favicon.ico')
@@ -208,55 +212,7 @@ def getScreenshotFromID(id):
     with open(r"static/images/IDImages/"+id+".png", 'wb') as f:
         f.write(canvas_png)
     print("[SCREENSHOT] - Done! ('static/images/IDImages/"+id+".png')")
-    '''
-    base64Image = driver.find_element_by_xpath('//*[@id="screenshots-container-inner"]/img').get_attribute("src")
-    #print(base64Image)
-    #print(bytes(base64Image, "utf-8"))
-    #base64Image.encode()
-    #base64Image = bytes(base64Image,"utf-8")
-    print(base64Image)
-    base64Image += "======"
-    #base64Image = bytes(base64Image, "ASCII")
-    code = base64.b64decode(base64Image)
-    print(base64Image)
-    print(code)
-    with open("static/images/IDImages/imageToSave.png", "wb") as fh:
-        fh.write(base64Image.decode('base64'))
-    try:    
-        enc1 = base64.encodebytes(base64Image)
-        print(type(enc1))
-    except Exception as e: 
-        print(e)
-    try:
-        enc2 = base64.decodebytes(base64Image)
-        print(type(enc2))
-    except Exception as e: 
-        print(e)
-    try:
-        enc3 = base64.b64decode(base64Image)
-        print(type(enc3))
-    except Exception as e: 
-        print(e)
     
-    
-   
-
-    try:
-        with open("static/images/IDImages/imageToSave.png","wb") as f:
-            #pass
-            f.write(base64.b64decode(base64Image))
-            #f.write(decodestring(base64Image))
-    except Exception as e: 
-        print(e)
-    
-        print("[SAVING] - Falied(Base64 to Png encoding failed!")
-    #screenshot = driver.save_screenshot('Saved/IDImages/'+id+'.png') 
-    screenshot = driver.save_screenshot('static/images/IDImages/'+id+'.png') 
-    driver.quit()
-    print("[SCREENSHOT] - Done!")
-    '''
-
-
 
 ##############                   For Compiling Only               ###########################
 if __name__ =='__main__':

@@ -94,3 +94,5 @@ let overView;
 let editingModeDelete = false;
 
 let inTyping = false;
+
+let forDeleting = [];

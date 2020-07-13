@@ -539,6 +539,12 @@ var scaler = function(evt){
     //B: Wheeldata of   1 +/-  = 1.1/0.9
     //C: wheeldata of  20 +/-  = 1.2/0.8
     var x = evt.wheelDelta/160; //Setting x as 160th of the wheeldelta values from('1' - '1/160')
+    //x = x/2;
+    //ZOOM bug fix
+    if(evt.wheelDelta < 0){
+        x=x/2;
+    }
+
     /*
     x = 1/x; // Divides 1 by x I.E: 1/(1/160) = 160, or 1/1
     if(evt.wheelDelta < 0){
@@ -1406,6 +1412,74 @@ function generatePresetDOM(obj){
     return preDiv;
 }
 
+//Generates deleting element
+function generateDeleteDOM(obj){
+    ///getData/specific/<identifier>
+    let preDiv = document.createElement("div");
+    preDiv.className = "saved-room";
+    //preDiv.onclick = 'loadPresetByClick("event")';
+    preDiv.onclick = removeFromDeletions;
+    preDiv.id = obj.id;
+    
+    let imgEl = document.createElement("img");
+    imgEl.src = "static/images/IDImages/"+obj.id+".png"; 
+    imgEl.alt = obj.name;
+    imgEl.id = obj.id;
+
+    let textEl = document.createElement("h4");
+    textEl.id = obj.id;
+    textEl.innerHTML = obj.name;
+
+    
+
+    preDiv.appendChild(imgEl);
+    preDiv.appendChild(textEl);
+    if(obj.statistics != undefined){
+        if(obj.statistics.gjester != undefined){
+            let statisticsEl = document.createElement("h4");
+            statisticsEl.innerHTML = "Gjester: " + obj.statistics.gjester.antall;
+            preDiv.appendChild(statisticsEl);
+        }
+    }
+    return preDiv;
+}
+
+function retrieveSpecificIdObject(id){
+    let xhr = new XMLHttpRequest();
+    let url = "http://localhost:5000/getData/specific/"+id;
+    url = "/getData/specific/"+id;
+    xhr.open("GET", url, true);
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Request finished. Do processing here.
+            specificData = JSON.parse(xhr.response);
+            console.log(typeof(overView));
+            el = generateDeleteDOM(specificData);
+            document.getElementById("for-deleting-presets-div").appendChild(el);
+        }
+    }
+    xhr.send();
+}
+
+function removeFromDeletions(e){
+    let idDeleteObject = e.target.id;
+    for(let i =0; i<forDeleting.length; i++){
+        if(forDeleting[i] === idDeleteObject){
+            forDeleting.splice(i,1);
+        }
+    }
+    updateforDeletingList();
+}
+
+function updateforDeletingList(){
+    document.getElementById("for-deleting-presets-div").innerHTML ="";
+    for(let i = 0; i<forDeleting.length; i++){
+        retrieveSpecificIdObject(forDeleting[i]);
+    }
+}
 //Fills up the presets tab with loaded presets
 function loadPresets(objectData){
     //objectData = overView;

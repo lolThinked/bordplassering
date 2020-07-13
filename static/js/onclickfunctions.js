@@ -95,11 +95,22 @@ function editOrLoad(){
     let visAtDuRedigererEl = document.getElementById("visAtDuRedigerer");
     if(editingModeDelete){//IF IN DELETING MODE
         editingModeDelete = false;
-        visAtDuRedigererEl.innerHTML = "DU er nå i lagringsmodus";
+        visAtDuRedigererEl.innerHTML = "Last inn";
+        visAtDuRedigererEl.style.backgroundColor = "#7cac73";
     }else{ //IF IN LOAD MODE
+
         editingModeDelete = true;
-        visAtDuRedigererEl.innerHTML = "DU er nå i slettingsmodus";
+        visAtDuRedigererEl.innerHTML = "Sletting";
+        visAtDuRedigererEl.style.backgroundColor = "#ac7373";
     }
+}
+
+//Deletes the selected tables
+function confirmDeletePresets(){
+    console.log("[DELETING] - Deleting selectedTable!");
+    sendDeleteIds(forDeleting);
+    forDeleting = [];
+    updateforDeletingList();
 }
 
 //LOADS Preset or send delete message
@@ -114,9 +125,13 @@ function loadPresetByClick(e){
         loadNewPageFromPreset(id);
         console.log("[LOADED] - save");
     }else{
-        console.log("[DELETING] - Deleting selectedTable!");
+
+        e.target.style.display = "none";
+        //console.log("[DELETING] - Deleting selectedTable!");
         sendList = [id];
-        sendDeleteIds(sendList);
+        //sendDeleteIds(sendList);
+        forDeleting.push(id);
+        updateforDeletingList();
     }
 }
 
