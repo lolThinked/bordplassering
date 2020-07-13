@@ -66,13 +66,20 @@
 .saved-setups{
 
 }
-
+.for-deleting-presets-div{
+    display: flex;
+    flex-wrap: wrap;
+}
+.saved-room-settings-container-info{
+    display: flex;
+}
 .saved-room-container, .saved-room-settings-container{
     width: 100%;
     border: 1px solid grey;
     padding: 0px;
     padding-bottom: 5px;
     display: inline-flex;
+    flex-wrap: wrap;
 }
 .saved-room-container h1{
     margin: 0;

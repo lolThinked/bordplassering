@@ -126,7 +126,7 @@ function loadPresetByClick(e){
         console.log("[LOADED] - save");
     }else{
 
-        e.target.style.display = "none";
+        //e.target.style.display = "none";
         //console.log("[DELETING] - Deleting selectedTable!");
         sendList = [id];
         //sendDeleteIds(sendList);

@@ -510,6 +510,8 @@ body{
 
     animation: presetListHide 1.5s 1;
 }
+
+
 @keyframes presetListHide{
     0%{width: 200px; height: 400px; bottom: 0px;}
     50%{width: 200px; height: 0px; bottom: 0px;}

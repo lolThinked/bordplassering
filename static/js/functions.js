@@ -1479,6 +1479,19 @@ function updateforDeletingList(){
     for(let i = 0; i<forDeleting.length; i++){
         retrieveSpecificIdObject(forDeleting[i]);
     }
+    let presetsSaves = document.querySelectorAll(".saved-room-container > div");
+    let forDeletingCopy = forDeleting.slice();
+    for(let i=0; i<presetsSaves.length; i++){
+        for(let j=0; j<forDeletingCopy.length; j++){
+            if(presetsSaves[i].id ===forDeletingCopy[j]){
+                //presetsSaves[i].style.display = "hidden";
+                presetsSaves[i].style.visibility = "hidden";
+                console.log(presetsSaves[i].style);
+                forDeletingCopy.splice(i,1);
+            }
+        }
+    }
+    
 }
 //Fills up the presets tab with loaded presets
 function loadPresets(objectData){
