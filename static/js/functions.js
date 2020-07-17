@@ -595,6 +595,7 @@ var scaler = function(evt){
 }
 
 function scaleToScreen(room){
+    console.log("[SCALE TO SCREEN]");
     if(room == undefined){
         room = currentRoom;
     }
@@ -636,10 +637,13 @@ function scaleToScreen(room){
     //MAxwith maxheight
     let newGuiWidth = document.getElementById("new-GUI").offsetWidth;
     let widthWithMenu = w-newGuiWidth;
+    /*
     console.log(widthWithMenu, ":",w, ":", newGuiWidth);
     console.log(drawingWidth[0]);
+    */
     let scalingNumber = widthWithMenu/drawingWidth[0];
-    console.log(scalingNumber);
+
+    console.log("[SCALE TO SCREEN] - ScalingnNumber: "+scalingNumber);
     console.log("[MATRIX] : " + contextMatrix);
 
     scale(scalingNumber, scalingNumber, 0 ,0);
@@ -967,6 +971,7 @@ let tablesListObject = [
 ];
 
 function drawFrameForPrinting(){
+    console.log("[PRINTING] - drawing frame for printing!");
     //Hide New App
     document.getElementById("new-app").style.display = "none";
     
@@ -974,9 +979,6 @@ function drawFrameForPrinting(){
     ctx.clearRect(-window.innerWidth,-window.innerHeight, window.innerWidth*4, window.innerHeight*4);
     ctx.strokeStyle = 'white';
     
-    console.log("[MATRIX] -printing : ");
-    console.log(contextMatrix);
-    console.log(ctx.getTransform());
     //DRAW OBSTACLES
     for(var i = 0; i<obstacles.length; i++){
         obstacles[i].drawMyself();
@@ -991,23 +993,22 @@ function drawFrameForPrinting(){
     for(let i =0; i<bord.length; i++){
         bord[i].drawMyself();
     }
-    console.log("[MATRIX] -printing : ");
-    console.log(contextMatrix);
-    console.log(ctx.getTransform());
     
     let o = contextMatrix.slice();
 
-    window.print();
-    ctx.setTransform(contextMatrix);
-    ctx.setTransform(o[0],o[1],o[2],o[3],o[4],o[5]);
-    //contextMatrix =[1,0,0,1,0,0];
-    console.log("[MATRIX] -printing after set transform : ");
-    console.log(contextMatrix);
-    console.log(ctx.getTransform());
     
+    window.print();
+    
+    //let o = contextMatrix.slice();
+
+    //ctx.setTransform(contextMatrix);
+    ctx.setTransform(o[0],o[1],o[2],o[3],o[4],o[5]);
+    //contextMatrix =[1,0,0,1,0,0];    
 
     document.getElementById("new-app").style.display = "block";
-    update();
+    //update();
+    //ctx.setTransform(contextMatrix);
+    //ctx.setTransform(o[0],o[1],o[2],o[3],o[4],o[5]);
 }
 
 
@@ -1106,8 +1107,8 @@ function translateToCenter(room){
     console.log(roomInfo);
     let translateXValue = roomInfo[1][0]-centerX;
     let translateYValue = roomInfo[1][1]+centerY;
-    console.log("[TRANSLATING CANVAS] - CenterY and translateY: (" +centerY +  " : " + roomInfo[1][1]+")");
-    console.log(-translateXValue + " : " + translateYValue);
+    console.log("[TRANSLATING CANVAS] - CenterY and translateY: (" +centerY +  " : " + roomInfo[1][1]+") - ( move Value(-)X" + -translateXValue + " : move ValueY" + translateYValue +")");
+    //console.log(-translateXValue + " : " + translateYValue);
     //transformX = -(translateXValue);
     //transformY = (translateYValue);
     //translate(-translateXValue, translateYValue);
@@ -1122,12 +1123,25 @@ function onDocumentResize(){
     translateToCenter(currentRoomPointer); 
 }
 function setCanvasSize(){
+    let o = contextMatrix.slice();
+    //ctx.setTransform(contextMatrix);
+    //ctx.setTransform(o[0],o[1],o[2],o[3],o[4],o[5]);
     let width = window.innerWidth-document.getElementById("new-GUI").offsetWidth;
     let height = window.innerHeight-document.getElementById("topnav").offsetHeight;
     console.log("[RESIZING CANVAS] - ("+width + " : " + height+")");
+    console.log("[MATRIX - UPDATE] - Canvas size change :");
+    /*
+    console.log(contextMatrix);
+    console.log(ctx.getTransform());
+    */
     ctx.canvas.width  = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
-    
+    ctx.setTransform(o[0],o[1],o[2],o[3],o[4],o[5]);
+/*
+    console.log("[MATRIX] -CANVAS SIZE : ");
+    console.log(contextMatrix);
+    console.log(ctx.getTransform());
+*/
     //ctx.canvas.width  = window.innerWidth*0.8;
     //ctx.canvas.height = window.innerHeight*0.8;
     //ctx.canvas.width = width;
