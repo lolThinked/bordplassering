@@ -123,6 +123,7 @@ function pushTestTables(){
 }
 
 function setBord(e){
+    
     e = e || previousEvent;
     mouseIsPressed = true;
     //console.log(e);
@@ -138,6 +139,7 @@ function setBord(e){
     drawTablePreview();
     setDistanceForSelected(mouseX, mouseY);
     //console.log(exportTableSetup());
+    console.log(ctx.getTransform());
     update(e);
 }
 

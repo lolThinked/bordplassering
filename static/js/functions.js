@@ -967,10 +967,16 @@ let tablesListObject = [
 ];
 
 function drawFrameForPrinting(){
+    //Hide New App
     document.getElementById("new-app").style.display = "none";
+    
+    //Clear screen
     ctx.clearRect(-window.innerWidth,-window.innerHeight, window.innerWidth*4, window.innerHeight*4);
     ctx.strokeStyle = 'white';
     
+    console.log("[MATRIX] -printing : ");
+    console.log(contextMatrix);
+    console.log(ctx.getTransform());
     //DRAW OBSTACLES
     for(var i = 0; i<obstacles.length; i++){
         obstacles[i].drawMyself();
@@ -985,8 +991,21 @@ function drawFrameForPrinting(){
     for(let i =0; i<bord.length; i++){
         bord[i].drawMyself();
     }
+    console.log("[MATRIX] -printing : ");
+    console.log(contextMatrix);
+    console.log(ctx.getTransform());
+    
+    let o = contextMatrix.slice();
 
     window.print();
+    ctx.setTransform(contextMatrix);
+    ctx.setTransform(o[0],o[1],o[2],o[3],o[4],o[5]);
+    //contextMatrix =[1,0,0,1,0,0];
+    console.log("[MATRIX] -printing after set transform : ");
+    console.log(contextMatrix);
+    console.log(ctx.getTransform());
+    
+
     document.getElementById("new-app").style.display = "block";
     update();
 }
@@ -1097,6 +1116,8 @@ function translateToCenter(room){
 
 
 function onDocumentResize(){
+    //ON
+    console.log("[ON DOCUMENT RESIZE] - ");
     setCanvasSize();
     translateToCenter(currentRoomPointer); 
 }
@@ -1565,6 +1586,8 @@ function sendDeleteIds(listOfIds){
 
 
 function changeWindowSizeFunction(){
+    //
+    console.log("[CHANGE WINDOW SIZE]");
     setCanvasSize();
 }
 

@@ -40,7 +40,7 @@ let manehallenToalett= [
     {x: 1069, y:895}
 ];
 let manehallenBar = [
-    {x: 377,y:855 },
+    {x: 377,y:855 }, 
     {x: 595,y:855 },
     {x: 595,y:982 },
     {x: 673,y: 982},
@@ -143,6 +143,36 @@ function createSoylehallenObstacles(){
 }
 createSoylehallenObstacles();
 //console.log(soylehallenObstacles);
+
+let cafe =[
+    {x:0,y: 0},
+    {x:0,y: 1217.8},
+    {x:255.0,y: 1217.8},
+    {x:255.0,y: 1523.4},
+    {x:800.6,y: 1523.4},
+    {x:800.6,y: 0},
+    {x:416.8,y: 0},
+    {x:416.8,y: 504.1},
+    {x:379.8,y: 520.0},
+    {x:379.8,y: 0},
+    {x:0,y: 0}
+];
+let cafeBar =[
+    { x: 0, y:  542.0},
+    { x: 255.0, y:  542.0},
+    { x: 255.0, y:  1217.8},
+    { x: 0, y:  1217.8},
+    { x: 0, y:  542.0}
+];
+
+let cafeScene =[
+    { x: 379.8, y:  1523.4},
+    { x: 379.8, y:  1233.9},
+    { x: 800.6, y:  944.1},
+    { x: 800.6, y:  1523.4},
+    { x: 379.8, y:  1523.4}
+];
+
 
 
 function scaleRoomPoints(room){
@@ -281,7 +311,10 @@ function drawRoomObstacle(obstacleList){
 
 function drawRoomPartObstacle(room){
     if(room ==="Cafe"){
-
+        //console.log("[DRAW ROOM PART OBSTACLE] - Cafe");
+        drawRoom(cafe);
+        drawRoomPart(cafeBar);
+        drawRoomPart(cafeScene);
     }else if(room ==="Manehallen"){
         drawRoom(manehallen);
         drawRoomPart(manehallenToalett);
