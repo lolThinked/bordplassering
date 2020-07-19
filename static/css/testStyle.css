@@ -1,0 +1,25 @@
+.topnav{
+    background-image:linear-gradient(to bottom right, #252525, #00b8ff);
+    background-image: linear-gradient(to bottom right, #252525, #004763);
+}
+.new-app{
+    background-color: #0e2525;
+}
+
+.new-content{
+    background-image: linear-gradient(to bottom right, #59c762, #7717bf);
+}
+
+.new-content-header-menu{
+    background-color: #f0f8ff00;
+}
+.new-content-header-menu a.active {
+    background-color: #116331c9;
+}
+.new-content-header-menu a:hover {
+    background-color: #12575a82;
+}
+
+.new-content-menu{
+    background-color: transparent;
+}
