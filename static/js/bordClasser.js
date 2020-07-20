@@ -242,7 +242,7 @@ class Bord{
             ctx.closePath();
             ctx.stroke();
             ctx.fill();
-            ctx.fillStyle = "red";
+            ctx.fillStyle = red;
             
             //console.log(halvparten);
             ctx.fillText(this.descriptor, this.descriptorX-halvparten, this.descriptorY);
@@ -256,7 +256,10 @@ class Bord{
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
-            ctx.fillText(this.descriptor, this.x+(this.width/2)-halvparten, this.y+(this.height/2));
+
+            ctx.fillStyle = red;
+            ctx.fillText(this.descriptor, this.x-halvparten, this.y);
+            ctx.fillStyle ="white";
         }
         ctx.lineWidth ="7";
     }

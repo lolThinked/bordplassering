@@ -706,16 +706,23 @@ function drawFrame(){
     for(var i = 0; i<obstacles.length; i++){
         obstacles[i].drawMyself();
     }
-    
+    //console.log("[DRAWFRAME] - after obstacles");
+
     drawRoomPartObstacle(currentRoom);
     //DRAW SELECTIONBOX
     if(!mouseIsMove && !tableInSelectedGroup && mouseIsPressed){
         drawSelectBox(clickOriginX, clickOriginY, mouseX, mouseY);
     }
+
+    //Setter teksten til å bli skrevet fra midten istedet.
+    ctx.textBaseline = "middle";
     //DRAW TABLES
     for(let i =0; i<bord.length; i++){
         bord[i].drawMyself();
     }
+    //Resetter tekstposisjonen.
+    ctx.textBaseline = "alphabetic";
+
     ctx.lineWidth = "7";
     ctx.fillStyle = "white";
     ctx.fillRect(mouseX, mouseY, 20, 20);
@@ -724,6 +731,9 @@ function drawFrame(){
     ctx.fillText(((mouseX).toFixed(0) +" : "+ (mouseY).toFixed(0)), mouseX, mouseY);
     ctx.fillStyle = farge;
     ctx.fillStyle = "white";
+
+    //console.log("[DRAWFRAME] - after mouseX");
+    
     //drawTablePreview();
     var d = new Date();
     var n = d.getTime();
@@ -732,6 +742,8 @@ function drawFrame(){
     //counterEl.innerHTML = "<h1>"+ timeDiff + "</h1>";
     counterEl.innerHTML = "<h1>FPS : " + fpsCounter(timeDiff) + "</h1>";
     drawCenterRectangle();
+
+    //console.log("[DRAWFRAME] - End");
 }
 
 function pushObstacles(navn){
@@ -970,6 +982,7 @@ let tablesListObject = [
     {x:869, y:1032, bordType :"langbord", rotation:30, descriptor:"D"}
 ];
 
+//Draws a specific view for printing the webpage without unneccescary things
 function drawFrameForPrinting(){
     console.log("[PRINTING] - drawing frame for printing!");
     //Hide New App
@@ -995,20 +1008,10 @@ function drawFrameForPrinting(){
     }
     
     let o = contextMatrix.slice();
-
-    
     window.print();
-    
-    //let o = contextMatrix.slice();
-
-    //ctx.setTransform(contextMatrix);
     ctx.setTransform(o[0],o[1],o[2],o[3],o[4],o[5]);
     //contextMatrix =[1,0,0,1,0,0];    
-
     document.getElementById("new-app").style.display = "block";
-    //update();
-    //ctx.setTransform(contextMatrix);
-    //ctx.setTransform(o[0],o[1],o[2],o[3],o[4],o[5]);
 }
 
 
@@ -1148,6 +1151,7 @@ function setCanvasSize(){
     //ctx.canvas.height = height;
     //ctx.canvas.width = document.getElementById("canvas").innerWidth;
     //ctx.canvas.height = document.getElementById("canvas").innerHeight;
+    update();
 }
 
 
