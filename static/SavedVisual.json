@@ -1,0 +1,25 @@
+{
+    "Project":{
+        "type":"preset/User",
+        "hall":{
+
+        },
+        "id":"asdasdasdas",
+        "dates":{
+            "create":"",
+            "createdBy":"",
+            "modify":"",
+            "modifiedBy":""
+        },
+        "editors":[
+            {
+                "id":"asdasdasdasasd",
+                "rights":""
+            }
+        ],
+
+        "guests":[],
+        
+        "tables":[]
+    }
+}
