@@ -649,6 +649,8 @@ function scaleToScreen(room){
     scale(scalingNumber, scalingNumber, 0 ,0);
     console.log("[MATRIX] : " + contextMatrix);
 
+    drawFrame();
+
 }
 
 function drawCenterRectangle(){
