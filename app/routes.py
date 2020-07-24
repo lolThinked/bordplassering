@@ -1,5 +1,6 @@
 from app import app
-from flask import Flask, render_template, jsonify, url_for, send_from_directory, request
+from flask import Flask, render_template, jsonify, url_for, send_from_directory, request, flash, redirect
+from app.forms import LoginForm
 #from flask_login import LoginManager
 import json
 import os
@@ -20,6 +21,18 @@ def home():
     #print(os.getcwd())
     #print(os.path.exists("templates/index_flaskpage.html"))
     return render_template("index_flaskpage.html", obj=0)
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me.data))
+        return redirect(url_for('index'))
+    return render_template('login.html', title='Sign In', form=form)
+
 
 @app.route("/save", methods=["post"])
 def saveData():

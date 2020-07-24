@@ -1,25 +1,36 @@
 from flask import Flask, render_template, jsonify, url_for, send_from_directory, request
 from flask_login import LoginManager
+from config import Config
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
+
 import json
 import os
-
-from threading import Thread
-from selenium import webdriver 
-from selenium.webdriver.chrome.options import Options
-
-from base64 import decodestring, decodebytes
-import base64
 
 
 
 app = Flask(__name__)
+app.config.from_object(Config)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
-from app import routes
+from app import routes, models
 login_manager = LoginManager()
 #login_manager.init_app(app)
 
-print(app)
+#print(app)
 #print(os.getcwd())
+
+from app import app, db
+from app.models import User, Project, Allergy, Person
+
+@app.shell_context_processor
+def make_shell_context():
+    print("TESTING")
+    return {'db': db, 'User': User, 'Project': Project, 'Person':Person, 'Allergy':Allergy}
+
+
 
 '''
 #global overView = {}
@@ -66,4 +77,4 @@ if __name__ =='__main__':
 ##############                   For Compiling Only               ###########################
 
 
-app.run(host='0.0.0.0',port=5000)
+#app.run(host='0.0.0.0',port=5000)
