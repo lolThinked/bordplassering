@@ -11,11 +11,11 @@ from selenium.webdriver.chrome.options import Options
 from base64 import decodestring, decodebytes
 import base64
 
-#from app import overview, idList
+from app.globalFile import overView, idList
 
 #HOME DEFAULT ROUTE
 @app.route("/")
-@app.route("/index")
+@app.route("/index") 
 def home():
     #print(os.getcwd())
     #print(os.path.exists("templates/index_flaskpage.html"))

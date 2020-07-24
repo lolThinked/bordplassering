@@ -21,9 +21,11 @@ login_manager = LoginManager()
 print(app)
 #print(os.getcwd())
 
-
-overView = {}
-idList = []
+'''
+#global overView = {}
+#global idList = []
+global overView
+global idList
 
 
 
@@ -51,8 +53,10 @@ overView = initializeMemoryData()
 idList = initializeIDList()
 #print(idList)
 #print(overView)
+'''
 
-    
+
+
 
 ##############                   For Compiling Only               ###########################
 if __name__ =='__main__':
