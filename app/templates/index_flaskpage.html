@@ -101,6 +101,8 @@
             <a class="active" href="/" onclick="goHome()">Hjem</a>
             <a href="#about">Plantegning</a>
             <a href="#contact">Administrering</a>
+            <a href="{{url_for('login')}}">Login</a>
+            <a href="{{url_for('logout')}}">Logout</a>
             <div class="login-container">
               <form action="/action_page.php">
                 <input type="text" placeholder="Username" name="username" id="usernameInput">

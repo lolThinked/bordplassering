@@ -31,8 +31,13 @@ var bord = [];
 var obstacles = [];
 let drawLater = [];
 canvasEl.addEventListener("mousemove", update(event));
+
 canvasEl.addEventListener("mousedown", setBord(event));
 canvasEl.addEventListener("mouseup", deleteBord());
+
+canvasEl.addEventListener("ontouchstart", setBord(event));
+canvasEl.addEventListener("ontouchmove", update(event));
+canvasEl.addEventListener("ontouchend", deleteBord());
 
 window.addEventListener("resize", changeWindowSizeFunction);
 
@@ -162,12 +167,14 @@ function update(e){
     }
     tblPreview =false;
     //Change mouse to pointer if over table
-    if(checkIfTable(mouseX, mouseY)){
-        canvasEl.style.cursor = "pointer";
+    if(checkIfTable(mouseX, mouseY) && !mouseIsPressed){
+        canvasEl.style.cursor = "grab";
     }else if(checkIfTable(mouseX, mouseY)!= true){
         if(mouseIsMove != true){
             canvasEl.style.cursor = "default";
         }
+    }else if(checkIfTable(mouseX, mouseY) && mouseIsPressed){
+        canvasEl.style.cursor ="grabbing";
     }
     drawTablePreview();
 
