@@ -25,7 +25,7 @@ from app.globalFile import overView, idList
 def index():
     #print(os.getcwd())
     #print(os.path.exists("templates/index_flaskpage.html"))
-    return render_template("index_flaskpage.html", obj=0)
+    return render_template("index_flaskpage.html", obj=0, user= current_user)
 
 
 
@@ -48,6 +48,13 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/myPage')
+def myPage():
+    return render_template("index_flaskpage.html", obj=0, user= current_user)
+
+
 
 @app.route("/save", methods=["post"])
 def saveData():
