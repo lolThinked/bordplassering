@@ -1,6 +1,6 @@
 class Person{
     constructor(firstName, surName, age, gender, email, allergies, id, table, seat){
-        if(arguments.length == 1){
+        if(arguments.length == 1 && typeOf(arguments[0]) == "object"){
             //check if they are object for import
         }else{
             this.firstName = firstName || undefined;

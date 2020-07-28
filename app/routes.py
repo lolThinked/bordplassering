@@ -89,7 +89,7 @@ def loadJsonSave():
 
 @app.route('/<identifier>')
 def found(identifier):
-  return render_template("index_flaskpage.html", obj=overView[identifier])
+  return render_template("index_flaskpage.html", obj=overView[identifier],user= current_user)
 
 
 @app.route("/getData/idList")
