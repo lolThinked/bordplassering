@@ -212,6 +212,6 @@ def getScreenshotFromID(id):
     driver.quit()
     #print(canvas_base64)
     # save to a file
-    with open(r"static/images/IDImages/"+id+".png", 'wb') as f:
+    with open(r"app/static/images/IDImages/"+id+".png", 'wb') as f:
         f.write(canvas_png)
     print("[SCREENSHOT] - Done! ('static/images/IDImages/"+id+".png')")
