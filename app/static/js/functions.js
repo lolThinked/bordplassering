@@ -206,7 +206,15 @@ function selectArea(startX, startY, currentX, currentY){
     selecting = tempSelecting;
     //console.log(selecting);
 }
-
+//UPDATES the input field for table with the name of the table
+function setNameForTableInInputField(){
+    if(selected[0] != undefined){
+        document.getElementById("name-for-table").value = selected[0].descriptor;
+    }else{
+        document.getElementById("name-for-table").value = selecting[0].descriptor;
+    }
+    
+}
 function addTableToSelected(table, selectingString){
     if(shiftIsPressed){
         if(selectingString =="selected"){
@@ -223,6 +231,7 @@ function addTableToSelected(table, selectingString){
         }
         
     }
+    setNameForTableInInputField();
 }
 function addTableToSelecting(table, selectingArray){
     let ifIN = false;
@@ -680,7 +689,7 @@ function redraw(){
     var counterForStats=0;
     for(var i =0; i<loopLength; i++){
         bord[i].drawMyself();
-        counterForStats += bord[i].returnPeople();
+        counterForStats += bord[i].returnNumberOfSeats();
     }
     
     counterEl.innerHTML = "<h1>0/"+counterForStats+"</h1>";
@@ -1181,7 +1190,7 @@ function getStats(){
     for(let i =0; i<bord.length; i++){
         let tbl = bord[i];
         statistics.bord[tbl.returnType()] +=1;
-        statistics.gjester.antall += tbl.returnPeople();
+        statistics.gjester.antall += tbl.returnNumberOfSeats();
     
     
     }

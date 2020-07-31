@@ -17,6 +17,9 @@ class Bord{
         this.distanceToMouseY;
         this.descriptor = descriptor || "";
         this.descriptorX, this.descriptorY;
+        this.persons = [];
+        this.seats = [];
+        
         if(bordType == "langbord"){
             this.width = tableScales.rect.width;
             this.height = tableScales.rect.height;
@@ -39,29 +42,33 @@ class Bord{
             this.descriptorY = this.y + this.height/2;
         }
         
-
+        this.seats = new SeatController(this);
     }
     rotate(angle){
         //console.log(this.drawPoints);
         if(angle ==0 || angle ==undefined){
             return
         }
-        for(let i = 1; i<this.drawPoints.length; i++){
+        if(this.bordType =="lanbord"){
+            for(let i = 1; i<this.drawPoints.length; i++){
             
-            let rotatedCords = rotatePoint(this.drawPoints[i][0], this.drawPoints[i][1], this.x, this.y, angle);
-            
-            this.drawPoints[i][0] = rotatedCords.x;
-            this.drawPoints[i][1] = rotatedCords.y;
-            //console.log(rotatedCords);
+                let rotatedCords = rotatePoint(this.drawPoints[i][0], this.drawPoints[i][1], this.x, this.y, angle);
+                
+                this.drawPoints[i][0] = rotatedCords.x;
+                this.drawPoints[i][1] = rotatedCords.y;
+                //console.log(rotatedCords);
+            }
+            if(this.bordType =="langbord"){
+                //console.log("teste");
+                let rotatedCords = rotatePoint(this.descriptorX, this.descriptorY, this.x, this.y, angle);
+                this.descriptorX = rotatedCords.x;
+                this.descriptorY = rotatedCords.y;
+            }
+            this.rotation += angle;
+            //console.log(this.drawPoints[1][0]);
+        }else{
+            return
         }
-        if(this.bordType =="langbord"){
-            //console.log("teste");
-            let rotatedCords = rotatePoint(this.descriptorX, this.descriptorY, this.x, this.y, angle);
-            this.descriptorX = rotatedCords.x;
-            this.descriptorY = rotatedCords.y;
-        }
-        this.rotation += angle;
-        //console.log(this.drawPoints[1][0]);
     }
     turnRight(){
         let tempHeight = this.height;
@@ -112,8 +119,20 @@ class Bord{
     retturnArea(){
         return this.width * this.height;
     }
+    /*
+    //GAMMEL
     returnPeople(){
         return this.total;
+    }
+    */
+    returnWidth(){
+        return this.width;
+    }
+    returnNumberOfSeats(){
+        return this.total;
+    }
+    setNumberOfSeats(number){
+        this.total = number;
     }
     returnType(){
         return this.bordType;
@@ -121,6 +140,20 @@ class Bord{
     returnPosition(){
         return [this.x, this.y];
     }
+    returnCenter(){
+        let centerX;
+        let centerY;
+        if(this.bordType == "langbord"){
+            centerX = this.descriptorX;
+            centerY = this.descriptorY;
+        }else if(this.bordType == "rundbord"){
+            centerX = this.x;
+            centerY = this.y;
+        }
+        return [centerX, centerY];
+    }
+
+
     returnDistanceToMouse(){
         return [this.distanceToMouseX, this.distanceToMouseY];
     }
@@ -168,6 +201,7 @@ class Bord{
         }
         this.descriptorX -= diffX;
         this.descriptorY -= diffY;
+        this.seats.updatePosition();
     }
     //SETS DISTANCE TO MOUSE
     setDistanceToMouse(x,y){
@@ -262,6 +296,22 @@ class Bord{
             ctx.fillStyle ="white";
         }
         ctx.lineWidth ="7";
+        this.seats.drawSeats();
+
+    }
+
+
+
+
+    addPersonToTable(person){
+        this.persons.push(person);
+    }
+    removePersonFromTable(person){
+        for(let i = 0; i<persons.length; i++){
+            if(persons[i] === person){
+                this.persons.splice(i,1);
+            }
+        }
     }
 
 }

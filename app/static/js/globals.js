@@ -21,6 +21,20 @@ obstacleColor = "black";
 let obstacleTextColor = "rgba(185, 185, 185, 0.3)";
 let strokeColor =  "#222222";
 
+let drawSettings = {
+    "seat":{
+        "occupied":"#a3322a",
+        "free":"#237796",
+        "lineWidth":2,
+        "height":25,
+        "width":25
+    },
+    "standard":{
+        "strokeColor": "black",
+        "lineWidth":7
+    }
+};
+
 let transformX = 1342;
 let transformY = 208;
 

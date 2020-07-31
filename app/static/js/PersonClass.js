@@ -17,8 +17,10 @@ class Person{
 
 
 
-
-
+    //ADDS and allergy reference to the allergy list
+    addAllergy(allergy){
+        this.allergies.Push(allergy);
+    }
 
     getAllergies(){
         return this.allergies;

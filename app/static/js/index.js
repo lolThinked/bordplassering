@@ -141,6 +141,7 @@ function setBord(e){
     clickOriginX = mouseX;
     clickOriginY = mouseY;
     selectPoint(mouseX, mouseY);
+    //setNameForTableInInputField();
     drawTablePreview();
     setDistanceForSelected(mouseX, mouseY);
     //console.log(exportTableSetup());
@@ -206,7 +207,7 @@ function update(e){
         checkIfInSelecting(bord[i]);
         checkIfInSelected(bord[i]);
         //bord[i].drawMyself();
-        counterForStats += bord[i].returnPeople();
+        counterForStats += bord[i].returnNumberOfSeats();
     }
     //counterEl.innerHTML = "<h1>0/"+counterForStats+"</h1>";
 

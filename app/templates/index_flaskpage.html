@@ -21,7 +21,9 @@
   <script src={{ url_for('static', filename='js/hideshowfunctions.js')}} ></script>
   <script src={{ url_for('static', filename='js/onclickfunctions.js')}} ></script>
   <script src={{ url_for('static', filename='js/roomDrawing.js')}} ></script>
+  <script src={{ url_for('static', filename='js/Allergy.js')}} ></script>
   <script src={{ url_for('static', filename='js/PersonClass.js')}} ></script>
+  <script src={{ url_for('static', filename='js/Seat.js')}} ></script>
   <script src={{ url_for('static', filename='js/ProjectClass.js')}} ></script>
   <script>
       
@@ -352,7 +354,7 @@
                         <h2 onclick="rotateSelectedTables(30);">Roter (30°)</h2>
                         <h2 onclick="rotateSelectedTables(-30);">Roter (-30°)</h2>
                         <h2 onclick="deleteSelectedTables();">Slett bord</h2>
-                        <input type="text" id="name-for-table" placeholder="Navn til bordet" onchange="setNameForTable()">
+                        <input type="text" id="name-for-table" placeholder="Navn til bordet" oninput="setNameForTable()">
                     </div>
                 </div>
                 <h5 id="lagredeBord" ></h5>
