@@ -44,6 +44,7 @@ class Bord{
         
         this.seats = new SeatController(this);
     }
+    
     rotate(angle){
         //console.log(this.drawPoints);
         if(angle ==0 || angle ==undefined){

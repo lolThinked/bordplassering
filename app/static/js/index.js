@@ -145,7 +145,7 @@ function setBord(e){
     drawTablePreview();
     setDistanceForSelected(mouseX, mouseY);
     //console.log(exportTableSetup());
-    console.log(ctx.getTransform());
+    //console.log(ctx.getTransform());
     update(e);
 }
 

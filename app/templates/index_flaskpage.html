@@ -331,6 +331,28 @@
                         <h3 class="counter-text">Antall sitteplasser:</h3>
                     </div>
                 </div>
+                <div class="gui-person" id="gui-person">
+                    <div class="gui-header">
+                        <h1>Person</h1>
+                    </div>
+                    <div class="gui-container" id="GUI-Person">
+                        <input type="text" id="name-for-person" class="personInput" placeholder="Navn">
+                        <input type="text" id="surname-for-person" class="personInput" placeholder="Etternavn">
+                        <input type="number" min="0" id="age-for-person" class="personInput" placeholder="Alder">
+                        <input type="text" id="gender-for-person" class="personInput" placeholder="Kjønn">
+                        <form>
+                            <select id="allergy-for-person" class="personInput">
+                                <option value="alkohol">alkohol</option>
+                                <option value="Gluten">Gluten</option>
+                                <option value="Laktose">Laktose</option>
+                                <option value="Fisk">Fisk</option>
+                                <option value="Vegan">Vegan</option>
+                            </select>
+                            <button onclick="makePerson()">Legg til</button>
+                        </form>
+                        
+                    </div>
+                </div>
                 <div class="gui-utility" id="gui-utility">
                     <div class="gui-header">
                         <h1>Verktøy</h1>
@@ -355,6 +377,9 @@
                         <h2 onclick="rotateSelectedTables(-30);">Roter (-30°)</h2>
                         <h2 onclick="deleteSelectedTables();">Slett bord</h2>
                         <input type="text" id="name-for-table" placeholder="Navn til bordet" oninput="setNameForTable()">
+                        <h3>Bordfarge<input type="color" id="color-for-table" oninput="changeSelectedTableColor()"></h3>
+                        
+                        <h3>SeteFarge<input type="color" id="color-for-seat" oninput="changeSeatColor()"></h3>
                     </div>
                 </div>
                 <h5 id="lagredeBord" ></h5>

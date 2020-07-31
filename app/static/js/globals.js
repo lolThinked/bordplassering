@@ -32,6 +32,11 @@ let drawSettings = {
     "standard":{
         "strokeColor": "black",
         "lineWidth":7
+    },
+    "table":{
+        "selectedColor":"#28313E",
+        "selectingColor":"#1A1D24",
+        "notSelectedColor":"#F9FFEE"
     }
 };
 

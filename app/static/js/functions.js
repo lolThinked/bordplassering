@@ -37,7 +37,8 @@ function checkKey(e){
         }
         if(key =="l"){
             if(e.type==="keydown"){
-                drawFrameForPrinting();
+
+                //drawFrameForPrinting();
             } 
         }
         if(key =="Delete"){
@@ -215,6 +216,21 @@ function setNameForTableInInputField(){
     }
     
 }
+function changeSelectedTableColor(){/*
+    if(selected[0] != undefined){
+        selected[0].setFillStyle(document.getElementById("color-for-table").value);
+        console.log(selected[0].descriptor);
+    }else{
+        selecting[0].setFillStyle(document.getElementById("color-for-table").value);
+    }
+*/
+    drawSettings.table.notSelectedColor = document.getElementById("color-for-table").value;
+    update();
+}
+function changeSeatColor(){
+    drawSettings.seat.occupied = document.getElementById("color-for-seat").value;
+    update();
+}
 function addTableToSelected(table, selectingString){
     if(shiftIsPressed){
         if(selectingString =="selected"){
@@ -251,10 +267,10 @@ function addTableToSelecting(table, selectingArray){
 }
 
 function checkIfInSelecting(bord){
-    bord.setFillStyle("#F9FFEE");
+    bord.setFillStyle(drawSettings.table.notSelectedColor);
     for(tables in selecting){
         if(selecting[tables].returnId() == bord.returnId()){
-            bord.setFillStyle("#1A1D24");
+            bord.setFillStyle(drawSettings.table.selectingColor);
         }
     }
     
@@ -264,7 +280,8 @@ function checkIfInSelected(bord){
     for(tables in selected){
         //console.log(selected);
         if(selected[tables].returnId() == bord.returnId()){
-            bord.setFillStyle("#28313E");
+            //SELECT FARGE
+            bord.setFillStyle(drawSettings.table.selectedColor);
         }
     }
 }
@@ -1636,4 +1653,13 @@ function checkIfInType(){
         }
     }
     return false;
+}
+
+
+
+
+
+
+function makePerson(){
+    return
 }
