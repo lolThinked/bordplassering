@@ -128,7 +128,7 @@ function trackTransforms(ctx){
       m2.a=a; m2.b=b; m2.c=c; m2.d=d; m2.e=e; m2.f=f;
       xform = xform.multiply(m2);
       return transform.call(ctx,a,b,c,d,e,f);
-  };
+  }; 
 
   var setTransform = ctx.setTransform;
   ctx.setTransform = function(a,b,c,d,e,f){

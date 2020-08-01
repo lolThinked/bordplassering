@@ -15,13 +15,30 @@ class Person{
         }
     }
 
-
+    getFullName(){
+        return this.firstName + " " + this.surName;
+    }
+    getFirstName(){
+        return this.firstName;
+    }
+    getSurname(){
+        return this.surName;
+    }
 
     //ADDS and allergy reference to the allergy list
     addAllergy(allergy){
         this.allergies.Push(allergy);
     }
+    
 
+    getDataForLoadPerson(){
+        let returnData =[];
+        returnData.push(this.firstName);
+        returnData.push(this.surName);
+        returnData.push(this.age);
+        returnData.push(this.gender);
+        return returnData;
+    }
     getAllergies(){
         return this.allergies;
     }
@@ -31,6 +48,31 @@ class Person{
     getSeat(){
         return this.seat;
     }
+
+    setTable(table){
+        this.table = table;
+    }
+    setSeat(seat){
+        this.seat = seat;
+    }
+    setFirstname(name){
+        this.firstName = name;
+    }
+    setSurname(name){
+        this.surName = name;
+    }
+    setAge(age){
+        this.age = age;
+    }
+    setGender(gender){
+        this.gender = gender;
+    }
+    
+
+    getId(){
+        return this.id;
+    }
+    
     export(){
         return self.JSON;
     }

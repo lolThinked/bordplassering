@@ -8,6 +8,7 @@ ctx = canvasEl.getContext("2d");
 initializeListeners();
 let newAppEL = document.getElementById("new-app");
 let newAppMenuEL = document.getElementById("new-content");
+newAppGUIEl = document.getElementById("new-GUI");
 
 
 //TABLE PREVIEW
@@ -41,7 +42,7 @@ canvasEl.addEventListener("ontouchend", deleteBord());
 
 window.addEventListener("resize", changeWindowSizeFunction);
 
-
+console.log(contextMatrix);
 
 
 
@@ -104,6 +105,9 @@ function startTegner(navn){
     
     update();
     */
+    console.log("[PRINTING] (CTXMTRX, MOUSEX)");
+    console.log(contextMatrix);
+    console.log(mouseX);
     setupCanvas(navn);
     setupCSSForDrawing();
     pushTestTables();
@@ -113,7 +117,11 @@ function startTegner(navn){
     } 
     guiUpdate();
     update();
-    scaleToScreen();
+    //scaleToScreen(); //Because of css bug
+    console.log("[PRINTING] (MOUSEX, CANVAS_EL)");
+    console.log(mouseX);
+    console.log(canvasEl);
+    
 }
 
 
@@ -133,8 +141,7 @@ function setBord(e){
     mouseIsPressed = true;
     //console.log(e);
     //console.log(bord);
-    mouseX = (e.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0];
-    mouseY = (e.clientY/contextMatrix[3])-contextMatrix[5]/contextMatrix[3];
+    setMouseCordinatesWithEvent(e);
     var loopLength = bord.length;
     tblPreview = false;
     
@@ -257,6 +264,7 @@ function update(e){
     //getStats();
     //pushStats();
     //pushStatsFast();
+    updateProjectInfoGUI();
 }
 
 function deleteBord(e){
@@ -268,3 +276,5 @@ function deleteBord(e){
     drawFrame();
     
 }
+
+document.getElementById("create-project-date-input").value = new Date().toISOString;

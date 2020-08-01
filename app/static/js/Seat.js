@@ -7,7 +7,7 @@ class SeatController{
         this.y = tempValue[1];
         this.seats = [];
         this.radius = parentTable.returnWidth() + 20;
-        console.log(this.numberOfSeats);
+        //console.log(this.numberOfSeats);
         let distanceBewteenPointsOncircle = (Math.PI*2)/this.numberOfSeats;
         for(let i =0; i<this.numberOfSeats; i++){
             let xV = Math.cos(distanceBewteenPointsOncircle*i)*this.radius;

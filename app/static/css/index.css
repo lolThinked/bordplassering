@@ -164,6 +164,7 @@ body{
     position: relative;
     z-index: 1;
     border-left: 1px solid #a0a0a0;
+    overflow: auto;
 }
 .newGUI h2{
     color: #6c6c6c;

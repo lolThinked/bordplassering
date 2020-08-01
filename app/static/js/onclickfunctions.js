@@ -174,6 +174,6 @@ function takeScreenshot(){
         }
         lengde[i].style.display = "none";
     }
-    console.log(image);
+    //console.log(image);
 }
 

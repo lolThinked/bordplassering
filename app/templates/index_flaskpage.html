@@ -267,23 +267,25 @@
                             </div>
                             <div class="create-project-step-content" id="create-project-step-content-1">
                                 <div class="create-project-select-room" id="create-project-select-room">
-                                    <div class="create-project-room" id="create-project-cafe" onclick="startTegner('Cafe')">
+                                    <div class="create-project-room" id="create-project-cafe" onclick="projectCreationSetRoom(event, 'Cafe')">
                                         <img src="static/images/menublank/16/cafe.jpg" alt="Cafe">
                                         <h2>Café</h2>
                                     </div>
-                                    <div class="create-project-room" id="create-project-manehallen" onclick="startTegner('Manehallen')">                       
+                                    <div class="create-project-room" id="create-project-manehallen" onclick="projectCreationSetRoom(event,'Manehallen')">                       
                                         <img src="static/images/menublank/16/manehallen.jpg" alt="Manehallen">
                                         <h2>Månehallen</h2>
                                     </div>
-                                    <div class="create-project-room" id="create-project-soylehallen" onclick="startTegner('Soylehallen')">                        
+                                    <div class="create-project-room" id="create-project-soylehallen" onclick="projectCreationSetRoom(event,'Soylehallen')">                        
                                         <img src="static/images/menublank/16/soylehallen.png" alt="Soylehallen">
                                         <h2>Søylehallen</h2>
                                     </div>
-                                    <div class="create-project-room" id="create-project-hovedhallen" onclick="startTegner('Hovedhallen')">                        
+                                    <div class="create-project-room" id="create-project-hovedhallen" onclick="projectCreationSetRoom(event,'Hovedhallen')">                        
                                         <img src="static/images/menublank/16/hovedhallen.jpg" alt="HovedHallen">
                                         <h2>Hovedhallen</h2>
                                     </div>
                                 </div>
+                                <h1 id="selected-room-for-project">Ikke Valgt enda</h1>
+                                <a href="#cp-step-2"><h2>Neste -></h2></a>
                             </div>
                         </div>
                     </div>
@@ -298,10 +300,31 @@
                         <div class="create-project-step-container" id="create-project-step-container-2">
                             <div class="create-project-step-info" id="create-project-step-info-2">
                                 <h1>Navn</h1>
-                                <h3>Her kan du gi prosjektet ditt et navn.</h3>
+                                <h3>Her kan du gi prosjektet ditt et navn og dato.</h3>
                             </div>
                             <div class="create-project-step-content" id="create-project-step-content-2">
                                 <input type="text" name="create-project-name-input" id="create-project-name-input" placeholder="Ditt prosjekt">
+                                <input type="date" name="create-project-date-input" id="create-project-date-input">
+                                <a href="#cp-step-3"><h2>Neste -></h2></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="create-project-step" id="cp-step-3">
+                        <div class="create-project-step-progress" id="project-progress-step-3">
+                            <h2>Start</h2>
+                            <h2>Velg Rom</h2>
+                            <h2>Gi Navn</h2>
+                            <h2>Slutt</h2>
+                        </div>
+                        
+                        <div class="create-project-step-container" id="create-project-step-container-3">
+                            <div class="create-project-step-info" id="create-project-step-info-3">
+                                <h1>Slutte</h1>
+                                <h3>Her kan du opprette prosjektet ditt</h3>
+                            </div>
+                            <div class="create-project-step-content" id="create-project-step-content-3">
+                                <h1>Opprett prosjekt</h1>
+                                <button onclick="createProjectWithDataButton(event)">Klikk her for å oprette prosjektet</button>
                             </div>
                         </div>
                     </div>
@@ -321,6 +344,13 @@
         <div class="canvasGUI-Container">
             
             <div class="newGUI" id="new-GUI" style="display: none;" onclick="guiUpdate(event)">
+                <div class="gui-stats" id="gui-project-info">
+                    <div class="gui-header">
+                        <h1>Prosjekt</h1>
+                    </div>
+                    <div class="gui-container" id="gui-project-info-content">
+                    </div>
+                </div>
                 <div class="gui-stats" id="gui-stats">
                     <div class="gui-header">
                         <h1>Statestikk</h1>
@@ -340,6 +370,7 @@
                         <input type="text" id="surname-for-person" class="personInput" placeholder="Etternavn">
                         <input type="number" min="0" id="age-for-person" class="personInput" placeholder="Alder">
                         <input type="text" id="gender-for-person" class="personInput" placeholder="Kjønn">
+
                         <form>
                             <select id="allergy-for-person" class="personInput">
                                 <option value="alkohol">alkohol</option>
@@ -349,8 +380,9 @@
                                 <option value="Vegan">Vegan</option>
                             </select>
                             <button onclick="makePerson()">Legg til</button>
+                            <button onclick="changePerson()">Endre</button>
                         </form>
-                        
+                        <h4 style="display: none;" id="IDPERSON"></h4>
                     </div>
                 </div>
                 <div class="gui-utility" id="gui-utility">
@@ -359,12 +391,16 @@
                     </div>
                     <div class="gui-container">
                         <h2 onclick="openSaveDialog()">Lagre</h2>
+                        <button onclick="saveProjectData()">Lagre Prosjekt</button>
+
                     <!--<h2 onclick="saveCurrentTableSetupToText()">Lagre</h2>-->
                         <h2 onclick="drawFrameForPrinting()">Skriv ut</h2>
                         <h2 onclick="takeScreenshot()" id="takeScreenshotButton">Ta skjermbilde</h2>
                         <br>
                         <h2 onclick="addTable('lang')">Langbord [+]</h2>
                         <h2 onclick="addTable('rund')">Rundbord [+]</h2>
+                        <h3>Bordfarge<input type="color" id="color-for-table" oninput="changeSelectedTableColor()"></h3>
+                        <h3>SeteFarge<input type="color" id="color-for-seat" oninput="changeSeatColor()"></h3>
                     </div>
                 </div>
                 <div class="table-utility" id="table-utility">
@@ -377,9 +413,7 @@
                         <h2 onclick="rotateSelectedTables(-30);">Roter (-30°)</h2>
                         <h2 onclick="deleteSelectedTables();">Slett bord</h2>
                         <input type="text" id="name-for-table" placeholder="Navn til bordet" oninput="setNameForTable()">
-                        <h3>Bordfarge<input type="color" id="color-for-table" oninput="changeSelectedTableColor()"></h3>
                         
-                        <h3>SeteFarge<input type="color" id="color-for-seat" oninput="changeSeatColor()"></h3>
                     </div>
                 </div>
                 <h5 id="lagredeBord" ></h5>
@@ -399,7 +433,7 @@
 
         </div>
     </div>
-    <canvas id="canvas" class="canvas" style="display: none;" onscroll="scale(event)"  onmouseup="deleteBord(event)" onmousedown="setBord(event)" onmousemove="update(event)" >You need to update your browser to run canvas</canvas>
+    <canvas id="canvas" class="canvas" style="display: none;" onmouseup="deleteBord(event)" onmousedown="setBord(event)" onmousemove="update(event)" >You need to update your browser to run canvas</canvas>
 
 
     

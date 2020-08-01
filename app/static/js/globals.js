@@ -108,6 +108,7 @@ let modalCancelBtnEL = document.getElementsByClassName("cancelbtnModal");
 
 let canvasVariablesSet= false;
 let canvasEl;
+let newAppGUIEl;
 let ctx;
 let overView;
 let editingModeDelete = false;
@@ -116,4 +117,4 @@ let inTyping = false;
 
 let forDeleting = [];
 
-let project = {};
+let project;

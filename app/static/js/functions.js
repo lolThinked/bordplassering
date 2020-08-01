@@ -542,20 +542,28 @@ function translate(x,y){
     //console.log("MATRIX[4]: " + contextMatrix[4]);
 }
 function scale(x,y, translateX, translateY){
-    contextMatrix[0] *= x;
-    contextMatrix[1] *= x;
-    contextMatrix[2] *= y;
-    contextMatrix[3] *= y;
-    ctx.scale(x,y);
-    translate(translateX, translateY);
-    //redraw();
-    update();
-    translationLimit();
-    
+    if(typeof(x) === "number" && typeof(y) === "number"){
+        //console.log("[SCALE FUNCTION]");
+        //console.log(contextMatrix); //Good
+        //console.table();
+        //console.trace();
+        //console.log(x,y);
+        contextMatrix[0] *= x;
+        contextMatrix[1] *= x;
+        contextMatrix[2] *= y;
+        contextMatrix[3] *= y;
+        ctx.scale(x,y);
+        translate(translateX, translateY);
+        //redraw();
+        update();
+        translationLimit();
+    }
+    console.log("[SCALE FUNCTION] - FAILED");
 }
 
 //SCALE ON MOUSESCROLL
 var scaler = function(evt){
+    console.log("[SCALER FUNCTION]");
     //Mouse X and Y (Canvas reference)
     //Getting cordinates for mouse position before translation and scaling
     let prevX = (evt.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0];
@@ -593,6 +601,7 @@ var scaler = function(evt){
     //translateX = prevX-currentX;
     //translateY = prevY- currentY;
     console.log("[WHEELDELTA] : "+ evt.wheelDelta);
+    console.log
     //console.log(evt.wheelDelta);
 
     //Calling zoom functions
@@ -624,6 +633,7 @@ function scaleToScreen(room){
     console.log("[SCALE TO SCREEN]");
     if(room == undefined){
         room = currentRoom;
+        console.log("[ROOM UNDEFINED]");
     }
     //Find screen size
     let w = window.innerWidth;
@@ -753,6 +763,7 @@ function drawFrame(){
 
     ctx.lineWidth = "7";
     ctx.fillStyle = "white";
+    //console.log(mouseX);
     ctx.fillRect(mouseX, mouseY, 20, 20);
     ctx.strokeRect(mouseX, mouseY, 24, 24);
     ctx.font = "25px Arial";
@@ -763,12 +774,14 @@ function drawFrame(){
     //console.log("[DRAWFRAME] - after mouseX");
     
     //drawTablePreview();
+    /*
     var d = new Date();
     var n = d.getTime();
     let timeDiff = n-previousTime;
     previousTime = n;
     //counterEl.innerHTML = "<h1>"+ timeDiff + "</h1>";
     counterEl.innerHTML = "<h1>FPS : " + fpsCounter(timeDiff) + "</h1>";
+    */
     drawCenterRectangle();
 
     //console.log("[DRAWFRAME] - End");
@@ -1135,7 +1148,8 @@ function translateToCenter(room){
     
     let centerX = canvasEl.width/2;
     let centerY = canvasEl.height/2;
-    console.log(roomInfo);
+    console.log("[ROOM INFO] - "+roomInfo);
+    //console.log(roomInfo);
     let translateXValue = roomInfo[1][0]-centerX;
     let translateYValue = roomInfo[1][1]+centerY;
     console.log("[TRANSLATING CANVAS] - CenterY and translateY: (" +centerY +  " : " + roomInfo[1][1]+") - ( move Value(-)X" + -translateXValue + " : move ValueY" + translateYValue +")");
@@ -1388,13 +1402,16 @@ function modalClose(){
     modal.style.display = "none";
 }
 
+function saveProjectData(){
+    console.log(JSON.stringify(project));
+}
 
 //Sets the canvas variables
 function setCanvasVariables(){
     if(!canvasVariablesSet){
         console.log("[CANVAS VARIABLES] - Setting variables");
         canvasEl = document.getElementById("canvas");
-        console.log(canvasEl);
+        //console.log(canvasEl);
         ctx = canvasEl.getContext("2d");
         canvasVariablesLoaded = true;
         //console.log(ctx);
@@ -1404,6 +1421,8 @@ function setCanvasVariables(){
 }
 //CANVAS SETUP - Sets up the neccescary info for the canvas to work input name
 function setupCanvas(navn){
+    console.log(previousEvent);
+    //contextMatrix = [1,0,0,1,0,0];
     console.log("[CANVAS] - Setting up canvas settings");
     setCanvasVariables();
     //console.log(ctx);
@@ -1416,14 +1435,20 @@ function setupCanvas(navn){
     setCanvasSize();
     update();
 }
-
+function createCanvasEl(){
+    
+}
 //Sets up css for drawing in canvas
 function setupCSSForDrawing(){
-    console.log("[CANVAS] - Setting up css for drawing")
+    console.log("[CANVAS] - Setting up css for drawing");
+    console.log("[MASSIVE BUG] - with css positioning");
     newAppMenuEL.style.display ="none";
     bodyEl.style.overflow =  "hidden"; 
     canvasEl.style.display = "block";
-    document.getElementById("new-GUI").style = "";
+    setTimeout(() => {
+        newAppGUIEl.style.display ="";
+        scaleToScreen();
+    }, 100);
 }
 
 //Loads save into drawing by ID
@@ -1450,7 +1475,7 @@ function retrieveOverview(){
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             // Request finished. Do processing here.
             overView = JSON.parse(xhr.response);
-            console.log(typeof(overView));
+            console.log("[OVERVIEW REQUEST] - Datatype: "+typeof(overView));
             loadPresets(overView);
         }
     }
@@ -1607,7 +1632,7 @@ function updatePresets(){
 }
 
 
-//Sends a list of Ids to be deleted
+//Sends a list of Ids to be deleted 
 function sendDeleteIds(listOfIds){
     let sendPackage = {"ids":listOfIds};
     let xhr = new XMLHttpRequest();
@@ -1655,11 +1680,115 @@ function checkIfInType(){
     return false;
 }
 
+function projectCreationSetRoom(e, room){
+    let roomELs = document.querySelectorAll(".create-project-room");
+    //console.log(e);
+    document.getElementById("selected-room-for-project").innerHTML = room;
 
+}
 
+function createProjectWithDataButton(e){
+    console.log(contextMatrix);
+    previousEvent = e;
+    setMouseCordinatesWithEvent(e);
+    let roomP = document.getElementById("selected-room-for-project").innerHTML;
+    let nameP = document.getElementById("create-project-name-input").value;
+    let dateP = document.getElementById("create-project-date-input").value;
 
+    project = new Project(roomP, nameP);
+    project.setDate(dateP);
+    startTegner(roomP);
+    //update(event);
+    console.log(contextMatrix);
+}
+function setMouseCordinatesWithEvent(e){
+    mouseX = (e.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0];
+    mouseY = (e.clientY/contextMatrix[3])-contextMatrix[5]/contextMatrix[3];
+}
 
 
 function makePerson(){
-    return
+    let iEls = document.querySelectorAll(".personInput");
+    let person = new Person(iEls[0].value, iEls[1].value, iEls[2].value, iEls[3].value);
+    project.addGuest(person);
+    update();
+}
+function changePerson(){
+    let id = document.getElementById("IDPERSON").innerHTML;
+    let guests = project.getGuests();
+    let personObject;
+    for(let j =0; j<guests.length; j++){
+        //console.log(guests[j].getId(), " ", id);
+        if(guests[j].getId() == id){
+            personObject = guests[j];
+            //break;
+        }
+    }
+    let iEls = document.querySelectorAll(".personInput");
+    personObject.setFirstname(iEls[0].value);
+    personObject.setSurname(iEls[1].value);
+    personObject.setAge(iEls[2].value);
+    personObject.setGender(iEls[3].value);
+}
+
+function updateProjectInfoGUI(){
+    if(project != undefined){
+        let headerElement = document.querySelector("#gui-project-info > div > h1");
+        let contentElement= document.querySelectorAll("#gui-project-info > div")[1];
+        headerElement.innerHTML = project.getName();
+
+        contentElement.innerHTML ="";
+        contentElement.innerHTML += "<h3>📅: " + project.getDateText() + "</h3>";
+        let guests = project.getGuests();
+        //console.log(guests);
+        for(let i = 0; i<guests.length; i++){
+            let personDiv = document.createElement("div");
+            let personName = document.createElement("h3");
+            personName.innerHTML = guests[i].getFullName();
+            
+            personDiv.onclick=loadPerson;
+            personDiv.id = guests[i].getId();
+            personDiv.className = "personVisningsDiv";
+            personName.id = guests[i].getId();
+
+            personDiv.appendChild(personName);
+            contentElement.appendChild(personDiv);
+            //console.log(i);
+        }
+        //console.log(contentElement);
+    }
+}
+function loadPerson(value){
+    let id;
+    console.log(value);
+    if(typeof(value) == "event"){
+        id= value.target.id;
+    }else if(typeof(value) =="string"){
+        id = value;
+    }else if(typeof(value) ==="object"){ 
+        id= value.target.id;   
+    }else if(typeof(value) =="MouseEvent"){
+        id= value.target.id;
+    }else{
+        console.log("[LOAD PERSON] - Value: " + value);
+    }
+    
+    let guests = project.getGuests();
+    let personObject;
+    for(let j =0; j<guests.length; j++){
+        //console.log(guests[j].getId(), " ", id);
+        if(guests[j].getId() == id){
+            personObject = guests[j];
+            //break;
+        }
+    }
+    console.log(personObject);
+    let iEls = document.querySelectorAll(".personInput");
+    let dataToLoop = personObject.getDataForLoadPerson();
+    for(let i = 0; i<dataToLoop.length; i++){
+        iEls[i].value = dataToLoop[i];
+        console.log(iEls[i]);
+        console.log(dataToLoop[i]);
+    }
+    document.getElementById("IDPERSON").innerHTML = id;
 }
