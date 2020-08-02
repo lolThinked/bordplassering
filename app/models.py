@@ -3,6 +3,7 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import login
+from hashlib import md5
 
 
 
@@ -22,8 +23,14 @@ class User(UserMixin, db.Model):
     createdProjects = db.relationship('Project', backref='author', lazy='dynamic')
     #person = db.relationship("Person", uselist=False, back_populates="person")
     person = db.relationship("Person")
-    
+    #about_me = db.Column(db.String(140))
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
+    
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -48,6 +55,7 @@ class Person(db.Model):
     def __repr__(self):
         return '<Person {}>'.format(self.firstName + " " + self.surName +" : " + str(self.age))    
 
+'''
 allergyLink = db.Table("allergyLink",
     db.Column("person_id", db.Integer, db.ForeignKey("person.id"), primary_key=True),
     db.Column("allergy_id", db.Integer, db.ForeignKey("allergy.id"), primary_key=True) 
@@ -60,7 +68,7 @@ class Allergy(db.Model):
 
     def __repr__(self):
         return '<Allergy {}>'.format(self.name)
-
+'''
 
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)

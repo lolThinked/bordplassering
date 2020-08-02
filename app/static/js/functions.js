@@ -1700,6 +1700,7 @@ function createProjectWithDataButton(e){
     startTegner(roomP);
     //update(event);
     console.log(contextMatrix);
+    createTestPersons();
 }
 function setMouseCordinatesWithEvent(e){
     mouseX = (e.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0];
@@ -1791,4 +1792,21 @@ function loadPerson(value){
         console.log(dataToLoop[i]);
     }
     document.getElementById("IDPERSON").innerHTML = id;
+}
+
+
+
+
+function createTestPersons(){
+    let personArray = [
+        {firstName:"Fabian",surName:"Hopland",age:20,gender:"Mann",allergies:[],id:"05b3e2882e740d88"},
+        {firstName:"Thea Wangberg",surName:"Sørum",age:24,gender:"Dame",allergies:[],id:"a3642d36e7c8b097"},
+        {firstName:"Margrethe",surName:"Cannistraci",age:51,gender:"Dame",allergies:[],id:"fc1b4a7aca7cd3fc"},
+        {firstName:"Eystein",surName:"Hopland",age:55,gender:"Mann",allergies:[],id:"97f01021a3a9a23d"}
+    ];
+    for(let i =0; i<personArray.length; i++){
+        let guest = new Person(personArray[i]);
+        project.addGuest(guest);
+    }
+    update();
 }

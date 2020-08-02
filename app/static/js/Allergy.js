@@ -1,9 +1,11 @@
 class Allergy{
-    constructor(name, tag, description, advice){
+    constructor(name, tag, description, advice, id, color){
         this.name = name || "Ingen navn";
         this.tag = tag || "Ingen forkortelse";
         this.description = description || "Ingen beskrivelse";
         this.advice = advice || "Ingen råd";
+        this.id = id || generateID();
+        this.color = color || false;
     }
 
 
@@ -20,6 +22,19 @@ class Allergy{
     }
     getAdvice(){
         return this.advice;
+    }
+    returnAsObject(){
+        let tempObject ={};
+        tempObject.name = this.name;
+        tempObject.tag = this.tag;
+        tempObject.description = this.description;
+        tempObject.advice = this.advice;
+        tempObject.id = this.id;
+        tempObject.color = this.color;
+        return tempObject;
+    }
+    getId(){
+        return this.id;
     }
 }
 

@@ -53,7 +53,9 @@ class Seat{
         this.id = id;
         //console.log(this.xVector, this.y);
     }
-
+    getId(){
+        return this.id;
+    }
     addPerson(person){
         this.person = person;
     }

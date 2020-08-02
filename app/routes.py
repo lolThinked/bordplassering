@@ -1,9 +1,9 @@
-from app import app
+from app import app, db
 from flask import Flask, render_template, jsonify, url_for, send_from_directory, request, flash, redirect
-from app.forms import LoginForm
+from app.forms import LoginForm, RegistrationForm
 #from flask_login import LoginManager
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Project, Allergy, Person
+from app.models import User, Project, Person
 
 
 import json
@@ -40,8 +40,25 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for('index'))
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
 
 
 @app.route('/logout')
@@ -49,6 +66,16 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = [
+        {'author': user, 'body': 'Test post #1'},
+        {'author': user, 'body': 'Test post #2'}
+    ]
+    return render_template('user.html', user=user, posts=posts)
 
 @app.route('/myPage')
 def myPage():
@@ -105,6 +132,52 @@ def getSpecificIdentifier(identifier):
     return overView[identifier]
 
 
+@app.route("/project/save/<identifier>")
+def saveProjectWithIdentifier(identifier):
+    jsonData = eval(request.data)
+    #updateProjectList
+    projectOverview[identifier] = jsonData["project"]
+    with open("/Saved/Projects/projectOverview.json", "w") as f:
+        json.dump(projectOverview, f)
+    #makeFolder
+    createFolder("./Saved/Projects/"+identifier)
+    #makeProjectFile
+    with open("./Saved/Projects/"+identifier+"/project.json", "w") as f:
+        json.dump(jsonData["project"], f)
+    #makeDrawingFiles
+    with open("./Saved/Projects/"+identifier+"/drawing.json", "w") as f:
+        json.dump(jsonData["drawing"], f)
+    #makePeopleFiles
+    for person in jsonData["guests"]:
+        with open("/Saved/Person/"+person["id"]+".json", "w") as f:
+            json.dumps(person, f)
+    print("\n[PROJECT] - SAVED!")
+    return jsonify(message = "Saved!")
+
+
+
+@app.route("/saveData/allergy/<identifier>", methods=["post"])
+def saveAllergyWithIdentifier(identifier):
+    inData = request.data
+    #print(inData)
+    jsonData = eval(inData)
+    allergyOverview[identifier] = jsonData
+    with open("Saved/Allergy/overview.json", "w") as f:
+        json.dump(allergyOverview, f)
+    '''
+    with open("Saved/Allergy/"+jsonData["id"]+".json", "w+") as f:
+        json.dump(jsonData, f)
+    if(os.path.exists("Saved/Allergy/list.txt")):
+        with open("Saved/Allergy/list.txt", "a") as f:
+            #listIDS = [line.rstrip('\n') for line in f]
+            f.write(identifier + "\n")
+    '''
+    return jsonify(message = "OK")
+
+@app.route("/getData/allergy/all")
+def getAllergyAll():
+    return allergyOverview
+
 #hent ikon
 @app.route('/favicon.ico')
 def favicon():
@@ -116,7 +189,12 @@ def favicon():
 
 
 
-
+def createFolder(directory):
+    try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+    except OSError:
+        print ('Error: Creating directory. ' +  directory)
 
 def saveDataLocally(dicSave):
     #SAVE

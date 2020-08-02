@@ -26,12 +26,12 @@ from app import routes, models
 #print(os.getcwd())
 
 from app import app, db
-from app.models import User, Project, Allergy, Person
+from app.models import User, Project, Person
 
 @app.shell_context_processor
 def make_shell_context():
     print("TESTING")
-    return {'db': db, 'User': User, 'Project': Project, 'Person':Person, 'Allergy':Allergy}
+    return {'db': db, 'User': User, 'Project': Project, 'Person':Person}
 
 
 

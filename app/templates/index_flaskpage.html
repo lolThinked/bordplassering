@@ -25,6 +25,7 @@
   <script src={{ url_for('static', filename='js/PersonClass.js')}} ></script>
   <script src={{ url_for('static', filename='js/Seat.js')}} ></script>
   <script src={{ url_for('static', filename='js/ProjectClass.js')}} ></script>
+  <script src={{ url_for('static', filename='js/projectFunctions.js')}} ></script>
   <script>
       
   </script>
@@ -106,6 +107,7 @@
             {% if current_user.is_anonymous %}
             <a href="{{url_for('login')}}">Login</a>
             {% else %}
+            <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
             <a href="{{url_for('logout')}}">Logout</a>
             {% endif %}
 

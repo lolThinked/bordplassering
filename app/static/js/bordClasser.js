@@ -6,6 +6,7 @@ class Bord{
         this.bordType = bordType;
         this.id = idCounter;
         idCounter++;
+        this.id = generateID();
         this.width = 0;
         this.height = 0;
         this.total = 0;
@@ -44,7 +45,9 @@ class Bord{
         
         this.seats = new SeatController(this);
     }
-    
+    getId(){
+        return this.id;
+    }
     rotate(angle){
         //console.log(this.drawPoints);
         if(angle ==0 || angle ==undefined){
