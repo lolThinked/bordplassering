@@ -96,6 +96,7 @@ function select(startX, startY){
 }
 function selectPoint(pointX, pointY){
     let easyCalcDistance = 50;
+    
     let notSelected = true;
     tableInSelectedGroup = false;
     for(let i=0; i<bord.length; i++){
@@ -214,7 +215,7 @@ function setNameForTableInInputField(){
     }else{
         document.getElementById("name-for-table").value = selecting[0].descriptor;
     }
-    
+    //document.getElementById("name-for-table").focus();
 }
 function changeSelectedTableColor(){/*
     if(selected[0] != undefined){
@@ -733,6 +734,7 @@ function redraw(){
 }
 
 function drawFrame(){
+    ctx.font ="25px Arial";
     //CLEAR FRAME
     ctx.clearRect(-window.innerWidth,-window.innerHeight, window.innerWidth*4, window.innerHeight*4);
     ctx.strokeStyle = 'white';
@@ -763,14 +765,15 @@ function drawFrame(){
 
     ctx.lineWidth = "7";
     ctx.fillStyle = "white";
-    //console.log(mouseX);
+    
+    //  ___________________                MUSEN              _____________________
     ctx.fillRect(mouseX, mouseY, 20, 20);
     ctx.strokeRect(mouseX, mouseY, 24, 24);
-    ctx.font = "25px Arial";
+    /*ctx.font = "25px Arial";
     ctx.fillText(((mouseX).toFixed(0) +" : "+ (mouseY).toFixed(0)), mouseX, mouseY);
     ctx.fillStyle = farge;
     ctx.fillStyle = "white";
-
+    */
     //console.log("[DRAWFRAME] - after mouseX");
     
     //drawTablePreview();
@@ -782,9 +785,11 @@ function drawFrame(){
     //counterEl.innerHTML = "<h1>"+ timeDiff + "</h1>";
     counterEl.innerHTML = "<h1>FPS : " + fpsCounter(timeDiff) + "</h1>";
     */
-    drawCenterRectangle();
+    //                                      CENTER RECTANGLE         ____________
+    //drawCenterRectangle();
 
     //console.log("[DRAWFRAME] - End");
+    
 }
 
 function pushObstacles(navn){
@@ -1012,7 +1017,10 @@ function exportTables(){
 function loadTables(list){
     for(tables in list){
         tbl = list[tables];
-        bord.push(new Bord(tbl.x, tbl.y, tbl.bordType, tbl.rotation, tbl.descriptor));
+        if(tbl.id != undefined){
+
+        }
+        bord.push(new Bord(tbl.x, tbl.y, tbl.bordType, tbl.rotation, tbl.descriptor, tbl.name || "gi Navn", tbl.id || undefined));
         //console.log(idCounter);
     }
 }
@@ -1251,7 +1259,15 @@ function pushStatsFast(){
 }
 
 
-
+function guiMouseDown(e){
+    console.log(e);
+    for(let i=0;i<project.guests.length;i++){
+        if(target.id===project.guests[i].getId()){
+            
+        }
+    }
+    setBord(e);
+}
 
 function guiUpdate(e){
     e = e || previousEvent;
@@ -1259,6 +1275,10 @@ function guiUpdate(e){
     getStats();
     pushStats();
 }
+function guiMouseUp(e){
+    deleteBord(e);
+}
+
 function setNameForTable(e){
     
     selected[0].setDescriptor(document.getElementById("name-for-table").value);
@@ -1403,7 +1423,22 @@ function modalClose(){
 }
 
 function saveProjectData(){
-    console.log(JSON.stringify(project));
+    console.log("[PROJECT] (SAVING) - "+project.getName() + " : " + project.getId());
+    let data = project.exportForJson();
+    let projectId = project.getId();
+    let xhr = new XMLHttpRequest(); 
+    let url = "/project/save/"+projectId;
+    xhr.open("POST", url, true);
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Request finished. Do processing here.
+            console.log("[PROJECT] (SAVING) - SAVED");
+        }
+    }
+    xhr.send(JSON.stringify(data));
 }
 
 //Sets the canvas variables
@@ -1702,6 +1737,21 @@ function createProjectWithDataButton(e){
     console.log(contextMatrix);
     createTestPersons();
 }
+function loadProject(id){
+    let xhr = new XMLHttpRequest();
+    let url = "/project/load/"+id;
+    xhr.open("GET", url, true);
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            inData = JSON.parse(xhr.response);
+            project = new Project(inData);
+        }
+    }
+    xhr.send();
+}
 function setMouseCordinatesWithEvent(e){
     mouseX = (e.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0];
     mouseY = (e.clientY/contextMatrix[3])-contextMatrix[5]/contextMatrix[3];
@@ -1710,7 +1760,10 @@ function setMouseCordinatesWithEvent(e){
 
 function makePerson(){
     let iEls = document.querySelectorAll(".personInput");
+    console.log(iEls);
+    //navn, etternavn, alder, kjønn
     let person = new Person(iEls[0].value, iEls[1].value, iEls[2].value, iEls[3].value);
+    //console.log(person);
     project.addGuest(person);
     update();
 }
@@ -1745,7 +1798,7 @@ function updateProjectInfoGUI(){
         for(let i = 0; i<guests.length; i++){
             let personDiv = document.createElement("div");
             let personName = document.createElement("h3");
-            personName.innerHTML = guests[i].getFullName();
+            personName.innerHTML = "🧍"+guests[i].getFullName()+"🧍‍♀️";
             
             personDiv.onclick=loadPerson;
             personDiv.id = guests[i].getId();
@@ -1809,4 +1862,24 @@ function createTestPersons(){
         project.addGuest(guest);
     }
     update();
+}
+
+function getPersonById(id){
+    let xhr = new XMLHttpRequest();
+    let url = "http://localhost:5000/getData/overView";
+    url = "/getData/person/"+id;
+    xhr.open("GET", url, true);
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Request finished. Do processing here.
+            inData = JSON.parse(xhr.response);
+            console.log("[PERSON REQUEST] - Datatype: "+typeof(overView));
+            person = new Person(inData);
+            project.addGuest(person);
+        }
+    }
+    xhr.send();
 }

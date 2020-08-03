@@ -69,25 +69,28 @@ class Seat{
     }
     //50cm?
     drawMyself(){
+
         if(!this.person){
-            ctx.fillStyle = drawSettings.seat.occupied;
+            ctx.fillStyle = drawSettings.seat.occupied;ctx.strokeStyle = drawSettings.standard.strokeColor;
+            ctx.lineWidth = drawSettings.seat.lineWidth;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, drawSettings.seat.width, 0, 2*Math.PI, false);
+            //console.log(this.x, this.y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            //console.log("DRAWING SEATS");
+            if(!this.person){
+                ctx.fillStyle = "black";
+                ctx.fillText(this.id, this.x, this.y);
+            }
+            ctx.fillStyle = drawSettings.standard.fillColor;  
+            ctx.lineWidth = drawSettings.standard.lineWidth;
         }else{
-            ctx.fillStyle = drawSettings.seat.free;
+            //ctx.fillStyle = drawSettings.seat.free;
+            //ctx.fillStyle = drawSettings.standard.fillColor;
+            this.person.drawMyself(this.x, this.y);
         }
-        ctx.strokeStyle = drawSettings.standard.strokeColor;
-        ctx.lineWidth = drawSettings.seat.lineWidth;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, drawSettings.seat.width, 0, 2*Math.PI, false);
-        //console.log(this.x, this.y);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        //console.log("DRAWING SEATS");
-        if(!this.person){
-            ctx.fillStyle = "black";
-            ctx.fillText(this.id, this.x, this.y);
-        }
-        ctx.fillStyle ="white";  
-        ctx.lineWidth = drawSettings.standard.lineWidth;
+        
     }
 }

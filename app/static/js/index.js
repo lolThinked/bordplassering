@@ -110,11 +110,13 @@ function startTegner(navn){
     console.log(mouseX);
     setupCanvas(navn);
     setupCSSForDrawing();
-    pushTestTables();
+    //pushTestTables();
+    /*
     if(navn =="Manehallen"){
         bord = [];
         loadTables(tablesListObject);
-    } 
+    }
+    */ 
     guiUpdate();
     update();
     //scaleToScreen(); //Because of css bug
@@ -139,7 +141,7 @@ function setBord(e){
     
     e = e || previousEvent;
     mouseIsPressed = true;
-    //console.log(e);
+    console.log(e);
     //console.log(bord);
     setMouseCordinatesWithEvent(e);
     var loopLength = bord.length;
@@ -148,11 +150,13 @@ function setBord(e){
     clickOriginX = mouseX;
     clickOriginY = mouseY;
     selectPoint(mouseX, mouseY);
+    //if(e.target)
     //setNameForTableInInputField();
-    drawTablePreview();
+    //drawTablePreview();
     setDistanceForSelected(mouseX, mouseY);
     //console.log(exportTableSetup());
     //console.log(ctx.getTransform());
+    
     update(e);
 }
 
@@ -184,7 +188,7 @@ function update(e){
     }else if(checkIfTable(mouseX, mouseY) && mouseIsPressed){
         canvasEl.style.cursor ="grabbing";
     }
-    drawTablePreview();
+    //drawTablePreview();
 
     //TRANSLATE canvas if "ctrl" and no table is selected
     if(mouseIsMove && mouseIsPressed){
@@ -230,7 +234,8 @@ function update(e){
         }
     }
 
-    
+    ctx.fillText("🧍", ((e.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0]), ((e.clientY/contextMatrix[3])-contextMatrix[5]/contextMatrix[3]));
+
     // //CHECKING COLITIONS
     // drawLater = [];
     // checkEveryColition();

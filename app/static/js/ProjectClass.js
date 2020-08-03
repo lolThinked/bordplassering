@@ -1,14 +1,40 @@
 class Project{
     constructor(room, name, id, guests,creationDate, creationUser, plannedDate){
-        this.room = room || undefined;
-        this.name = name || "Ditt Prosjekt";
-        this.id = id || generateID();
-        this.guests = guests || [];
-        this.creationDate = new Date(creationDate) || new Date();
-        this.creationUser = creationUser || undefined; // Pointer ID
-        this.plannedDate = new Date(plannedDate) || undefined;
-        console.log(this);
-        if(this.creationDate == undefined){
+        if(arguments.length == 1 && (typeof(arguments[0]) === "object")){
+            //check if they are object for import
+            let inData = arguments[0];
+            let projectData = inData.project;
+            this.room = projectData.room || undefined;
+            this.name = projectData.name || undefined;
+            this.id = projectData.id || generateID();
+            this.creationDate = new Date(projectData.creationDate);
+            this.creationUser = projectData.creationUser || undefined;
+            this.plannedDate = new Date(projectData.plannedDate) || undefined;
+            this.guests = [];
+            //DRAWING
+            //loadTables(inData.drawing.tables);
+            this.drawing = {};
+            this.drawing.tables = bord || undefined;
+            //PERSON
+            
+            //console.log(guests);
+            this.addGuestByList(inData.guests);
+            //console.log(guests);
+            startTegner(this.room);
+            loadTables(inData.drawing.tables);
+        }else{
+            this.room = room || undefined;
+            this.name = name || "Ditt Prosjekt";
+            this.id = id || generateID();
+            this.guests = guests || [];
+            this.creationDate = new Date(creationDate) || new Date();
+            this.creationUser = creationUser || undefined; // Pointer ID
+            this.plannedDate = new Date(plannedDate) || undefined;
+            console.log(this);
+            
+        }
+        if(this.creationDate == undefined || this.creationDate == "Invalid Date"){
+            console.log("[SETTING CREATION DATE] - PROJECT");
             this.setCreationDate();
         }
     }
@@ -19,7 +45,28 @@ class Project{
     getName(){
         return this.name;
     }
+    addGuestByList(liste){
+        console.log("[PROJECT] - Added guest");
+        //console.log(person);
+        /*
+        if(Array.isArray(liste)){
+            if(typeof(liste[0]) =="string"){
+                for(let i=0; i<liste.length; i++){
+                    getPersonById(liste[i]);
+                }
+            return
+            }
+        }
+        */
+       console.log(liste);
+       for(let person in liste){
+           console.log(liste);
+           console.log(person);
+           this.guests.push(new Person(liste[person]));
+       }
+    }
     addGuest(person){
+        console.log("[PUSHED] GUEST");
         this.guests.push(person);
     }
     removeGuest(person){
@@ -50,7 +97,9 @@ class Project{
         this.creationDate = new Date().getTime();
     }
 
-
+    getId(){
+        return this.id;
+    }
     exportForJson(){
         let tempObj = {};
         //project
@@ -79,8 +128,14 @@ class Project{
 
         //drawing
 
+        let tmpDrawing= {};
+        tmpDrawing.tables = [];
+        for(let i=0; i<bord.length;i++){
+            tmpDrawing.tables.push(bord[i].returnForExport());
+        }
 
-
+        
+        tempObj.drawing = tmpDrawing;
         return tempObj;
     }
 }

@@ -1,10 +1,12 @@
 from app import app, db
 from flask import Flask, render_template, jsonify, url_for, send_from_directory, request, flash, redirect
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm
+
 #from flask_login import LoginManager
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Project, Person
-
+from werkzeug.urls import url_parse
+from datetime import datetime
 
 import json
 import os
@@ -16,7 +18,16 @@ from selenium.webdriver.chrome.options import Options
 from base64 import decodestring, decodebytes
 import base64
 
-from app.globalFile import overView, idList
+from app.globalFile import overView, idList, projectOverview, allergyOverview
+from app.email import send_password_reset_email
+
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
+
 
 #HOME DEFAULT ROUTE
 @app.route("/index")
@@ -25,7 +36,9 @@ from app.globalFile import overView, idList
 def index():
     #print(os.getcwd())
     #print(os.path.exists("templates/index_flaskpage.html"))
-    return render_template("index_flaskpage.html", obj=0, user= current_user)
+    liste = makeListFromOverview(projectOverview)
+    #print(liste)
+    return render_template("index_flaskpage.html", obj=0, user= current_user,projects=liste)
 
 
 
@@ -60,11 +73,56 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = EditProfileForm(current_user.username)
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    return render_template('edit_profile.html', title='Edit Profile',
+                           form=form)
 
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html',
+                           title='Reset Password', form=form)
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
+
 
 
 @app.route('/user/<username>')
@@ -131,28 +189,65 @@ def sendOverview():
 def getSpecificIdentifier(identifier):
     return overView[identifier]
 
+@app.route("/getData/person/<identifier>")
+def getPersonByIdentifier(identifier):
+    if(os.path.exists("Saved/Person/"+identifier+".json")):
+        with open("Saved/Person/"+identifier+".json", "r") as f:
+            jsonData =json.load(f)
+            return jsonData
 
-@app.route("/project/save/<identifier>")
+
+@app.route("/project/save/<identifier>", methods=["post"])
 def saveProjectWithIdentifier(identifier):
     jsonData = eval(request.data)
     #updateProjectList
+    print(jsonData)
+    print(projectOverview)
     projectOverview[identifier] = jsonData["project"]
-    with open("/Saved/Projects/projectOverview.json", "w") as f:
+    with open("Saved/Projects/projectOverview.json", "w") as f:
         json.dump(projectOverview, f)
     #makeFolder
     createFolder("./Saved/Projects/"+identifier)
     #makeProjectFile
-    with open("./Saved/Projects/"+identifier+"/project.json", "w") as f:
+    with open("Saved/Projects/"+identifier+"/project.json", "w") as f:
         json.dump(jsonData["project"], f)
     #makeDrawingFiles
-    with open("./Saved/Projects/"+identifier+"/drawing.json", "w") as f:
+    with open("Saved/Projects/"+identifier+"/drawing.json", "w") as f:
         json.dump(jsonData["drawing"], f)
     #makePeopleFiles
     for person in jsonData["guests"]:
-        with open("/Saved/Person/"+person["id"]+".json", "w") as f:
-            json.dumps(person, f)
+        with open("Saved/Person/"+person["id"]+".json", "w") as f:
+            print(person)
+            json.dump(person, f)
     print("\n[PROJECT] - SAVED!")
     return jsonify(message = "Saved!")
+
+@app.route("/project/getAll")
+def getProjectOverview():
+    with open("Saved/Projects/projectOverview.json","r") as f:
+        return json.load(f)
+
+@app.route("/project/load/<identifier>")
+def getProjectById(identifier):
+    projectData ={}
+    with open("Saved/Projects/"+identifier+"/project.json", "r") as f:
+        projectData["project"] = json.load(f)
+    with open("Saved/Projects/"+identifier+"/drawing.json", "r") as f:
+        projectData["drawing"] = json.load(f)
+    projectData["guests"] = []
+    guestList = projectData["project"]["guests"]
+    for guest in guestList:
+        gjest = guest
+        projectData["guests"].append(retrieveGuestFromId(guest))
+    #print(guestList)
+    return projectData
+
+
+@login_required
+@app.route("/project/")
+@app.route("/project/<identifier>")
+def loadProjectHtml(identifier):
+    return redirect(url_for('index'))
 
 
 
@@ -293,3 +388,16 @@ def getScreenshotFromID(id):
     with open(r"app/static/images/IDImages/"+id+".png", 'wb') as f:
         f.write(canvas_png)
     print("[SCREENSHOT] - Done! ('static/images/IDImages/"+id+".png')")
+
+def makeListFromOverview(overviewInput):
+    #print(overviewInput)
+    liste = []
+    for item in overviewInput:
+        liste.append(overviewInput[item])
+    #print(liste)
+    return liste
+
+def retrieveGuestFromId(id):
+    with open("Saved/Person/"+id+".json","r") as f:
+        data = json.load(f)
+        return data

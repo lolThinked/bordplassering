@@ -246,6 +246,9 @@
                             <div class="create-project-step-info" id="create-project-step-info-0">
                                 <h1>Prosjekt</h1>
                                 <h3>Ved å følge veiledingen vil du kunne opprette et prosjekt!</h3>
+                                {% for project in projects %}
+                                    {% include '_project.html' %}
+                                {% endfor %}
                             </div>
                             <div class="create-project-step-content" id="create-project-step-content-0">
                                 <a href="#cp-step-1"><h2>Neste -></h2></a>
@@ -345,7 +348,7 @@
         </div>
         <div class="canvasGUI-Container">
             
-            <div class="newGUI" id="new-GUI" style="display: none;" onclick="guiUpdate(event)">
+            <div class="newGUI" id="new-GUI" style="display: none;" onclick="guiUpdate(event)" onmousedown="guiMouseDown(event)" onmouseup="guiMouseUp(event)">
                 <div class="gui-stats" id="gui-project-info">
                     <div class="gui-header">
                         <h1>Prosjekt</h1>
@@ -353,7 +356,15 @@
                     <div class="gui-container" id="gui-project-info-content">
                     </div>
                 </div>
-                <div class="gui-stats" id="gui-stats">
+                <div class="gui-stats" id="gui-table-info">
+                    <div class="gui-header">
+                        <h1>Bord</h1>
+                    </div>
+                    <div class="gui-container" id="gui-table-info-content">
+                    </div>
+                </div>
+
+                <div class="gui-stats" id="gui-stats" style="display:none;">
                     <div class="gui-header">
                         <h1>Statestikk</h1>
                     </div>
@@ -372,7 +383,8 @@
                         <input type="text" id="surname-for-person" class="personInput" placeholder="Etternavn">
                         <input type="number" min="0" id="age-for-person" class="personInput" placeholder="Alder">
                         <input type="text" id="gender-for-person" class="personInput" placeholder="Kjønn">
-
+                        <button onclick="makePerson()">Legg til</button>
+                        <button onclick="changePerson()">Endre</button>
                         <form>
                             <select id="allergy-for-person" class="personInput">
                                 <option value="alkohol">alkohol</option>
@@ -381,9 +393,9 @@
                                 <option value="Fisk">Fisk</option>
                                 <option value="Vegan">Vegan</option>
                             </select>
-                            <button onclick="makePerson()">Legg til</button>
-                            <button onclick="changePerson()">Endre</button>
+                            
                         </form>
+                        
                         <h4 style="display: none;" id="IDPERSON"></h4>
                     </div>
                 </div>

@@ -1,12 +1,13 @@
 let idCounter = 1;
 class Bord{
-    constructor(positionX, positionY, bordType, rotation, descriptor){
-        this.x = positionX;
-        this.y = positionY;
-        this.bordType = bordType;
+    constructor(positionX, positionY, bordType, rotation, descriptor, name,id){
+        this.x = positionX || 400;
+        this.y = positionY || 300;
+        this.bordType = bordType || "langbord";
         this.id = idCounter;
         idCounter++;
-        this.id = generateID();
+        this.id = id || generateID();
+        this.name = name || "gi navn";
         this.width = 0;
         this.height = 0;
         this.total = 0;
@@ -161,7 +162,9 @@ class Bord{
     returnDistanceToMouse(){
         return [this.distanceToMouseX, this.distanceToMouseY];
     }
-
+    setName(name){
+        this.name = name;
+    }
     returnForExport(){
         let exportObj ={
             
@@ -171,6 +174,8 @@ class Bord{
         exportObj.bordType = this.bordType;
         exportObj.rotation = this.rotation;
         exportObj.descriptor = this.descriptor;
+        exportObj.name = this.name;
+        exportObj.id = this.id;
         return exportObj;
     }
     updatePosition(x,y){

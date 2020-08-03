@@ -39,6 +39,7 @@ def initializeProjectOverview():
             if(pathA):
                 overView = json.load(f)
                 return overView
+    return {}
     print("[PROJECT] - Overview Loaded!")
 
 

@@ -10,8 +10,8 @@ class Person{
             this.email = inData.email || undefined;
             this.allergies = inData.allergies || [];
             this.id = inData.id || generateID();
-            this.table = inData.table || undefined;
-            this.seat = inData.seat || undefined;
+            this.table = this.setTable(inData.table);
+            this.seat = this.setSeat(inData.seat);
             
         }else{
             this.firstName = firstName || undefined;
@@ -24,6 +24,8 @@ class Person{
             this.table = table || undefined; //pointer
             this.seat = seat || undefined;
         }
+        this.x =0;
+        this.y=0;
     }
 
     exportWithoutPointers(){
@@ -51,6 +53,31 @@ class Person{
         }
        
         return tempObj;
+    }
+
+    drawMyself(x,y){
+        ctx.fillStyle = drawSettings.person.color;
+        ctx.fillRect(x,y,30,20);
+        ctx.fillStyle = drawSettings.standard.fillColor;
+        //ctx.fillText("🧍", x, y);
+    }
+    setPosition(x,y){
+
+    }
+    
+    setTable(seat){
+        if(seat != "undefined"&& seat!=undefined){
+            return seat
+        }else{
+            return undefined
+        }
+    }
+    setSeat(table){
+        if(table != "undefined"&& table!=undefined){
+            return table
+        }else{
+            return undefined
+        }
     }
 
     getFullName(){

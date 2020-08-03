@@ -31,12 +31,17 @@ let drawSettings = {
     },
     "standard":{
         "strokeColor": "black",
-        "lineWidth":7
+        "lineWidth":7,
+        "fillColor":"white"
     },
     "table":{
         "selectedColor":"#28313E",
         "selectingColor":"#1A1D24",
         "notSelectedColor":"#F9FFEE"
+    },
+    "person":{
+        "color":"#6c936c",
+        "textColor":"#ebebeb"
     }
 };
 

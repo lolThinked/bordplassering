@@ -1,9 +1,12 @@
+import app
 from app import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import login
 from hashlib import md5
+import jwt
+from time import time
 
 
 
@@ -23,7 +26,7 @@ class User(UserMixin, db.Model):
     createdProjects = db.relationship('Project', backref='author', lazy='dynamic')
     #person = db.relationship("Person", uselist=False, back_populates="person")
     person = db.relationship("Person")
-    #about_me = db.Column(db.String(140))
+    about_me = db.Column(db.String(140), default="")
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
     def avatar(self, size):
@@ -39,7 +42,20 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)    
+        return '<User {}>'.format(self.username)
+    def get_reset_password_token(self, expires_in=600):
+        return jwt.encode(
+            {'reset_password': self.id, 'exp': time() + expires_in},
+            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, app.config['SECRET_KEY'],
+                            algorithms=['HS256'])['reset_password']
+        except:
+            return
+        return User.query.get(id)
 
 class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
