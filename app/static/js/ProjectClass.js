@@ -22,6 +22,7 @@ class Project{
             //console.log(guests);
             startTegner(this.room);
             loadTables(inData.drawing.tables);
+            loadPeopleIntoDrawing(this.guests, this);
         }else{
             this.room = room || undefined;
             this.name = name || "Ditt Prosjekt";
@@ -45,6 +46,13 @@ class Project{
     getName(){
         return this.name;
     }
+    getTables(){
+        if(this.drawing != undefined){
+            return this.drawing.tables;
+        }else{
+            return undefined
+        }
+    }
     addGuestByList(liste){
         console.log("[PROJECT] - Added guest");
         //console.log(person);
@@ -60,8 +68,8 @@ class Project{
         */
        console.log(liste);
        for(let person in liste){
+           console.log(liste[person]);
            console.log(liste);
-           console.log(person);
            this.guests.push(new Person(liste[person]));
        }
     }
@@ -79,7 +87,13 @@ class Project{
     getGuests(){
         return this.guests;
     }
-
+    getGuestById(id){
+        for(guest in this.guests){
+            if(this.guests[guest].getId() === id){
+                return this.guests[guest];
+            }
+        }
+    }
 
     setDate(date){
         this.plannedDate = new Date(date);
@@ -111,7 +125,17 @@ class Project{
         for(let i=0; i<this.guests.length;i++){
             tmpOBJ.guests.push(this.guests[i].getId());
         }
-        tmpOBJ.creationDate = this.creationDate.toUTCString();
+        try{
+            tmpOBJ.creationDate = this.creationDate.toUTCString();
+        }catch(e){
+            console.error();
+            try{
+                tmpOBJ.creationDate = this.creationDate;
+            }catch(e){
+                console.error();
+            }
+        }
+        
         tmpOBJ.creationUser = this.creationUser;
         if(this.plannedDate != undefined){
             tmpOBJ.plannedDate = this.plannedDate.toUTCString();

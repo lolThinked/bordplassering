@@ -28,7 +28,10 @@ class SeatController{
     returnPosition(){
         return [this.x, this.y];
     }
-*/
+*/  
+    addGuests(personObjectList){
+        return
+    }
     drawSeats(){
         for(let i = 0; i<this.numberOfSeats; i++){
             this.seats[i].drawMyself();

@@ -1,3 +1,11 @@
 .screenshotElement{
     width: 100%;
 }
+.gui-project-list-container{
+    margin: auto;
+    max-height: 300;
+    width: 100%;
+    contain: content;
+    overflow-x: hidden;
+    padding: 13px;
+}

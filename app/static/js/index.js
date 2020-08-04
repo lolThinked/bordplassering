@@ -29,6 +29,7 @@ let forrigeFargeDiv = 0;
 
 
 var bord = [];
+let drawingObjects = bord;
 var obstacles = [];
 let drawLater = [];
 canvasEl.addEventListener("mousemove", update(event));
@@ -222,8 +223,6 @@ function update(e){
     }
     //counterEl.innerHTML = "<h1>0/"+counterForStats+"</h1>";
 
-   
-
 
     var loopLength = bord.length;
     farge = "red";
@@ -274,6 +273,7 @@ function update(e){
 
 function deleteBord(e){
     mouseIsPressed = false;
+    addPersonToTable();
     addSelectingToSelected();
     
     translationLimit();

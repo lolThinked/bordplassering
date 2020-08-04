@@ -96,13 +96,12 @@ function select(startX, startY){
 }
 function selectPoint(pointX, pointY){
     let easyCalcDistance = 50;
-    
     let notSelected = true;
     tableInSelectedGroup = false;
     for(let i=0; i<bord.length; i++){
         let infoAboutTable = bord[i].returnPositionInfo();
         if(infoAboutTable[0] =="rect"){
-            //console.log(bord[i].returnId());
+            //console.log(bord[i].getId());
             if(ifPointInRectangle(pointX, pointY, infoAboutTable[1])){
                 //selected =[bord[i]];
                 //console.log(selected);
@@ -114,7 +113,6 @@ function selectPoint(pointX, pointY){
                     //console.log(selected);
                     //console.log("SET TABLE SELECTED AS FALSE");
                     tableInSelectedGroup = true;
-                    
                 }
                 notSelected = false;
             }
@@ -138,20 +136,47 @@ function selectPoint(pointX, pointY){
                 
         
             }
+        }else if(infoAboutTable[0] =="person"){
+            if(ifPointInRectangle(pointX, pointY, infoAboutTable[1], infoAboutTable[0])){
+                if(ifTableInSelected(bord[i])){
+                    tableInSelectedGroup = true;
+                }else{
+                    addTableToSelected(bord[i], "selected");
+                    tableInSelectedGroup = true;   
+                }
+                notSelected = false;
+            }
         }
     }
 
     if(notSelected){
-        //console.log("CLEAR SELECTED");
+        console.log("CLEAR SELECTED");
         //console.log(selected);
         //console.log(selecting);
         selected =[];
         selecting = [];
     }
 }
+function returnTableOfSelectedPoint(pointX, pointY){
+    for(let i=0; i<bord.length; i++){
+        let infoAboutTable = bord[i].returnPositionInfo();
+        if(infoAboutTable[0] =="rect"){
+            if(ifPointInRectangle(pointX, pointY, infoAboutTable[1])){
+                return bord[i];
+            }
+        }else if(infoAboutTable[0] =="circle"){
+            if(bord[i].checkSelf(mouseX,mouseY) != false){
+                return bord[i];
+            }
+        }
+    }
+    return false;
+}
 function ifTableInSelected(table){
+    //console.log(table);
     for(tables in selected){
-        if(selected[tables].returnId() == table.returnId()){
+        console.log(selected[tables]);
+        if(selected[tables].getId() == table.getId()){
             //console.log("TRUE");
             return true;
         }
@@ -186,7 +211,7 @@ function selectArea(startX, startY, currentX, currentY){
                 let tableX =points[j][0];
                 let tableY = points[j][1];
                 if((tableX >= x1 && tableX <= x2) && (tableY >= y1 && tableY <= y2)){
-                    //console.log(bord[i].returnId());
+                    //console.log(bord[i].getId());
                     //console.log(selected.push(bord[i]));
                     //addTableToSelecting(bord[i]);
                     tempSelecting.push(bord[i]);
@@ -197,7 +222,7 @@ function selectArea(startX, startY, currentX, currentY){
             let circleCenterX = tableInfo[1]+(tableInfo[3]/2);
             let circleCenterY = tableInfo[2]+(tableInfo[4]/2);
             if((circleCenterX >= x1 && circleCenterX <= x2) && (circleCenterY >= y1 && circleCenterY <= y2)){
-                //console.log(bord[i].returnId());
+                //console.log(bord[i].getId());
                 //console.log(selected.push(bord[i]));
                 //addTableToSelecting(bord[i]);
                 tempSelecting.push(bord[i]);
@@ -244,7 +269,10 @@ function addTableToSelected(table, selectingString){
         if(selectingString =="selected"){
             selected = [table];
         }else{
+            
             selecting = [table];
+            console.log(selecting);
+            console.log("[CLEAR SELECTING 275]");
         }
         
     }
@@ -253,7 +281,7 @@ function addTableToSelected(table, selectingString){
 function addTableToSelecting(table, selectingArray){
     let ifIN = false;
     for(tables in selectingArray){
-        if(table.returnId() == selectingArray[tables].returnId()){
+        if(table.getId() == selectingArray[tables].getId()){
             ifIN = true;
             break;
         }
@@ -270,7 +298,7 @@ function addTableToSelecting(table, selectingArray){
 function checkIfInSelecting(bord){
     bord.setFillStyle(drawSettings.table.notSelectedColor);
     for(tables in selecting){
-        if(selecting[tables].returnId() == bord.returnId()){
+        if(selecting[tables].getId() == bord.getId()){
             bord.setFillStyle(drawSettings.table.selectingColor);
         }
     }
@@ -280,7 +308,7 @@ function checkIfInSelected(bord){
     //bord.setFillStyle("#F9FFEE");
     for(tables in selected){
         //console.log(selected);
-        if(selected[tables].returnId() == bord.returnId()){
+        if(selected[tables].getId() == bord.getId()){
             //SELECT FARGE
             bord.setFillStyle(drawSettings.table.selectedColor);
         }
@@ -296,11 +324,15 @@ function drawSelectBox(startX, startY,){
     //ctx.closePath();
 }
 
-
+//FIX THIS
 function addSelectingToSelected(){
     //console.log(Math.abs(mouseX -clickOriginX));
     //console.log(Math.abs(mouseY -clickOriginY));
+    
+    //CHECK IF MOUSE HAS MOOVED
     if(Math.abs(mouseX-clickOriginX)>5 && Math.abs(mouseY-clickOriginY)>5){
+        console.log(Math.abs(mouseX-clickOriginX), Math.abs(mouseY-clickOriginY));
+        console.log("[ADDED] Selecting to selected");
         if(shiftIsPressed){
             selected += selecting;
         }else{
@@ -311,7 +343,38 @@ function addSelectingToSelected(){
     }
 }
 
-
+function addPersonToTable(){
+    console.log(selected);
+    let listOfPersons = [];
+    for(people in (selected)){
+        let person =selected[people];
+        console.log(person);
+        if(person.returnType() != "person"){
+            return
+        }
+        if(person.returnType() =="person"){
+            listOfPersons.push(person);
+        }
+    }
+    console.log(listOfPersons);
+    let table = returnTableOfSelectedPoint(mouseX, mouseY);
+    if(table!=false){
+        console.log(table);
+        for(guest in listOfPersons){
+            let personDrawing = listOfPersons[guest];
+            let person = personDrawing.getReferenceObject();
+            table.addGuest(person);
+            person.setTable(table);
+            //Delete drawing object
+            deleteTable(personDrawing);
+        }
+        console.log(table);
+    }else{
+        console.log("[NOT ADDED] - ");
+        return
+    }
+    console.log("[ADDED PERSON TO TABLE] - ");
+}
 
 function setDistanceForSelected(x,y){
     for(tables in selected){
@@ -340,7 +403,11 @@ function translateBackground(e){
 //             B
 //  D
 //           C
-function ifPointInRectangle(pointX, pointY, rectangle){
+function ifPointInRectangle(pointX, pointY, rectangle, type){
+    if(rectangle==undefined){
+        console.trace();
+        console.log(mouseX);
+    }
     let sumTriangleArea =0;
     let pointArray = [pointX, pointY];
     //console.log(rectangle);
@@ -352,8 +419,14 @@ function ifPointInRectangle(pointX, pointY, rectangle){
         sumTriangleArea += areaAPD;
     }
     let sumRectangle = tableScales.rect.width*tableScales.rect.height;
+    if(type=="person"){
+        sumRectangle = tableScales.person.width*tableScales.person.height;
+    }
     let difference = sumRectangle-sumTriangleArea;
     if(difference >= (-1)){
+        //console.log(difference);
+        //console.log(sumRectangle);
+        //console.log(sumTriangleArea);
         return true;
     }
     return false
@@ -401,16 +474,28 @@ function checkIfTable(mouseX, mouseY){
     let onTable = false;
     for(let i =0; i<loopLength; i++){
         if(bord[i].returnPositionInfo()[0] =="rect"){
+            //console.log(bord[i]);
             if(ifPointInRectangle(mouseX, mouseY, bord[i].returnPositionInfo()[1])){
                 tblPreview = bord[i];
-                drawTablePreview();
+                //drawTablePreview();
+                //console.log(mouseX, mouseY, bord[i].returnPositionInfo()[1]);
                 return true;
             }
         }else if(bord[i].returnPositionInfo()[0] =="circle"){
+            //console.log(bord[i]);
             if(bord[i].checkSelf(mouseX, mouseY)){
                 return true;
             }
 
+        }else if(bord[i].returnPositionInfo()[0] =="person"){
+            //console.log(bord[i]);
+            if(ifPointInRectangle(mouseX, mouseY, bord[i].returnPositionInfo()[1], bord[i].returnPositionInfo()[0])){
+                tblPreview = bord[i];
+                //drawTablePreview();
+                //console.trace();
+                //console.log(mouseX, mouseY, bord[i].returnPositionInfo()[1]);
+                return true;
+            }
         }
     }
     return false;
@@ -530,10 +615,29 @@ function addTable(bordType){
         bord.push(new Bord(200+addTableStacking, 300, "langbord"));
     }else if(bordType =="rund"){
         bord.push(new Bord(200+addTableStacking, 200, "rundbord"));
+    }else if(bordType =="person"){
+        
     }
     addTableStacking+=20;
     update();
     //redraw();
+}
+function addPersonToDrawing(person, projectReference){
+    if(person.getTable()==undefined){
+        //console.log(person.getTable());
+        let tempPerson=new drawingObject(200+addTableStacking, 100, "person",0,person.getFullName(), person.getFirstName(), person.getId());
+        tempPerson.addReferenceFromId(projectReference);
+        drawingObjects.push(tempPerson);
+        addTableStacking+=20;
+        console.log(tempPerson);
+    }else{
+        let tempPerson = new drawingObject(person.getTable().returnPosition()[0],person.getTable().returnPosition()[1] , "person",0,person.getFullName(), person.getFirstName(), person.getId());
+        tempPerson.addReferenceFromId(projectReference);
+        drawingObjects.push(tempPerson);
+        console.log(tempPerson);
+    }
+    //console.log(bord);
+    //console.log(drawingObjects);
 }
 function translate(x,y){
     //console.log("translate X:" + x); 
@@ -915,8 +1019,8 @@ function drawTablePreview(){
         //console.log("ID: " + tblPreview.returnId);
         //let seat =[ [this.x, this.y-50, this.width/4, 50, tempType],];
         for(var i = 0; i<drawLater.length; i++){
-            //console.log( tblPreview.returnId()+ " : " + bord[drawLater[i][0]].returnId() );
-            if(tblPreview.returnId() === bord[drawLater[i][0]].returnId()){
+            //console.log( tblPreview.getId()+ " : " + bord[drawLater[i][0]].getId() );
+            if(tblPreview.getId() === bord[drawLater[i][0]].getId()){
                 collidedObjects.push(drawLater[i][1]);
             }
         }
@@ -1020,8 +1124,20 @@ function loadTables(list){
         if(tbl.id != undefined){
 
         }
-        bord.push(new Bord(tbl.x, tbl.y, tbl.bordType, tbl.rotation, tbl.descriptor, tbl.name || "gi Navn", tbl.id || undefined));
-        //console.log(idCounter);
+        if(tbl.type==undefined){
+            bord.push(new Bord(tbl.x, tbl.y, tbl.bordType, tbl.rotation, tbl.descriptor, tbl.name || "gi Navn", tbl.id || undefined));
+
+        }else if(tbl.type =="person"){
+            //drawingObjects.push(new drawingObject())
+        }  
+                //console.log(idCounter);
+    }
+}
+function loadPeopleIntoDrawing(list, projectReference){
+    for(people in list){
+        guest = list[people];
+        
+        addPersonToDrawing(guest, projectReference);
     }
 }
 let tablesListObject = [
@@ -1225,15 +1341,11 @@ function getStats(){
             "antall":0,
         },
     };
-
     for(let i =0; i<bord.length; i++){
         let tbl = bord[i];
         statistics.bord[tbl.returnType()] +=1;
         statistics.gjester.antall += tbl.returnNumberOfSeats();
-    
-    
     }
-    //console.log(statistics);
 }
 function pushStats(stats){
     
@@ -1261,12 +1373,14 @@ function pushStatsFast(){
 
 function guiMouseDown(e){
     console.log(e);
-    for(let i=0;i<project.guests.length;i++){
-        if(target.id===project.guests[i].getId()){
-            
+    if(project!=undefined){
+        for(let i=0;i<project.guests.length;i++){
+            if(target.id===project.guests[i].getId()){
+                
+            }
         }
+        setBord(e);
     }
-    setBord(e);
 }
 
 function guiUpdate(e){
@@ -1765,6 +1879,7 @@ function makePerson(){
     let person = new Person(iEls[0].value, iEls[1].value, iEls[2].value, iEls[3].value);
     //console.log(person);
     project.addGuest(person);
+    addPersonToDrawing(person, project);
     update();
 }
 function changePerson(){
@@ -1784,34 +1899,75 @@ function changePerson(){
     personObject.setAge(iEls[2].value);
     personObject.setGender(iEls[3].value);
 }
-
+//FIX THIS 
+function loadTable(){
+    return
+}
 function updateProjectInfoGUI(){
     if(project != undefined){
         let headerElement = document.querySelector("#gui-project-info > div > h1");
         let contentElement= document.querySelectorAll("#gui-project-info > div")[1];
+        let personContainer = document.createElement("div");
+        personContainer.className = "gui-project-list-container";
         headerElement.innerHTML = project.getName();
-
         contentElement.innerHTML ="";
         contentElement.innerHTML += "<h3>📅: " + project.getDateText() + "</h3>";
         let guests = project.getGuests();
-        //console.log(guests);
+        /*
+        guests.sort(function(a, b){
+            //console.log(b);
+            let string1 = a.getSurname().slice();
+            let string2 = b.getSurname().slice();
+            let comapreValue = string1.localeCompare(string2);
+            if(comapreValue == -1){
+                return a
+            }else if(comapreValue == 1){
+                return b
+            }else{
+                b
+            }
+        });
+        */
         for(let i = 0; i<guests.length; i++){
             let personDiv = document.createElement("div");
             let personName = document.createElement("h3");
             personName.innerHTML = "🧍"+guests[i].getFullName()+"🧍‍♀️";
-            
             personDiv.onclick=loadPerson;
             personDiv.id = guests[i].getId();
             personDiv.className = "personVisningsDiv";
             personName.id = guests[i].getId();
-
             personDiv.appendChild(personName);
-            contentElement.appendChild(personDiv);
-            //console.log(i);
+            personContainer.appendChild(personDiv);
         }
-        //console.log(contentElement);
+        contentElement.appendChild(personContainer);
+
+        //TABLES
+        
+        let tableContent = document.getElementById("gui-table-info-content");
+        tableContent.innerHTML ="";
+        let tableContainer = document.createElement("div");
+        tableContainer.className = "gui-project-list-container";
+        if(project.getTables() != undefined){
+            for(tables in project.getTables()){
+                let table = project.getTables()[tables];
+                if(table.returnType()=="rundbord"||table.returnType()=="langbord"){
+                    let tableDiv = document.createElement("div");
+                    let tableName = document.createElement("h3");
+                    tableName.innerHTML = "🧍"+table.descriptor+"🧍‍♀️";
+                    tableDiv.onclick=loadTable;
+                    //tableDiv.id = project.getTables()[table].getId();
+                    tableDiv.className = "tableVisningsDiv";
+                    //tableName.id = project.getTables()[table].getId();
+                    tableDiv.appendChild(tableName);
+                    tableContainer.appendChild(tableDiv);
+                }   
+            }
+            tableContent.appendChild(tableContainer);
+        }
+
     }
 }
+
 function loadPerson(value){
     let id;
     console.log(value);

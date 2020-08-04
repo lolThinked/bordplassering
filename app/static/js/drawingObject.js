@@ -1,28 +1,38 @@
-let idCounter = 1;
-class Bord{
-    constructor(positionX, positionY, bordType, rotation, descriptor, name,id){
+class drawingObject{
+    constructor(positionX, positionY, type, rotation, descriptor, name,id){
         this.x = positionX || 400;
         this.y = positionY || 300;
-        this.bordType = bordType || "langbord";
-        this.id = idCounter;
-        idCounter++;
+        this.type = type || "langbord";
         this.id = id || generateID();
         this.name = name || "gi navn";
-        this.width = 0;
-        this.height = 0;
+        this.width = 0; 
+        this.height = 0; 
         this.total = 0;
-        this.strokeColor = blue;
-        this.fillColor = "white";
+        this.strokeColor = blue; 
+        this.fillColor = "white"; 
         this.lineWidth = "5";
-        this.rotation = 0;
-        this.distanceToMouseX;
-        this.distanceToMouseY;
         this.descriptor = descriptor || "";
-        this.descriptorX, this.descriptorY;
-        this.persons = [];
-        this.seats = [];
-        
-        if(bordType == "langbord"){
+        this.rotation = 0; 
+        this.distanceToMouseX; 
+        this.distanceToMouseY;
+        this.descriptorX = (this.x + this.width/2);
+        this.descriptorY = (this.y + this.height/2);
+        this.refToObject;
+        this.drawPoints;
+        if(this.type ==="person"){
+            this.width = 40;
+            this.height = 40;
+            this.total = 8;
+            this.drawPoints = [
+                [this.x, this.y],
+                [this.x + this.width, this.y],
+                [this.x + this.width, this.y+this.height],
+                [this.x, this.y+this.height]
+            ];
+            this.descriptorX = (this.x + this.width/2);
+            this.descriptorY = this.y + this.height/2;
+            this.rotate(rotation);
+        }else if(bordType == "langbord"){
             this.width = tableScales.rect.width;
             this.height = tableScales.rect.height;
             this.total = 8;
@@ -43,11 +53,17 @@ class Bord{
             this.descriptorX = (this.x + this.width/2);
             this.descriptorY = this.y + this.height/2;
         }
-        
-        this.seats = new SeatController(this);
+        //this.seats = new SeatController(this);
+        //person 
+    }
+    addReferenceFromId(project){
+        this.refToObject = project.getGuestById(this.id);
+    }
+    getReferenceObject(){
+        return this.refToObject;
     }
     addGuest(guest){
-        this.persons.push(guest);
+        return
     }
     getId(){
         return this.id;
@@ -80,9 +96,9 @@ class Bord{
     }
     returnTable(){
         let tempType;
-        if(this.bordType == "langbord"){
+        if(this.type == "langbord"){
             tempType =  "rect";
-        }else if(this.bordType == "rundbord"){
+        }else if(this.type == "rundbord"){
             tempType = "circle";
         }
         let tempArray = [this.x, this.y, this.width, this.height, tempType];
@@ -91,16 +107,18 @@ class Bord{
     returnPositionInfo(){
         let tempArray = [];
         let tempType;
-        if(this.bordType == "langbord"){
+        if(this.type == "langbord"){
             tempType = "rect";
             tempArray = [tempType, this.drawPoints, this.angle];
-        }else if(this.bordType == "rundbord"){
+        }else if(this.type == "rundbord"){
             tempType = "circle";
             tempArray = [tempType, this.x, this.y, this.width, this.height];
+        }else if(this.type == "person"){
+            tempType = "person";
+            tempArray = [tempType, this.drawPoints, this.angle];
         }
         return tempArray;
     }
-
     returnWidth(){
         return this.width;
     }
@@ -111,7 +129,7 @@ class Bord{
         this.total = number;
     }
     returnType(){
-        return this.bordType;
+        return this.type;
     }
     returnPosition(){
         return [this.x, this.y];
@@ -119,10 +137,10 @@ class Bord{
     returnCenter(){
         let centerX;
         let centerY;
-        if(this.bordType == "langbord"){
+        if(this.type == "langbord"){
             centerX = this.descriptorX;
             centerY = this.descriptorY;
-        }else if(this.bordType == "rundbord"){
+        }else if(this.type == "rundbord"){
             centerX = this.x;
             centerY = this.y;
         }
@@ -142,7 +160,7 @@ class Bord{
         }
         exportObj.x = this.x;
         exportObj.y = this.y;
-        exportObj.bordType = this.bordType;
+        exportObj.type = this.type;
         exportObj.rotation = this.rotation;
         exportObj.descriptor = this.descriptor;
         exportObj.name = this.name;
@@ -154,8 +172,8 @@ class Bord{
         let diffY = this.y-y;
         this.x = x;
         this.y = y;
-        if(this.bordType =="langbord"){
-            //console.log(this.bordType);
+        if(this.type =="langbord"){
+            //console.log(this.type);
             for(let i = 0; i<this.drawPoints.length; i++){
                 this.drawPoints[i][0] -= diffX;
                 this.drawPoints[i][1] -= diffY;
@@ -172,8 +190,8 @@ class Bord{
         //this.y = y-this.distanceToMouseY;
         this.x = x;
         this.y = y;
-        if(this.bordType =="langbord"){
-            //console.log(this.bordType);
+        if(this.type =="langbord" || this.type=="person"){
+            //console.log(this.type);
             for(let i = 0; i<this.drawPoints.length; i++){
                 this.drawPoints[i][0] -= diffX;
                 this.drawPoints[i][1] -= diffY;
@@ -181,7 +199,9 @@ class Bord{
         }
         this.descriptorX -= diffX;
         this.descriptorY -= diffY;
-        this.seats.updatePosition();
+        if(this.type == "langbord"||this.type =="rundbord"){
+            this.seats.updatePosition();
+        }
     }
     //SETS DISTANCE TO MOUSE
     setDistanceToMouse(x,y){
@@ -195,8 +215,8 @@ class Bord{
         let diffY = this.y-y;
         this.x += x;
         this.y += y;
-        if(this.bordType =="langbord"){
-            //console.log(this.bordType);
+        if(this.type =="langbord"){
+            //console.log(this.type);
             for(let i = 0; i<this.drawPoints.length; i++){
                 this.drawPoints[i][0] -= diffX;
                 this.drawPoints[i][1] -= diffY;
@@ -216,7 +236,7 @@ class Bord{
         this.fillColor = color;
     }
     checkSelf(x,y){
-        if(this.bordType !="rundbord"){
+        if(this.type !="rundbord"){
             if(x >= this.x && x <= (this.x+this.width)){
                 if(y >= this.y && y <= (this.y+this.height)){
                     var difference = [this.x-x, this.y-y];
@@ -235,16 +255,11 @@ class Bord{
         return false;
     }
     drawMyself(){
-        let halvparten =(ctx.measureText(this.descriptor).width/2);
-        if(this.bordType =="langbord"){
+        let halvparten;
+        if(this.type =="langbord"){
             //RECTANGLE
+            halvparten =(ctx.measureText(this.descriptor).width/2);
             ctx.lineWidth = this.lineWidth;
-            //ctx.fillStyle = "white";
-            //ctx.strokeStyle = this.strokeColor;
-            //console.log(ctx.strokeStyle + " : "+this.strokeColor );
-            //ctx.fillRect(this.x, this.y, this.width, this.height);
-            //ctx.fill();
-            //ctx.strokeRect(this.x, this.y, this.width, this.height);
             ctx.strokeStyle = this.strokeColor;
             ctx.fillStyle = this.fillColor;
             ctx.beginPath();
@@ -260,8 +275,9 @@ class Bord{
             
             //console.log(halvparten);
             ctx.fillText(this.descriptor, this.descriptorX-halvparten, this.descriptorY);
-        }else if(this.bordType =="rundbord"){
+        }else if(this.type =="rundbord"){
             //CIRCLE
+            halvparten =(ctx.measureText(this.descriptor).width/2);
             ctx.lineWidth = this.lineWidth;
             ctx.strokeStyle = this.strokeColor;
             ctx.fillStyle = this.fillColor;
@@ -274,9 +290,35 @@ class Bord{
             ctx.fillStyle = red;
             ctx.fillText(this.descriptor, this.x-halvparten, this.y);
             ctx.fillStyle ="white";
+        }else if(this.type ==="person"){
+            //PERSON
+            ctx.font = drawSettings.person.font;
+            halvparten =(ctx.measureText(this.descriptor).width/2);
+            this.refToObject.drawMyself(this.x,this.y);
+            ctx.lineWidth = this.lineWidth;
+            ctx.strokeStyle = this.strokeColor;
+            ctx.fillStyle = this.fillColor;
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.drawPoints[1][0],this.drawPoints[1][1]);
+            ctx.lineTo(this.drawPoints[2][0],this.drawPoints[2][1]);
+            ctx.lineTo(this.drawPoints[3][0],this.drawPoints[3][1]);
+            ctx.lineTo(this.x, this.y);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fill();
+
+            ctx.fillStyle = drawSettings.person.textColor;
+            ctx.lineWidth= drawSettings.person.textStrokeWidth;
+            ctx.strokeStyle = drawSettings.person.textStroke;
+            ctx.fillText(this.descriptor, this.descriptorX-halvparten, this.descriptorY);
+            ctx.strokeText(this.descriptor, this.descriptorX-halvparten, this.descriptorY);
         }
-        ctx.lineWidth ="7";
-        this.seats.drawSeats();
+        ctx.strokeStyle = drawSettings.standard.strokeColor;
+        ctx.lineWidth =drawSettings.standard.lineWidth;
+        ctx.fillStyle = drawSettings.standard.fillColor;
+        ctx.font = drawSettings.standard.font;
+        //this.seats.drawSeats();
 
     }
 
@@ -293,5 +335,4 @@ class Bord{
             }
         }
     }
-
 }

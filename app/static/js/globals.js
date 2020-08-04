@@ -32,16 +32,21 @@ let drawSettings = {
     "standard":{
         "strokeColor": "black",
         "lineWidth":7,
-        "fillColor":"white"
+        "fillColor":"white",
+        "font": "25px Arial"
     },
     "table":{
         "selectedColor":"#28313E",
         "selectingColor":"#1A1D24",
-        "notSelectedColor":"#F9FFEE"
+        "notSelectedColor":"#F9FFEE",
+        "standardAmountOfGuests":8
     },
     "person":{
         "color":"#6c936c",
-        "textColor":"#ebebeb"
+        "textColor":"#ebebeb",
+        "textStroke":"black",
+        "textStrokeWidth":1,
+        "font":"14px Arial"
     }
 };
 
@@ -52,6 +57,7 @@ let tableScales = {
     "snap" : 10,
     "rect" : {"width" : 200, "height" : 95},
     "circle" : {"width" : 170/2, "height" : 170/2},
+    "person":{"width":40,"height":40}
 };
 let transformValues = {
     "hovedhallen" :{x:-458.5 , y:1066},
@@ -85,6 +91,7 @@ let timeDiffs=[];
 let tableInSelectedGroup = false;
 let selecting = [];
 let selected = [];
+
 
 //STATISTICS
 let statsTextELs = document.getElementsByClassName("counter-text");

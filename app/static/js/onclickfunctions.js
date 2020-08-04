@@ -2,14 +2,14 @@ function turnTableQuarter(table){
     if(!table){
         let table = tblPreview;
         if(tblPreview !== false && tblPreview !== undefined){
-            console.log(table.returnId());
-            table.turnRight();
+            console.log(table.getId());
+            table.rotate(90);
         }
         redraw();
         return
     }
     if(tblPreview !== false && tblPreview !== undefined){
-        table.turnRight();
+        table.rotate(90);
     }
     redraw();
     update();
@@ -20,7 +20,7 @@ function deleteTableOUTDATED(table){
         let table =tblPreview;
         let forLength = bord.length;
         for(var i =0; i<forLength; i++){
-            if(bord[i].returnId() === table.returnId()){
+            if(bord[i].getId() === table.getId()){
                 bord.splice(i,1);
             }
         }

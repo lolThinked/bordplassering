@@ -1,4 +1,4 @@
-2020-08-02 20:51:41,468 ERROR: Exception on / [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+2020-08-02 18:46:13,515 ERROR: Exception on /project/save/5b29925db3ffeafa [POST] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,41 +12,21 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 38, in index
-    return render_template("index_flaskpage.html", obj=0, user= current_user)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\templating.py", line 138, in render_template
-    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 869, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 830, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 804, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\loaders.py", line 125, in load
-    code = environment.compile(source, name, filename)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 591, in compile
-    self.handle_exception(exc_info, source_hint=source_hint)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\templates\index_flaskpage.html", line 249, in template
-    <h3>{{}}</h3>
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 497, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 901, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 875, in subparse
-    add_data(self.parse_tuple(with_condexpr=True))
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 637, in parse_tuple
-    describe_token(self.stream.current))
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 59, in fail
-    raise exc(msg, lineno, self.name, self.filename)
-jinja2.exceptions.TemplateSyntaxError: Expected an expression, got 'end of print statement'
-2020-08-02 20:52:25,887 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
-2020-08-02 20:52:27,077 ERROR: Exception on / [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 181, in saveProjectWithIdentifier
+    json.dumps(person, f)
+TypeError: dumps() takes 1 positional argument but 2 were given
+2020-08-02 18:47:47,893 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 19:31:11,630 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 19:36:30,709 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 19:36:56,036 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 19:38:25,683 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 19:41:52,827 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 19:42:44,283 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 19:43:55,019 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 19:50:56,447 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 20:39:09,966 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 20:51:30,612 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 20:51:36,923 ERROR: Exception on / [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()

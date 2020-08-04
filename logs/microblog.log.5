@@ -1,4 +1,4 @@
-2020-08-02 20:51:41,468 ERROR: Exception on / [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+2020-08-02 20:52:30,200 ERROR: Exception on / [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -45,8 +45,8 @@ Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 59, in fail
     raise exc(msg, lineno, self.name, self.filename)
 jinja2.exceptions.TemplateSyntaxError: Expected an expression, got 'end of print statement'
-2020-08-02 20:52:25,887 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
-2020-08-02 20:52:27,077 ERROR: Exception on / [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+2020-08-02 20:54:47,199 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:66]
+2020-08-02 20:54:48,419 ERROR: Exception on / [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -64,32 +64,22 @@ Traceback (most recent call last):
     return func(*args, **kwargs)
   File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 38, in index
     return render_template("index_flaskpage.html", obj=0, user= current_user)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\templating.py", line 138, in render_template
-    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 869, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 830, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 804, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\loaders.py", line 125, in load
-    code = environment.compile(source, name, filename)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 591, in compile
-    self.handle_exception(exc_info, source_hint=source_hint)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\templating.py", line 140, in render_template
+    ctx.app,
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\templating.py", line 120, in _render
+    rv = template.render(context)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
     reraise(exc_type, exc_value, tb)
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\templates\index_flaskpage.html", line 249, in template
-    <h3>{{}}</h3>
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 497, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 901, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 875, in subparse
-    add_data(self.parse_tuple(with_condexpr=True))
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 637, in parse_tuple
-    describe_token(self.stream.current))
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 59, in fail
-    raise exc(msg, lineno, self.name, self.filename)
-jinja2.exceptions.TemplateSyntaxError: Expected an expression, got 'end of print statement'
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\templates\index_flaskpage.html", line 249, in top-level template code
+    {% include '_project.html' %}
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\templates\_project.html", line 3, in top-level template code
+    <td><h3 onclick="loadProject('{{project.id}}')"></h3></td>
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'project' is undefined

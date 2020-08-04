@@ -247,8 +247,19 @@
     box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.75); */
 }
 
+.create-project-previous-project{
+    border: 1px dotted black;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 20px;
+    background-color: #fef8ff;
+    border-radius: 10px;
+    cursor: pointer;
+}
 
-
+.create-project-previous-project:hover{
+    background-color: #88d08c;
+}
 
 .new-footer{
 
@@ -259,7 +270,16 @@
     margin: 5px;
     cursor: pointer;
 }
+.tableVisningsDiv{
+    width: 100%;
+    border: 1px dashed #b0b0b0;
+    margin: 5px;
+    cursor: pointer;
+}
 .personVisningsDiv:hover{
+    background-color: #4CAF50;
+}
+.tableVisningsDiv:hover{
     background-color: #4CAF50;
 }
 button {
