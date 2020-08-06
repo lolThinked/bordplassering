@@ -8,11 +8,15 @@ class SeatController{
         this.seats = [];
         this.radius = parentTable.returnWidth() + 20;
         //console.log(this.numberOfSeats);
-        let distanceBewteenPointsOncircle = (Math.PI*2)/this.numberOfSeats;
-        for(let i =0; i<this.numberOfSeats; i++){
-            let xV = Math.cos(distanceBewteenPointsOncircle*i)*this.radius;
-            let yV = Math.sin(distanceBewteenPointsOncircle*i)*this.radius;
-            this.seats[i] = new Seat(xV, yV, this, i);
+        if(parentTable.returnType() =="rundbord"){
+            let distanceBewteenPointsOncircle = (Math.PI*2)/this.numberOfSeats;
+            for(let i =0; i<this.numberOfSeats; i++){
+                let xV = Math.cos(distanceBewteenPointsOncircle*i)*this.radius;
+                let yV = Math.sin(distanceBewteenPointsOncircle*i)*this.radius;
+                this.seats[i] = new Seat(xV, yV, this, i);
+            }
+        }else if(parentTable.returnType() =="langbord"){
+            
         }
     }
 
@@ -29,6 +33,7 @@ class SeatController{
         return [this.x, this.y];
     }
 */  
+
     addGuests(personObjectList){
         return
     }
@@ -37,6 +42,24 @@ class SeatController{
             this.seats[i].drawMyself();
         }
         
+    }
+
+    getTable(){
+        return this.table;
+    }
+    addPersonIfToSeatIfCordinatesElseController(mseX,mseY,person){
+        //25+20+witdh
+        let distanceCheck = drawSettings.seat.width+drawSettings.seatController.radius + tableScales.width;
+        let difx = mseX-this.x;
+        let dify = mseY-this.y;
+        let distanceToMouse = Math.sqrt(difx*difx + dify*dify);
+        if(distanceToMouse <= distanceCheck){
+            for(seatI in this.seats){
+                if(this.seats[seatI].checkIfCordinatesIsLessThanRadiusAway()){
+                    this.seats[seatI].addPerson(person);
+                }
+            }
+        }
     }
 }
 
@@ -61,14 +84,28 @@ class Seat{
     }
     addPerson(person){
         this.person = person;
+        //Adds Current references to Person Object
+        this.person.setSeat(this);
+        this.person.setTable(this.seatController.this.getTable()); 
     }
     removePerson(){
+        this.person.setSeat(undefined);
         this.person = false;
     }
 
     updatePosition(){
         this.x = this.seatController.x + this.xVector;
         this.y = this.seatController.y + this.yVector;
+    }
+
+    checkIfCordinatesIsLessThanRadiusAway(mseX, mseY){
+        let distanceCheck = drawSettings.seat.width;
+        let difx = mseX-this.x;
+        let dify = mseY-this.y;
+        let distanceToMouse = Math.sqrt(difx*difx + dify*dify);
+        if(distanceToMouse <= distanceCheck){
+            return true
+        }
     }
     //50cm?
     drawMyself(){

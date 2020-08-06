@@ -28,6 +28,8 @@ let drawSettings = {
         "lineWidth":2,
         "height":25,
         "width":25
+    },"seatController":{
+        "radius":20
     },
     "standard":{
         "strokeColor": "black",

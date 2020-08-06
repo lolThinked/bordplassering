@@ -5,4 +5,10 @@ class Table{
         this.seats = new SeatController(drawObject);
         this.seats.addGuests(guests);
     }
+
+
+    addGuest(guest){
+        this.guests.push(guest);
+        this.seats.addGuest(guest);
+    }
 }
