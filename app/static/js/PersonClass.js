@@ -26,6 +26,7 @@ class Person{
         }
         this.x =0;
         this.y=0;
+        this.drawingObject = undefined;
     }
 
     exportWithoutPointers(){
@@ -65,14 +66,14 @@ class Person{
 
     }
     
-    setTable(seat){
+    setSeat(seat){
         if(seat != "undefined"&& seat!=undefined){
             return seat
         }else{
             return undefined
         }
     }
-    setSeat(table){
+    setTable(table){
         if(table != "undefined"&& table!=undefined){
             return table
         }else{

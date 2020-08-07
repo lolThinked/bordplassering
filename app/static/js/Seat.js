@@ -77,10 +77,11 @@ class SeatController{
                 if(checkSeatValue){
                     this.seats[seatI].addPerson(person);
                     console.log(person.getFirstName()+" Added to table: " + seatI);
-                    return;
+                    return true;
                 }
             }
             console.log(person.getFirstName() + " -  Not added to table");
+            return false
             
         }
     }
@@ -93,6 +94,7 @@ class Seat{
         this.yVector = yVector;
         this.seatController = seatController;
         this.person = person || false;
+        this.drawObject = undefined;
         /*
         this.x = seatController.returnPosition()[0] + xVector;
         this.y = seatController.returnPosition()[1] + yVector;
@@ -100,7 +102,11 @@ class Seat{
         this.x = seatController.x + xVector;
         this.y = seatController.y + yVector;
         this.id = id;
+
         //console.log(this.xVector, this.y);
+    }
+    getPosition(){
+        return [this.x, this.y];
     }
     getId(){
         return this.id;
@@ -115,10 +121,15 @@ class Seat{
         this.person.setSeat(undefined);
         this.person = false;
     }
-
+    addDrawingObjectReference(drawingObject){
+        this.drawObject = drawingObject;
+    }
     updatePosition(){
         this.x = this.seatController.x + this.xVector;
         this.y = this.seatController.y + this.yVector;
+        if(this.drawObject != undefined){
+            this.drawObject.updatePositionNEW(this.x, this.y);
+        }
     }
 
     checkIfCordinatesIsLessThanRadiusAway(mseX, mseY){

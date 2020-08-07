@@ -145,6 +145,8 @@ function selectPoint(pointX, pointY){
                     tableInSelectedGroup = true;   
                 }
                 notSelected = false;
+                console.log(bord[i]);
+                clearPersonFromSeat(bord[i]);
             }
         }
     }
@@ -365,11 +367,32 @@ function addPersonToTable(){
         for(guest in listOfPersons){
             let personDrawing = listOfPersons[guest];
             let person = personDrawing.getReferenceObject();
-            table.addGuest(person);
-            table.getSeatsObject().addPersonIfToSeatIfCordinatesElseController(mouseX, mouseY, person);
+            let isPersonSeated = false;
+            if(table.getSeatsObject().addPersonIfToSeatIfCordinatesElseController(mouseX, mouseY, person)){
+                isPersonSeated = true;
+                console.log("[ADD PERSON TO TABLE] isPersonSeated: " + isPersonSeated);
+                table.addGuest(person, isPersonSeated);  
+            }else{
+                console.log("[ADD PERSON TO TABLE] isPersonSeated: " + isPersonSeated);
+                table.addGuest(person, isPersonSeated);
+            }
             person.setTable(table);
+            
+            
+            //UPDATE POSITION
+            let seatPos;
+            if(person.getSeat() != undefined){
+                seatPos = person.getSeat().getPosition();
+            }else{
+                seatPos = person.getTable().returnCenter();
+            }
+            
+            personDrawing.updatePositionNEW(seatPos[0], seatPos[1]);
+            if(isPersonSeated){
+                person.getSeat().addDrawingObjectReference(personDrawing);
+            }
             //Delete drawing object
-            deleteTable(personDrawing);
+            //deleteTable(personDrawing);
         }
         console.log(table);
     }else{
@@ -622,8 +645,36 @@ function addTable(bordType){
         
     }
     addTableStacking+=20;
+    sorterBord();
     update();
     //redraw();
+}
+function sorterBord(){
+    bord.sort(function(a, b){
+        console.log(b);
+        let string1 = a.returnPositionInfo()[0].slice();
+        let string2 = b.returnPositionInfo()[0].slice();
+        /*
+        let string1 = a.returnPositionInfo()[0].slice();
+        let string2 = b.returnPositionInfo()[0].slice();
+        let comapreValue = string1.localeCompare(string2);
+        if(comapreValue == -1){
+            return a
+        }else if(comapreValue == 1){
+            return b
+        }else{
+            b
+        }
+        */  
+        if(string1 <string2){
+            return -1;
+        }
+        if(string1 >string2){
+            return 1;
+        }
+        return 0;
+       //return a.returnPositionInfo()[0] - b.returnPositionInfo()[0]
+    });
 }
 function addPersonToDrawing(person, projectReference){
     if(person.getTable()==undefined){
@@ -632,12 +683,12 @@ function addPersonToDrawing(person, projectReference){
         tempPerson.addReferenceFromId(projectReference);
         drawingObjects.push(tempPerson);
         addTableStacking+=20;
-        console.log(tempPerson);
+        //console.log(tempPerson);
     }else{
         let tempPerson = new drawingObject(person.getTable().returnPosition()[0],person.getTable().returnPosition()[1] , "person",0,person.getFullName(), person.getFirstName(), person.getId());
         tempPerson.addReferenceFromId(projectReference);
         drawingObjects.push(tempPerson);
-        console.log(tempPerson);
+        //console.log(tempPerson);
     }
     //console.log(bord);
     //console.log(drawingObjects);
@@ -2037,7 +2088,11 @@ function createTestPersons(){
     for(let i =0; i<personArray.length; i++){
         let guest = new Person(personArray[i]);
         project.addGuest(guest);
+        addPersonToDrawing(guest, project);
     }
+    bord.sort();
+    //loadPeopleIntoDrawing(project.getGuests(), project);
+    console.log("[CREATED TEST PERSONS] - Project, added to current Project: " + project.getName());
     update();
 }
 
@@ -2059,4 +2114,22 @@ function getPersonById(id){
         }
     }
     xhr.send();
+}
+
+function clearPersonFromSeat(drawObectReference){
+    //Checks if Person object has a seat connected to it
+    //prsRef = Person Reference ==>
+    if(drawObectReference.getReferenceObject() != undefined){
+        let prsRef = drawObectReference.getReferenceObject();
+    //Checks if a person has a table
+    if(prsRef.getTable()!= undefined){
+        //Checks if Person has a seat
+        if(prsRef.getSeat() != undefined){
+            prsRef.getSeat().removePerson();
+        }
+        prsRef.getTable().removePersonFromTable(prsRef);
+        
+    }
+    }
+    
 }

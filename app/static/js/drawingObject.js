@@ -182,6 +182,22 @@ class drawingObject{
     }
     //UPDATES POSITION TO MOUSE POSITION with Diff from mouse
     updatePositionNEW(x,y){
+        //If PERSON HAS SEAS, remove distance from mouse because otherwise the postition of the Person is changed by the mouse.
+        //Removes 10 from x and y to center the Person drawobject
+        if(this.type =="person"){
+            if(this.refToObject != undefined){
+                if(this.refToObject.getSeat() != undefined){
+                    //let tmpPos = this.refToObject.getSeat().getPosition();
+                    //this.setDistanceToMouse(tmpPos[0], tmpPos[1]);
+                    x += this.distanceToMouseX;
+                    y += this.distanceToMouseY;
+                    x -=10;
+                    y -=10;
+                }
+            }
+        }
+        
+        
         x -= this.distanceToMouseX;
         y -= this.distanceToMouseY;
         let diffX = this.x-x;
@@ -209,13 +225,14 @@ class drawingObject{
         this.distanceToMouseY = y-this.y;
     }
 
+    
     //Updates position by(x,y)
     updatePositionBy(x,y){
         let diffX = this.x-x;
         let diffY = this.y-y;
         this.x += x;
         this.y += y;
-        if(this.type =="langbord"){
+        if(this.type =="langbord" || this.type =="person"){
             //console.log(this.type);
             for(let i = 0; i<this.drawPoints.length; i++){
                 this.drawPoints[i][0] -= diffX;

@@ -47,7 +47,11 @@ class Bord{
         
         this.seats = new SeatController(this);
     }
-    addGuest(guest){
+    addGuest(guest, isPersonSeated){
+        //isPersonSeated = isPersonSeated || false;
+        if(!isPersonSeated){
+            this.unseatedPersons.push(guest);
+        }
         this.persons.push(guest);
     }
     getId(){
@@ -186,6 +190,19 @@ class Bord{
         this.descriptorX -= diffX;
         this.descriptorY -= diffY;
         this.seats.updatePosition();
+        let t;
+        for(t in this.unseatedPersons){
+            let prs = this.unseatedPersons[t];
+            //prs.get
+            let tbls;
+            for(tbls in bord){
+                if(bord[tbls].returnPositionInfo()[0] === "person"){
+                    if(bord[tbls].getId() === prs.getId()){
+                        bord[tbls].updatePositionNEW(x,y);
+                    }
+                }
+            }
+        }
     }
     //SETS DISTANCE TO MOUSE
     setDistanceToMouse(x,y){
@@ -291,9 +308,15 @@ class Bord{
         this.persons.push(person);
     }
     removePersonFromTable(person){
-        for(let i = 0; i<persons.length; i++){
-            if(persons[i] === person){
+        for(let i = 0; i<this.persons.length; i++){
+            if(this.persons[i].getId() === person.getId()){
                 this.persons.splice(i,1);
+            }
+            
+        }
+        for(let i=0; i<this.unseatedPersons.length; i++){
+            if(this.unseatedPersons[i].getId() === person.getId()){
+                this.unseatedPersons.splice(i,1);
             }
         }
     }

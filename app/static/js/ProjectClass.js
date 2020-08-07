@@ -88,6 +88,7 @@ class Project{
         return this.guests;
     }
     getGuestById(id){
+        let guest;
         for(guest in this.guests){
             if(this.guests[guest].getId() === id){
                 return this.guests[guest];
