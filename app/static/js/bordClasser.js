@@ -20,6 +20,7 @@ class Bord{
         this.descriptor = descriptor || "";
         this.descriptorX, this.descriptorY;
         this.persons = [];
+        this.unseatedPersons =[];
         this.seats = [];
         
         if(bordType == "langbord"){
@@ -52,12 +53,15 @@ class Bord{
     getId(){
         return this.id;
     }
+    getSeatsObject(){
+        return this.seats;
+    }
     rotate(angle){
         //console.log(this.drawPoints);
         if(angle ==0 || angle ==undefined){
             return
         }
-        if(this.bordType =="lanbord"){
+        if(this.bordType =="langbord"){
             for(let i = 1; i<this.drawPoints.length; i++){
             
                 let rotatedCords = rotatePoint(this.drawPoints[i][0], this.drawPoints[i][1], this.x, this.y, angle);

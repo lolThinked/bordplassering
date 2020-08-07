@@ -7,19 +7,28 @@ class SeatController{
         this.y = tempValue[1];
         this.seats = [];
         this.radius = parentTable.returnWidth() + 20;
+        this.distanceBewteenPointsOncircle;
         //console.log(this.numberOfSeats);
         if(parentTable.returnType() =="rundbord"){
             let distanceBewteenPointsOncircle = (Math.PI*2)/this.numberOfSeats;
+            this.distanceBewteenPointsOncircle = distanceBewteenPointsOncircle;
             for(let i =0; i<this.numberOfSeats; i++){
                 let xV = Math.cos(distanceBewteenPointsOncircle*i)*this.radius;
                 let yV = Math.sin(distanceBewteenPointsOncircle*i)*this.radius;
                 this.seats[i] = new Seat(xV, yV, this, i);
             }
         }else if(parentTable.returnType() =="langbord"){
-            
+            let distanceBewteenPointsOncircle = (Math.PI*2)/this.numberOfSeats;
+            for(let i =0; i<this.numberOfSeats; i++){
+                let xV = Math.cos(distanceBewteenPointsOncircle*i)*this.radius;
+                let yV = Math.sin(distanceBewteenPointsOncircle*i)*this.radius;
+                this.seats[i] = new Seat(xV, yV, this, i);
+            }
         }
     }
-
+    returnDistanceBetweenTables(){
+        return this.distanceBewteenPointsOncircle;
+    }
     updatePosition(){
         let tempValue = this.table.returnCenter();
         this.x = tempValue[0];
@@ -48,17 +57,31 @@ class SeatController{
         return this.table;
     }
     addPersonIfToSeatIfCordinatesElseController(mseX,mseY,person){
+        console.log("[ADD TO SEATS FUNCTION] - ");
         //25+20+witdh
-        let distanceCheck = drawSettings.seat.width+drawSettings.seatController.radius + tableScales.width;
+        console.log(drawSettings.seat.width, drawSettings.seatController.radius, tableScales.circle.width, drawSettings.seatController.extraHitbox);
+        let distanceCheck = drawSettings.seat.width+drawSettings.seatController.radius + tableScales.circle.width + drawSettings.seatController.extraHitbox;
         let difx = mseX-this.x;
         let dify = mseY-this.y;
         let distanceToMouse = Math.sqrt(difx*difx + dify*dify);
+        console.log(distanceToMouse, distanceCheck);
+        if(distanceToMouse <= tableScales.width/4){
+            return
+        }
+        console.log(distanceToMouse, distanceCheck);
         if(distanceToMouse <= distanceCheck){
+            console.log("[DISTANCE CHECK SUCCEDED]");
+            let seatI;
             for(seatI in this.seats){
-                if(this.seats[seatI].checkIfCordinatesIsLessThanRadiusAway()){
+                let checkSeatValue = this.seats[seatI].checkIfCordinatesIsLessThanRadiusAway(mseX,mseY);
+                if(checkSeatValue){
                     this.seats[seatI].addPerson(person);
+                    console.log(person.getFirstName()+" Added to table: " + seatI);
+                    return;
                 }
             }
+            console.log(person.getFirstName() + " -  Not added to table");
+            
         }
     }
 }
@@ -86,7 +109,7 @@ class Seat{
         this.person = person;
         //Adds Current references to Person Object
         this.person.setSeat(this);
-        this.person.setTable(this.seatController.this.getTable()); 
+        this.person.setTable(this.seatController.getTable()); 
     }
     removePerson(){
         this.person.setSeat(undefined);
@@ -100,11 +123,16 @@ class Seat{
 
     checkIfCordinatesIsLessThanRadiusAway(mseX, mseY){
         let distanceCheck = drawSettings.seat.width;
+        distanceCheck = this.seatController.returnDistanceBetweenTables()*tableScales.circle.width;
         let difx = mseX-this.x;
         let dify = mseY-this.y;
+        console.log(difx,mseX,this.x, dify);
         let distanceToMouse = Math.sqrt(difx*difx + dify*dify);
+        console.log("[SEAT "+this.id+"] "+ distanceToMouse + " : " + distanceCheck);
         if(distanceToMouse <= distanceCheck){
             return true
+        }else{
+            return false
         }
     }
     //50cm?
@@ -129,7 +157,7 @@ class Seat{
         }else{
             //ctx.fillStyle = drawSettings.seat.free;
             //ctx.fillStyle = drawSettings.standard.fillColor;
-            this.person.drawMyself(this.x, this.y);
+            this.person.drawMyself(this.x-drawSettings.seat.width/2, this.y-drawSettings.seat.height/2);
         }
         
     }

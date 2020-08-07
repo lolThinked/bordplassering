@@ -28,8 +28,10 @@ let drawSettings = {
         "lineWidth":2,
         "height":25,
         "width":25
-    },"seatController":{
-        "radius":20
+    },
+    "seatController":{
+        "radius":20,
+        "extraHitbox":20
     },
     "standard":{
         "strokeColor": "black",
@@ -49,6 +51,9 @@ let drawSettings = {
         "textStroke":"black",
         "textStrokeWidth":1,
         "font":"14px Arial"
+    },
+    "statistics":{
+        "pushStats":false,
     }
 };
 

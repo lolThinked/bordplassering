@@ -345,6 +345,7 @@ function addSelectingToSelected(){
 
 function addPersonToTable(){
     console.log(selected);
+    //Gets the people in BORD Array[] - listOfPersons
     let listOfPersons = [];
     for(people in (selected)){
         let person =selected[people];
@@ -357,6 +358,7 @@ function addPersonToTable(){
         }
     }
     console.log(listOfPersons);
+
     let table = returnTableOfSelectedPoint(mouseX, mouseY);
     if(table!=false){
         console.log(table);
@@ -364,6 +366,7 @@ function addPersonToTable(){
             let personDrawing = listOfPersons[guest];
             let person = personDrawing.getReferenceObject();
             table.addGuest(person);
+            table.getSeatsObject().addPersonIfToSeatIfCordinatesElseController(mouseX, mouseY, person);
             person.setTable(table);
             //Delete drawing object
             deleteTable(personDrawing);
@@ -1348,7 +1351,9 @@ function getStats(){
     }
 }
 function pushStats(stats){
-    
+    if(!drawSettings.statistics.pushStats){
+        return
+    }
     //let statsTextELs = document.querySelectorAll("#GUI-Stats > h3");
     //console.log(statsTextELs);
     let j =0;
@@ -1363,6 +1368,9 @@ function pushStats(stats){
     }
 }
 function pushStatsFast(){
+    if(!drawSettings.statistics.pushStats){
+        return
+    }
     let j=0;
     for(stats in statistics2){
         statsTextELs[j].innerHTML = stats+ ": " +statistics2[stats];
@@ -1375,22 +1383,27 @@ function guiMouseDown(e){
     console.log(e);
     if(project!=undefined){
         for(let i=0;i<project.guests.length;i++){
-            if(target.id===project.guests[i].getId()){
+            try{
+                if(e.target.id===project.guests[i].getId()){
                 
+                }
+            }catch(err){
+                console.error(err);
             }
         }
-        setBord(e);
+        //setBord(e);
     }
 }
 
 function guiUpdate(e){
     e = e || previousEvent;
     update(e);
+    drawFrame();
     getStats();
     pushStats();
 }
 function guiMouseUp(e){
-    deleteBord(e);
+    //deleteBord(e);
 }
 
 function setNameForTable(e){
@@ -1900,8 +1913,15 @@ function changePerson(){
     personObject.setGender(iEls[3].value);
 }
 //FIX THIS 
-function loadTable(){
-    return
+function loadTable(id){
+    let tableToAdd;
+    for(tables in bord){
+        let tbl = bord[tables];
+        if(tbl.getId() === id){
+            tableToAdd = tbl;
+            return tbl
+        }
+    }
 }
 function updateProjectInfoGUI(){
     if(project != undefined){
@@ -1954,7 +1974,8 @@ function updateProjectInfoGUI(){
                     let tableDiv = document.createElement("div");
                     let tableName = document.createElement("h3");
                     tableName.innerHTML = "🧍"+table.descriptor+"🧍‍♀️";
-                    tableDiv.onclick=loadTable;
+                    let id = table.getId();
+                    tableDiv.onclick=loadTable('"'+id+'"');
                     //tableDiv.id = project.getTables()[table].getId();
                     tableDiv.className = "tableVisningsDiv";
                     //tableName.id = project.getTables()[table].getId();
