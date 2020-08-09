@@ -319,7 +319,8 @@ class drawingObject{
             //PERSON
             ctx.font = drawSettings.person.font;
             halvparten =(ctx.measureText(this.descriptor).width/2);
-            this.refToObject.drawMyself(this.x,this.y);
+
+            //this.refToObject.drawMyself(this.x,this.y);
             ctx.lineWidth = this.lineWidth;
             ctx.strokeStyle = this.strokeColor;
             ctx.fillStyle = this.fillColor;

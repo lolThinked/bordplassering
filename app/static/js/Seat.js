@@ -158,7 +158,7 @@ class Seat{
     drawMyself(){
 
         if(!this.person){
-            //console.log(this);
+            //console.log(this);git add
             ctx.fillStyle = drawSettings.seat.occupied;ctx.strokeStyle = drawSettings.standard.strokeColor;
             ctx.lineWidth = drawSettings.seat.lineWidth;
             ctx.beginPath();
