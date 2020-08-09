@@ -683,12 +683,12 @@ function addPersonToDrawing(person, projectReference){
         tempPerson.addReferenceFromId(projectReference);
         drawingObjects.push(tempPerson);
         addTableStacking+=20;
-        //console.log(tempPerson);
+        console.log(tempPerson);
     }else{
         let tempPerson = new drawingObject(person.getTable().returnPosition()[0],person.getTable().returnPosition()[1] , "person",0,person.getFullName(), person.getFirstName(), person.getId());
         tempPerson.addReferenceFromId(projectReference);
         drawingObjects.push(tempPerson);
-        //console.log(tempPerson);
+        console.log(tempPerson);
     }
     //console.log(bord);
     //console.log(drawingObjects);
@@ -1964,12 +1964,29 @@ function changePerson(){
     personObject.setGender(iEls[3].value);
 }
 //FIX THIS 
-function loadTable(id){
+function loadTable(value){
+    let id;
+    //console.log(value);
+    if(typeof(value) == "event"){
+        id= value.target.id;
+    }else if(typeof(value) =="string"){
+        id = value;
+    }else if(typeof(value) ==="object"){ 
+        id= value.target.id;   
+    }else if(typeof(value) =="MouseEvent"){
+        id= value.target.id;
+    }else{
+        console.log("[LOAD PERSON] - Value: " + value);
+    }
     let tableToAdd;
+    console.log("[LOAD TABLE FROM Menu]");
+    console.log(id);
+
     for(tables in bord){
         let tbl = bord[tables];
         if(tbl.getId() === id){
             tableToAdd = tbl;
+            selected = [tableToAdd];
             return tbl
         }
     }
@@ -2025,11 +2042,14 @@ function updateProjectInfoGUI(){
                     let tableDiv = document.createElement("div");
                     let tableName = document.createElement("h3");
                     tableName.innerHTML = "🧍"+table.descriptor+"🧍‍♀️";
-                    let id = table.getId();
-                    tableDiv.onclick=loadTable('"'+id+'"');
+                    let id = table.getId().slice();
+                    tableDiv.onclick="loadTable("+id+")";
+                    tableDiv.onclick=loadTable;
                     //tableDiv.id = project.getTables()[table].getId();
+                    tableDiv.id = table.getId();
                     tableDiv.className = "tableVisningsDiv";
                     //tableName.id = project.getTables()[table].getId();
+                    tableName.id = table.getId();
                     tableDiv.appendChild(tableName);
                     tableContainer.appendChild(tableDiv);
                 }   
@@ -2123,13 +2143,83 @@ function clearPersonFromSeat(drawObectReference){
         let prsRef = drawObectReference.getReferenceObject();
     //Checks if a person has a table
     if(prsRef.getTable()!= undefined){
+        //Clear from seat
+        prsRef.getTable()
+        
         //Checks if Person has a seat
+        console.log("CHECK IF PERSON HAS A SEAT");
         if(prsRef.getSeat() != undefined){
+            console.log("REMOVE PERSONS SEAT");
+            prsRef.getSeat().removeDrawObject();
             prsRef.getSeat().removePerson();
         }
+        console.log(prsRef.getTable());
         prsRef.getTable().removePersonFromTable(prsRef);
-        
+        prsRef.removeTableFromPerson();
     }
     }
     
+}
+
+function loadPeopleToTheirTables(guestList, prjRef){
+    for(let i=0; i<guestList.length; i++){
+        let guest = guestList[i];
+        
+        //Get Table
+        //Get Person Drawing object
+        let thisGuestsTable = false;
+        let personDrawingObject = false;
+        let person;
+        let personSeat = false;
+        let personSeatNumber;
+        for(let j=0; j<bord.length;j++){
+            let tmpBord = bord[j];
+            if(guest.table ===tmpBord.getId()){
+                thisGuestsTable = tmpBord; 
+            }
+            if(guest.id ===tmpBord.getId()){
+                personDrawingObject = tmpBord;
+            }
+        }
+        //Get Person object
+        let persons;
+        for(persons in prjRef.getGuests()){
+            person = prjRef.getGuests()[persons];
+            if(person.getId() === guest.id){
+                if(typeof(guest.seat) == "number"){
+                    personSeatNumber = guest.seat;
+                    personSeat = true;
+                }
+                break;
+            }
+        }
+
+        if(thisGuestsTable != false ){
+            //added guest too the table
+            thisGuestsTable.addGuest(person, personSeat);
+            if(personSeat != false){
+                thisGuestsTable.getSeatsObject().addGuestWithSeatNumber(person, personSeatNumber);
+            }
+            //Add Table to Guest
+            person.setTable(thisGuestsTable);
+            
+            let seatPos;
+            if(person.getSeat() != undefined){
+                seatPos = person.getSeat().getPosition();
+            }else{
+                console.log("GOT INFO FROM TABLE CENTER");
+                seatPos = person.getTable().returnCenter();
+            }
+            console.log("[SEAT POS]");
+            console.log(seatPos);
+            personDrawingObject.updatePositionNEW(seatPos[0], seatPos[1]);
+            console.log(personDrawingObject);
+            if(personSeat){
+                person.getSeat().addDrawingObjectReference(personDrawingObject);
+            }
+            console.log(person);
+            
+        }
+
+    }
 }

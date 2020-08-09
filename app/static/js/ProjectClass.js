@@ -23,6 +23,8 @@ class Project{
             startTegner(this.room);
             loadTables(inData.drawing.tables);
             loadPeopleIntoDrawing(this.guests, this);
+            console.log(bord);
+            loadPeopleToTheirTables(inData.guests, this);
         }else{
             this.room = room || undefined;
             this.name = name || "Ditt Prosjekt";

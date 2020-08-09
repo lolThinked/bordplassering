@@ -107,6 +107,7 @@ function startTegner(navn){
     update();
     */
     console.log("[PRINTING] (CTXMTRX, MOUSEX)");
+    console.trace();
     console.log(contextMatrix);
     console.log(mouseX);
     setupCanvas(navn);

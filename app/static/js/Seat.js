@@ -26,6 +26,10 @@ class SeatController{
             }
         }
     }
+    addGuestWithSeatNumber(person, seatNumber){
+        console.log(seatNumber);
+        this.seats[seatNumber].addPerson(person);
+    }
     returnDistanceBetweenTables(){
         return this.distanceBewteenPointsOncircle;
     }
@@ -120,9 +124,13 @@ class Seat{
     removePerson(){
         this.person.setSeat(undefined);
         this.person = false;
+        console.log(this.person);
     }
     addDrawingObjectReference(drawingObject){
         this.drawObject = drawingObject;
+    }
+    removeDrawObject(){
+        this.drawObject = undefined;
     }
     updatePosition(){
         this.x = this.seatController.x + this.xVector;
@@ -150,6 +158,7 @@ class Seat{
     drawMyself(){
 
         if(!this.person){
+            //console.log(this);
             ctx.fillStyle = drawSettings.seat.occupied;ctx.strokeStyle = drawSettings.standard.strokeColor;
             ctx.lineWidth = drawSettings.seat.lineWidth;
             ctx.beginPath();
