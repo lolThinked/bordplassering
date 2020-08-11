@@ -58,7 +58,7 @@ class Person{
 
     drawMyself(x,y){
         ctx.fillStyle = drawSettings.person.color;
-        ctx.fillRect(x,y-5,40,40);
+        ctx.fillRect(x-5,y-5,40,40);
         ctx.fillStyle = drawSettings.standard.fillColor;
         //ctx.fillText("🧍", x, y);
     }
@@ -66,6 +66,13 @@ class Person{
 
     }
     
+    setDrawingObject(drawingObject){
+        this.drawingObject = drawingObject;
+
+    }
+    getDrawingObject(){
+        return this.drawingObject
+    }
     setSeat(seat){
         if(seat != "undefined"&& seat!=undefined){
             return seat

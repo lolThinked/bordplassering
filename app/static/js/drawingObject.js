@@ -196,7 +196,7 @@ class drawingObject{
                     //this.setDistanceToMouse(tmpPos[0], tmpPos[1]);
                     x += this.distanceToMouseX;
                     y += this.distanceToMouseY;
-                    x -=10;
+                    x -=20;
                     y -=20;
                 }
             }

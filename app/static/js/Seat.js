@@ -69,7 +69,7 @@ class SeatController{
         let dify = mseY-this.y;
         let distanceToMouse = Math.sqrt(difx*difx + dify*dify);
         console.log(distanceToMouse, distanceCheck);
-        if(distanceToMouse <= tableScales.width/4){
+        if(distanceToMouse <= tableScales.circle.width/4){
             return
         }
         console.log(distanceToMouse, distanceCheck);

@@ -245,12 +245,25 @@ class Bord{
                 }
             }
         }else{
+            /*
             if(x >= (this.x-this.height) && x <= (this.x+this.width)){
                 if(y >= (this.y-this.height) && y <= (this.y+this.height)){
                     var difference = [this.x-x, this.y-y];
                     return difference;
                 }
             }
+            */
+            //Check if distance to table is less than big hitbox
+            //if()
+            
+            let distanceCheck = drawSettings.seat.width+drawSettings.seatController.radius + tableScales.circle.width + drawSettings.seatController.extraHitbox;
+            let difx = x-this.x;
+            let dify = y-this.y;
+            let distanceToMouse = Math.sqrt(difx*difx + dify*dify);
+            if(distanceToMouse <= tableScales.circle.width){
+                return distanceToMouse;
+            }
+            
         }
         
         return false;

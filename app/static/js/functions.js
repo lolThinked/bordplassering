@@ -684,12 +684,15 @@ function addPersonToDrawing(person, projectReference){
         drawingObjects.push(tempPerson);
         addTableStacking+=20;
         console.log(tempPerson);
+        person.setDrawingObject(tempPerson);
     }else{
         let tempPerson = new drawingObject(person.getTable().returnPosition()[0],person.getTable().returnPosition()[1] , "person",0,person.getFullName(), person.getFirstName(), person.getId());
         tempPerson.addReferenceFromId(projectReference);
         drawingObjects.push(tempPerson);
         console.log(tempPerson);
+        person.setDrawingObject(tempPerson);
     }
+    
     //console.log(bord);
     //console.log(drawingObjects);
 }
@@ -1962,6 +1965,7 @@ function changePerson(){
     personObject.setSurname(iEls[1].value);
     personObject.setAge(iEls[2].value);
     personObject.setGender(iEls[3].value);
+    personObject.getDrawingObject().setDescriptor(personObject.getFullName());
 }
 //FIX THIS 
 function loadTable(value){

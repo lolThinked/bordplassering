@@ -208,6 +208,7 @@ def saveProjectWithIdentifier(identifier):
         json.dump(projectOverview, f)
     #makeFolder
     createFolder("./Saved/Projects/"+identifier)
+    createFolder("./Saved/Projects/"+identifier+"/Person")
     #makeProjectFile
     with open("Saved/Projects/"+identifier+"/project.json", "w") as f:
         json.dump(jsonData["project"], f)
@@ -218,6 +219,9 @@ def saveProjectWithIdentifier(identifier):
     for person in jsonData["guests"]:
         with open("Saved/Person/"+person["id"]+".json", "w") as f:
             print(person)
+            json.dump(person, f)
+        with open("Saved/Projects/"+identifier+"/Person/"+person["id"]+".json", "w") as f:
+            #print(person)
             json.dump(person, f)
     print("\n[PROJECT] - SAVED!")
     return jsonify(message = "Saved!")
@@ -238,7 +242,8 @@ def getProjectById(identifier):
     guestList = projectData["project"]["guests"]
     for guest in guestList:
         gjest = guest
-        projectData["guests"].append(retrieveGuestFromId(guest))
+        #projectData["guests"].append(retrieveGuestFromId(guest))
+        projectData["guests"].append(retrieveProjectGuestFromId(guest, identifier))
     #print(guestList)
     return projectData
 
@@ -399,5 +404,9 @@ def makeListFromOverview(overviewInput):
 
 def retrieveGuestFromId(id):
     with open("Saved/Person/"+id+".json","r") as f:
+        data = json.load(f)
+        return data
+def retrieveProjectGuestFromId(id, projectId):
+    with open("Saved/Projects/"+projectId+"/Person/"+id+".json","r") as f:
         data = json.load(f)
         return data
