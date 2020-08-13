@@ -226,6 +226,39 @@ def saveProjectWithIdentifier(identifier):
     print("\n[PROJECT] - SAVED!")
     return jsonify(message = "Saved!")
 
+@app.route("/project/deletePerson/<identifier>", methods=["post"])
+def deletePersonFromProject(identifier):
+    jsonData = eval(request.data)
+    #updateProjectList
+    print(jsonData)
+    print(projectOverview)
+    projectOverview[identifier] = jsonData["project"]
+    with open("Saved/Projects/projectOverview.json", "w") as f:
+        json.dump(projectOverview, f)
+    #makeFolder
+    createFolder("./Saved/Projects/"+identifier)
+    createFolder("./Saved/Projects/"+identifier+"/Person")
+    #makeProjectFile
+    with open("Saved/Projects/"+identifier+"/project.json", "w") as f:
+        json.dump(jsonData["project"], f)
+    #makeDrawingFiles
+    with open("Saved/Projects/"+identifier+"/drawing.json", "w") as f:
+        json.dump(jsonData["drawing"], f)
+    #makePeopleFiles
+    for person in jsonData["guests"]:
+        with open("Saved/Person/"+person["id"]+".json", "w") as f:
+            print(person)
+            json.dump(person, f)
+        with open("Saved/Projects/"+identifier+"/Person/"+person["id"]+".json", "w") as f:
+            #print(person)
+            json.dump(person, f)
+    print("\n[PROJECT] - SAVED!")
+    print("\n[DELETING PERSON] - " + jsonData["deletingPersonId"])
+    if(os.path.exists("Saved/Projects/"+identifier+"/Person/"+jsonData["deletingPersonId"]+".json")):
+        os.remove("Saved/Projects/"+identifier+"/Person/"+jsonData["deletingPersonId"]+".json")
+    print("Deleted!")
+    return jsonify(message = "Deleted")
+
 @app.route("/project/getAll")
 def getProjectOverview():
     with open("Saved/Projects/projectOverview.json","r") as f:

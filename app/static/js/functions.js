@@ -2227,3 +2227,88 @@ function loadPeopleToTheirTables(guestList, prjRef){
 
     }
 }
+
+
+
+function getPersonObjectFromId(id){
+    let gList =project.getGuests();
+    let p;
+    for(let i =0; i<gList.length; i++){
+        p= gList[i];
+        if(p.getId() === id){
+            return p;
+        }
+    }
+    return false;
+}
+
+function deletePersonAndSave(person){
+    //Get Person Object and ID
+    let id;
+    if(typeof(person)=="object"){
+        id=person.getId();
+    }else if(typeof(person)=="string"){
+        id=person;
+        person = getPersonObjectFromId(id);
+    }
+
+    //Slett fra alle steder i nettleseren
+    //DrawingObject, Project, Table, Seat
+    console.log("[DELETING PERSON] - Table/Seat");
+    //Seat:
+    if(person.getSeat() != undefined){
+        person.getSeat().removeDrawObject();
+        person.getSeat().removePerson();
+    }
+    //Table
+    if(person.getTable()!=undefined){
+        person.getTable().removePersonFromTable(person);
+        person.removeTableFromPerson();
+    }
+    //Project
+    console.log("[DELETING PERSON] - Project");
+    project.removeGuest(person);
+    //DrawingObject
+    console.log("[DELETING PERSON] - BORD");
+    for(let i =0; i<bord.length; i++){
+        if(bord[i].getId() === person.getDrawingObject().getId()){
+            bord.slice(i,1);
+        }else if(bord[i] == person.getDrawingObject()){
+            bord.slice(i,1);
+        }
+    }
+    for(let i =0; i<drawingObjects.length; i++){
+        if(drawingObjects[i].getId() === person.getDrawingObject().getId()){
+            drawingObjects.slice(i,1);
+        }else if(drawingObjects[i] == person.getDrawingObject()){
+            drawingObjects.slice(i,1);
+        }
+    }
+    console.log(bord);
+    person.getDrawingObject().removeReference();
+
+
+
+
+
+    //Slett fra Server
+    console.log("[PROJECT] (Deleting person and saving) - "+project.getName() + " : " + project.getId());
+    let data = project.exportForJson();
+    let projectId = project.getId();
+    data.deletingPersonId = id;
+    let xhr = new XMLHttpRequest(); 
+    let url = "/project/deletePerson/"+projectId;
+    xhr.open("POST", url, true);
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+    
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Request finished. Do processing here.
+            console.log("[PROJECT] (SAVING) - SAVED");
+            update();
+        }
+    }
+    xhr.send(JSON.stringify(data));
+    
+}

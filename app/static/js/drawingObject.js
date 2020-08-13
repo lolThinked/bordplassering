@@ -349,7 +349,10 @@ class drawingObject{
     }
 
 
-
+    removeReference(){
+        //Used in Delete and save Person function
+        this.refToObject = undefined;
+    }
 
     addPersonToTable(person){
         this.persons.push(person);
