@@ -2023,12 +2023,23 @@ function updateProjectInfoGUI(){
         for(let i = 0; i<guests.length; i++){
             let personDiv = document.createElement("div");
             let personName = document.createElement("h3");
+            let deletePersonButton = document.createElement("button");
+            deletePersonButton.innerHTML ="🗑";
+            deletePersonButton.className = "deletePersonButton";
+            let tempId = guests[i].getId().slice();
+            //deletePersonButton.onclick = deletePersonAndSave(guest[i].getId());
+            deletePersonButton.addEventListener('click', function(){
+                //confirmDeletePerson("'"+guests[i].getId()+"'");
+                confirmDeletePerson(tempId);
+            });
             personName.innerHTML = "🧍"+guests[i].getFullName()+"🧍‍♀️";
+            personName.className ="personVisningText";
             personDiv.onclick=loadPerson;
             personDiv.id = guests[i].getId();
             personDiv.className = "personVisningsDiv";
             personName.id = guests[i].getId();
             personDiv.appendChild(personName);
+            personDiv.appendChild(deletePersonButton);
             personContainer.appendChild(personDiv);
         }
         contentElement.appendChild(personContainer);
@@ -2242,6 +2253,21 @@ function getPersonObjectFromId(id){
     return false;
 }
 
+function confirmDeletePerson(person){
+    //Get Person Object and ID
+    let id;
+    if(typeof(person)=="object"){
+        id=person.getId();
+    }else if(typeof(person)=="string"){
+        id=person;
+        person = getPersonObjectFromId(id);
+    }
+    if(confirm("Er du helt sikker på at du vil slette: " + person.getFullName())){
+        deletePersonAndSave(person);
+    }else{
+        console.log("Person not deleted: " + person.getFullName());
+    }  
+}
 function deletePersonAndSave(person){
     //Get Person Object and ID
     let id;
@@ -2251,7 +2277,7 @@ function deletePersonAndSave(person){
         id=person;
         person = getPersonObjectFromId(id);
     }
-
+    console.log(person);
     //Slett fra alle steder i nettleseren
     //DrawingObject, Project, Table, Seat
     console.log("[DELETING PERSON] - Table/Seat");
@@ -2272,24 +2298,22 @@ function deletePersonAndSave(person){
     console.log("[DELETING PERSON] - BORD");
     for(let i =0; i<bord.length; i++){
         if(bord[i].getId() === person.getDrawingObject().getId()){
-            bord.slice(i,1);
+            bord.splice(i,1);
+            console.log("[Deleted] - DeletePersonAndSave - 2276");
         }else if(bord[i] == person.getDrawingObject()){
-            bord.slice(i,1);
+            bord.splice(i,1);
         }
     }
     for(let i =0; i<drawingObjects.length; i++){
         if(drawingObjects[i].getId() === person.getDrawingObject().getId()){
-            drawingObjects.slice(i,1);
+            drawingObjects.splice(i,1);
         }else if(drawingObjects[i] == person.getDrawingObject()){
-            drawingObjects.slice(i,1);
+            drawingObjects.splice(i,1);
         }
     }
+    console.log(project);
     console.log(bord);
     person.getDrawingObject().removeReference();
-
-
-
-
 
     //Slett fra Server
     console.log("[PROJECT] (Deleting person and saving) - "+project.getName() + " : " + project.getId());

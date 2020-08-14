@@ -324,11 +324,15 @@ class Bord{
         for(let i = 0; i<this.persons.length; i++){
             if(this.persons[i].getId() === person.getId()){
                 this.persons.splice(i,1);
+            }else if(this.persons[i] === person){
+                this.persons.splice(i,1);
             }
             
         }
         for(let i=0; i<this.unseatedPersons.length; i++){
             if(this.unseatedPersons[i].getId() === person.getId()){
+                this.unseatedPersons.splice(i,1);
+            }else if(this.unseatedPersons[i] === person){
                 this.unseatedPersons.splice(i,1);
             }
         }

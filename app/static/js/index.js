@@ -193,11 +193,16 @@ function update(e){
     //drawTablePreview();
 
     //TRANSLATE canvas if "ctrl" and no table is selected
+    /*
     if(mouseIsMove && mouseIsPressed){
-        //console.log("TESTING");
         translateBackground(e);
-        
     }
+    */
+    if(mouseIsPressed && selected.length==0 && !shiftIsPressed){
+        translateBackground(e);
+    }
+
+
     //ctx.drawImage(backgroundImg, scaleBilde*0.1 ,backgroundImg.height*0.1  , scaleBilde*0.8,backgroundImg.height*0.8);
     //redraw();
     
@@ -211,6 +216,9 @@ function update(e){
     
     //SELECT AREA
     if(!mouseIsMove && !tableInSelectedGroup && mouseIsPressed){
+        selectArea(clickOriginX, clickOriginY, mouseX, mouseY);
+    }
+    if(shiftIsPressed && mouseIsPressed && !tableInSelectedGroup){
         selectArea(clickOriginX, clickOriginY, mouseX, mouseY);
     }
     

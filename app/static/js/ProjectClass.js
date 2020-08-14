@@ -82,7 +82,10 @@ class Project{
     removeGuest(person){
         for(let i=0; i<this.guests.length; i++){
             if(this.guests[i] == person){
-                this.guests.slice(i,1);
+                this.guests.splice(i,1);
+                console.log("[Deleted] - removeGuest - Project 86");
+            }else if(this.guests[i].getId() == person.getId()){
+                this.guests.splice(i,1);
             }
         }
     }
