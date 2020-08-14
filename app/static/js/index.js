@@ -185,7 +185,10 @@ function update(e){
         canvasEl.style.cursor = "grab";
     }else if(checkIfTable(mouseX, mouseY)!= true){
         if(mouseIsMove != true){
-            canvasEl.style.cursor = "default";
+            canvasEl.style.cursor = "move";
+        }
+        if(shiftIsPressed){
+            canvasEl.style.cursor ="crosshair";
         }
     }else if(checkIfTable(mouseX, mouseY) && mouseIsPressed){
         canvasEl.style.cursor ="grabbing";

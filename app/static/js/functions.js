@@ -21,8 +21,10 @@ function checkKey(e){
         if(key =="Shift"){
             if(e.type==="keydown"){
                 shiftIsPressed = true;
+                canvasEl.style.cursor = "crosshair";
             }else if(e.type ==="keyup"){
                 shiftIsPressed = false;
+                canvasEl.style.cursor = "initial";
             }    
         }
         if(key =="m"){
@@ -177,7 +179,7 @@ function returnTableOfSelectedPoint(pointX, pointY){
 function ifTableInSelected(table){
     //console.log(table);
     for(tables in selected){
-        console.log(selected[tables]);
+        //console.log(selected[tables]);
         if(selected[tables].getId() == table.getId()){
             //console.log("TRUE");
             return true;
@@ -336,7 +338,19 @@ function addSelectingToSelected(){
         console.log(Math.abs(mouseX-clickOriginX), Math.abs(mouseY-clickOriginY));
         console.log("[ADDED] Selecting to selected");
         if(shiftIsPressed){
-            selected += selecting;
+            //selected += selecting;
+            for(let i =0; i<selecting.length; i++){
+                let slctEl = selecting[i];
+                let selectElExistsInSelected = false;
+                for(let j=0;j<selected.length; j++){
+                    if(slctEl == selected[j] || slctEl.getId() === selected[j].getId()){
+                        selectElExistsInSelected = true;
+                    }
+                }
+                if(!selectElExistsInSelected){
+                    selected.push(slctEl);
+                }
+            }
         }else{
             selected = selecting;
             //console.log("ADDED");    
