@@ -18,11 +18,27 @@ class SeatController{
                 this.seats[i] = new Seat(xV, yV, this, i);
             }
         }else if(parentTable.returnType() =="langbord"){
+            /*
             let distanceBewteenPointsOncircle = (Math.PI*2)/this.numberOfSeats;
             for(let i =0; i<this.numberOfSeats; i++){
                 let xV = Math.cos(distanceBewteenPointsOncircle*i)*this.radius;
                 let yV = Math.sin(distanceBewteenPointsOncircle*i)*this.radius;
                 this.seats[i] = new Seat(xV, yV, this, i);
+            }
+            */
+            let info = parentTable.returnPositionInfo();
+            let points = info[1];
+            let centerLine = {"start":[],"end":[], "center":[]};
+            centerLine.start[0] = (points[0][0]+points[3][0])/2;
+            centerLine.start[1] = (points[0][1]+points[3][1])/2;
+            centerLine.end[0] = (points[1][0]+points[2][0])/2;
+            centerLine.end[1] = (points[1][1]+points[2][1])/2;
+            centerLine.center[0] = (centerLine.start[0]+centerLine.end[0])/2;
+            centerLine.center[1] = (centerLine.start[1]+centerLine.end[1])/2;
+            let lineTop = [];
+            let lineBot = [];
+            for(let i =2; i<this.numberOfSeats; i++){
+            
             }
         }
     }
@@ -55,6 +71,9 @@ class SeatController{
             this.seats[i].drawMyself();
         }
         
+    }
+    rotateSeats(x,y, angle){
+
     }
 
     getTable(){

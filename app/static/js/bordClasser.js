@@ -35,7 +35,7 @@ class Bord{
             ];
             this.descriptorX = (this.x + this.width/2);
             this.descriptorY = this.y + this.height/2;
-            this.rotate(rotation);
+            
             //this.vectorDiagonal = Math.sqrt(Math.pow(this.width, 2)+Math.pow(this.height, 2));
             //console.log(this.vectorDiagonal);
         }else if(bordType =="rundbord"){
@@ -46,6 +46,7 @@ class Bord{
         }
         
         this.seats = new SeatController(this);
+        this.rotate(rotation);
     }
     addGuest(guest, isPersonSeated){
         //isPersonSeated = isPersonSeated || false;
@@ -79,6 +80,9 @@ class Bord{
                 let rotatedCords = rotatePoint(this.descriptorX, this.descriptorY, this.x, this.y, angle);
                 this.descriptorX = rotatedCords.x;
                 this.descriptorY = rotatedCords.y;
+            }
+            if(this.seats != undefined){
+                this.seats.rotateSeats(this.x, this.y, angle);
             }
             this.rotation += angle;
             //console.log(this.drawPoints[1][0]);
@@ -268,6 +272,29 @@ class Bord{
         
         return false;
     }
+    checkSelfWidthSeatRange(x,y){
+        if(this.bordType !="rundbord"){
+            if(x >= this.x && x <= (this.x+this.width)){
+                if(y >= this.y && y <= (this.y+this.height)){
+                    var difference = [this.x-x, this.y-y];
+                    return difference;
+                }
+            }
+        }else{
+            let distanceCheck = drawSettings.seat.width+drawSettings.seatController.radius + tableScales.circle.width + drawSettings.seatController.extraHitbox;
+            let difx = x-this.x;
+            let dify = y-this.y;
+            let distanceToMouse = Math.sqrt(difx*difx + dify*dify);
+            if(distanceToMouse <= distanceCheck){
+                return distanceToMouse;
+            }
+            
+        }
+        
+        return false;
+    }
+
+
     drawMyself(){
         let halvparten =(ctx.measureText(this.descriptor).width/2);
         if(this.bordType =="langbord"){

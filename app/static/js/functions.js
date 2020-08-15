@@ -176,6 +176,23 @@ function returnTableOfSelectedPoint(pointX, pointY){
     }
     return false;
 }
+ //Legger til exkstra hhitbox for seter
+function getTableWitdhSeatHitboxOfSelectedPoint(pointX, pointY){
+    for(let i=0; i<bord.length; i++){
+        let infoAboutTable = bord[i].returnPositionInfo();
+        if(infoAboutTable[0] =="rect"){
+            if(ifPointInRectangle(pointX, pointY, infoAboutTable[1])){
+                return bord[i];
+            }
+        }else if(infoAboutTable[0] =="circle"){
+            if(bord[i].checkSelfWidthSeatRange(mouseX,mouseY) != false){
+                return bord[i];
+            }
+        }
+    }
+    return false;
+}
+
 function ifTableInSelected(table){
     //console.log(table);
     for(tables in selected){
@@ -375,7 +392,8 @@ function addPersonToTable(){
     }
     console.log(listOfPersons);
 
-    let table = returnTableOfSelectedPoint(mouseX, mouseY);
+    //let table = returnTableOfSelectedPoint(mouseX, mouseY);
+    let table = getTableWitdhSeatHitboxOfSelectedPoint(mouseX, mouseY);
     if(table!=false){
         console.log(table);
         for(guest in listOfPersons){

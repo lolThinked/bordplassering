@@ -258,6 +258,7 @@ def deletePersonFromProject(identifier):
         os.remove("Saved/Projects/"+identifier+"/Person/"+jsonData["deletingPersonId"]+".json")
     print("Deleted!")
     return jsonify(message = "Deleted")
+    
 
 @app.route("/project/getAll")
 def getProjectOverview():
