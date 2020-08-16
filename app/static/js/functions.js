@@ -176,12 +176,13 @@ function returnTableOfSelectedPoint(pointX, pointY){
     }
     return false;
 }
+
  //Legger til exkstra hhitbox for seter
 function getTableWitdhSeatHitboxOfSelectedPoint(pointX, pointY){
     for(let i=0; i<bord.length; i++){
         let infoAboutTable = bord[i].returnPositionInfo();
         if(infoAboutTable[0] =="rect"){
-            if(ifPointInRectangle(pointX, pointY, infoAboutTable[1])){
+            if(bord[i].checkSelfWidthSeatRange(mouseX,mouseY) != false){
                 return bord[i];
             }
         }else if(infoAboutTable[0] =="circle"){
@@ -479,12 +480,14 @@ function ifPointInRectangle(pointX, pointY, rectangle, type){
     let sumRectangle = tableScales.rect.width*tableScales.rect.height;
     if(type=="person"){
         sumRectangle = tableScales.person.width*tableScales.person.height;
+    }else if(type =="extraHitbox"){
+        sumRectangle =tableScales.rect.width*drawSettings.seatController.radius*2*tableScales.rect.height*drawSettings.seatController.radius*2;
     }
     let difference = sumRectangle-sumTriangleArea;
     if(difference >= (-1)){
-        //console.log(difference);
-        //console.log(sumRectangle);
-        //console.log(sumTriangleArea);
+        console.log(difference);
+        console.log(sumRectangle);
+        console.log(sumTriangleArea);
         return true;
     }
     return false

@@ -273,12 +273,30 @@ class Bord{
         return false;
     }
     checkSelfWidthSeatRange(x,y){
-        if(this.bordType !="rundbord"){
-            if(x >= this.x && x <= (this.x+this.width)){
-                if(y >= this.y && y <= (this.y+this.height)){
-                    var difference = [this.x-x, this.y-y];
-                    return difference;
-                }
+        if(this.bordType =="langbord"){
+            //Change drawPoints to extend hitbox
+            let extendedHitboxDrawpoints = [[0,0,],[0,0,],[0,0,],[0,0,]];
+            let pARR =extendedHitboxDrawpoints[0];
+            pARR[0] = this.drawPoints[0][0]+(-1)*drawSettings.seatController.radius*Math.sin(this.rotation)+(-1)*drawSettings.seatController.radius*Math.cos(this.rotation);
+            pARR[1] = this.drawPoints[0][1]+(-1)*drawSettings.seatController.radius*Math.cos(this.rotation)+(-1)*drawSettings.seatController.radius*Math.sin(this.rotation);
+            pARR = extendedHitboxDrawpoints[1];
+            //extendedHitboxDrawpoints[0] = pARR;
+            pARR[0] = this.drawPoints[1][0]+(1)*drawSettings.seatController.radius*Math.sin(this.rotation)+(1)*drawSettings.seatController.radius*Math.cos(this.rotation);
+            pARR[1] = this.drawPoints[1][1]+(-1)*drawSettings.seatController.radius*Math.cos(this.rotation)+(-1)*drawSettings.seatController.radius*Math.sin(this.rotation);
+            pARR = extendedHitboxDrawpoints[2];
+            //extendedHitboxDrawpoints[1] = pARR;
+            pARR[0] = this.drawPoints[2][0]+(1)*drawSettings.seatController.radius*Math.sin(this.rotation)+(1)*drawSettings.seatController.radius*Math.cos(this.rotation);
+            pARR[1] = this.drawPoints[2][1]+(1)*drawSettings.seatController.radius*Math.cos(this.rotation)+(1)*drawSettings.seatController.radius*Math.sin(this.rotation);
+            pARR = extendedHitboxDrawpoints[3];
+            //extendedHitboxDrawpoints[2] = pARR;
+            pARR[0] = this.drawPoints[3][0]+(-1)*drawSettings.seatController.radius*Math.sin(this.rotation)+(-1)*drawSettings.seatController.radius*Math.cos(this.rotation);
+            pARR[1] = this.drawPoints[3][1]+(1)*drawSettings.seatController.radius*Math.cos(this.rotation)+(1)*drawSettings.seatController.radius*Math.sin(this.rotation);
+            //extendedHitboxDrawpoints[3] = pARR;
+            console.log(extendedHitboxDrawpoints);
+            console.log(this.drawPoints);
+            if(ifPointInRectangle(x, y, extendedHitboxDrawpoints, "extraHitbox")){
+                console.log("[TRUE]");
+                return true
             }
         }else{
             let distanceCheck = drawSettings.seat.width+drawSettings.seatController.radius + tableScales.circle.width + drawSettings.seatController.extraHitbox;

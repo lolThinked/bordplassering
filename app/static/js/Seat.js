@@ -208,9 +208,14 @@ class Seat{
         }
     }
     rotate(x,y,angle){
-        let rotatedCords = rotatePoint(this.xVector, this.yVector, x, y, angle);
-        this.xVector = rotatedCords.x;
-        this.yVector = rotatedCords.y;
+        let xPoint = this.x + this.xVector;
+        let yPoint = this.y + this.yVector;
+        let rotatedCords = rotatePoint(this.x, this.y, x, y, angle);
+        this.x = rotatedCords.x;
+        this.y = rotatedCords.y;
+        let tblPos = this.seatController.getTable().returnCenter()
+        this.xVector = this.x - tblPos[0];
+        this.yVector = this.y - tblPos[1];
     }
 
     checkIfCordinatesIsLessThanRadiusAway(mseX, mseY){
