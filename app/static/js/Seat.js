@@ -40,13 +40,9 @@ class SeatController{
             centerLine.vector[1] = centerLine.start[1]-centerLine.end[1];
             centerLine.angle = 2*Math.PI-Math.atan2(centerLine.vector[0], centerLine.vector[1]);
             centerLine.length = Math.sqrt(centerLine.vector[0]**2 + centerLine.vector[1]**2);
-            console.log(points);
-            console.log(centerLine);
-
-
+        
             let limiter =2;
             let numberPerSide = (this.numberOfSeats-2)/2;
-            console.log(numberPerSide);
             let sideCounter =numberPerSide;
             if(this.numberOfSeats % 2 != 0){
                 limiter=1;
@@ -58,23 +54,20 @@ class SeatController{
                 numberPerSide = (this.numberOfSeats-1)/2;
                 sideCounter =numberPerSide;
             }else{
-                
                 let seatPointX = drawSettings.seatController.radius*Math.sin(centerLine.angle)+ centerLine.end[0];
                 let seatPointY = drawSettings.seatController.radius*Math.cos(centerLine.angle)+ centerLine.end[1];
                 let xV = seatPointX - this.x;
                 let yV = seatPointY - this.y;
                 this.seats[this.numberOfSeats-1] = new Seat(xV, yV, this, this.numberOfSeats-1);
-                console.log(this.radius*Math.sin(centerLine.angle),centerLine.start[0]);
                 //Seat2
                 seatPointX = (-1)*drawSettings.seatController.radius*Math.sin(centerLine.angle)+ centerLine.start[0];
                 seatPointY = (-1)*drawSettings.seatController.radius*Math.cos(centerLine.angle)+ centerLine.start[1];
                 xV = seatPointX - this.x;
                 yV = seatPointY - this.y;
                 this.seats[this.numberOfSeats-2] = new Seat(xV, yV, this, this.numberOfSeats-2);
-                console.log(this.radius*Math.sin(centerLine.angle),centerLine.end[0]);
             }
             let distanceBetweenPointsOnLine = centerLine.length/numberPerSide;
-            
+            //Adding other seats
             for(let i=0;i<(this.numberOfSeats-limiter)/2; i++){
                 let startingX = centerLine.start[0] + i*distanceBetweenPointsOnLine*Math.sin(centerLine.angle) + distanceBetweenPointsOnLine/2*Math.sin(centerLine.angle);
                 let startingY = centerLine.start[1] + i*distanceBetweenPointsOnLine*Math.cos(centerLine.angle) + distanceBetweenPointsOnLine/2*Math.cos(centerLine.angle);
@@ -87,13 +80,12 @@ class SeatController{
                 seatPointY = (drawSettings.seatController.radius+tableScales.rect.height/2)*Math.sin(centerLine.angle) + startingY;
                 xV = seatPointX - this.x;
                 yV = seatPointY - this.y;
-                this.seats[sideCounter] = new Seat(xV, yV, this, sideCounter);
+                this.seats[i+numberPerSide] = new Seat(xV, yV, this, i+numberPerSide);
                 seatPointX = (-1)*(drawSettings.seatController.radius+tableScales.rect.height/2)*Math.cos(centerLine.angle) + startingX;
                 seatPointY = (-1)*(drawSettings.seatController.radius +tableScales.rect.height/2)*Math.sin(centerLine.angle) + startingY;
                 xV = seatPointX - this.x;
                 yV = seatPointY - this.y;  
                 this.seats[i] = new Seat(xV, yV, this, i);
-                sideCounter++;
             }
         }
     }
