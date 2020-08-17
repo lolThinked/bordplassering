@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/allergyStyling.css')}} ></link>
+</head>
+<script>
+    let preLoaded = {{allergiesList|safe}};
+</script>
+    
+    <h1>List of Allergies</h1>
+    <div class="allergyListContainer" id="allergyListContainerID">
+        <table id="allergyTable" class="tableClassName">
+            <tr>
+                <td>Navn</td>
+                <td>Forkortelse(r)</td>
+                <td>Beskrivelse</td>
+                <td>Råd</td>
+                <td>Farge</td>
+                <td>Slett</td>
+                <td class="tableIdClass">ID</td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="createNewAllergyContainer" id="createNewAllergyContainer">
+        <button onclick="createAndAddNewAllergy()">Legg til ny allergi</button>
+        <button onclick="saveChanges()">Lagre forandringer</button>
+    </div>
+    <p><a href="{{ url_for('index') }}">Back</a></p>
+
+
+<script>
+    let tableEL = document.getElementById("allergyTable");
+    
+
+    function deleteAllergy(id){
+
+    }
+
+    function createTableRow(allergyObject){
+        let trEl = document.createElement("tr");
+        
+        let colorPicker = document.createElement("input");
+        colorPicker.type = "color";
+        colorPicker.id = allergyObject.id;
+
+        let deleteButtonEl = document.createElement("button");
+        deleteButtonEl.innerHTML = "🗑";
+        deleteButtonEl.addEventListener("click", function(){
+            deleteAllergy(allergyObject.id);
+        });
+
+
+        let nameEl = document.createElement("td");
+        let tagEl = document.createElement("td");
+        let descriptionEl = document.createElement("td");
+        let adviceEl = document.createElement("td");
+        let colorEl = document.createElement("td");
+        let deleteEl = document.createElement("td");
+        let idEl = document.createElement("td");
+
+        nameEl.contentEditable = true;
+        tagEl.contentEditable = true;
+        descriptionEl.contentEditable = true;
+        adviceEl.contentEditable = true;
+
+        nameEl.innerHTML = allergyObject.name;
+        //nameEl.appendChild(createAndReturnEditablePElement(allergyObject.name));
+        //nameEl.appendChild(document.createElement("p").isContentEditable=true);
+        tagEl.innerHTML = allergyObject.tags;
+        descriptionEl.innerHTML = allergyObject.description;
+        adviceEl.innerHTML = allergyObject.advice;
+        colorEl.appendChild(colorPicker);
+        deleteEl.appendChild(deleteButtonEl);
+        idEl.innerHTML = allergyObject.id;
+
+
+        trEl.appendChild(nameEl);
+        trEl.appendChild(tagEl);
+        trEl.appendChild(descriptionEl);
+        trEl.appendChild(adviceEl);
+        trEl.appendChild(colorEl);
+        trEl.appendChild(deleteEl);
+        trEl.appendChild(idEl);
+
+        return trEl;
+    }
+    function createNewAllergy(){
+        let tempAllergyObject = {"name": "Navn","tags": ["Tags"],"description": "Beskrivelse","advice": "Råd", "color": "black", "id":undefined};
+
+        tempAllergyObject.id = generateID();
+        return tempAllergyObject;
+    }
+
+
+    function createAndAddNewAllergy(){
+        let allergyObject = createNewAllergy();
+        let tableRowEl = createTableRow(allergyObject);
+        tableEL.appendChild(tableRowEl);
+    }
+
+    function createAndReturnEditablePElement(info){
+        let pEl = document.createElement("p");
+        pEl.contentEditable =true;
+        pEl.innerHTML = info;
+        return pEl;
+    }
+    function saveChanges(){
+
+    }
+    function saveSpecificAllergy(id){
+
+    }
+    function deleteAllergy(id){
+        id = {"id":id};
+        let xhr = new XMLHttpRequest();
+        let url = "/admin/allergies/delete/"+id.id;
+        xhr.open("POST", url, true);
+        //Send the proper header information along with the request
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = function() { // Call a function when the state changes.
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                // Request finished. Do processing here.
+            }
+        }
+        xhr.send(JSON.stringify(id));
+        //xhr.send(save);
+        // xhr.send(new Int8Array()); 
+        // xhr.send(document);
+        return;
+    }
+
+
+
+
+
+
+
+
+
+    //ID GENERATION
+    let IDList = [];
+    function generateID(){
+        let id1 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        let id2 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        let id3 = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        let id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        id = id+id1+id2+id3;
+        if(checkID(id)){
+            return id;
+        }else{
+            return generateID();
+        }
+    }
+    //ID CHECKER
+    function checkID(id){
+        for(let i=0; i<IDList.length;i++){
+            if(IDList[i] === id){
+                return false;
+            }
+        }
+        IDList.push(id);
+        return true;
+    }
+</script>
+{% endblock %}

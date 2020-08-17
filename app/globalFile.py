@@ -51,7 +51,9 @@ def initializeAllergyOverview():
             if(pathA):
                 overView = json.load(f)
                 return overView
+    return []
     print("[ALLERGY] - Overview Loaded!\n")
+    
 projectOverview = initializeProjectOverview()
 
 overView = initializeMemoryData()

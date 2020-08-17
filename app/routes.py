@@ -139,6 +139,11 @@ def user(username):
 def myPage():
     return render_template("index_flaskpage.html", obj=0, user= current_user)
 
+@app.route('/admin/allergies')
+@login_required
+def allergies():
+    print(allergyOverview)
+    return render_template('allergies.html', user=current_user, allergiesList=allergyOverview)
 
 
 @app.route("/save", methods=["post"])
