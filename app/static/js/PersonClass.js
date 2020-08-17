@@ -143,11 +143,14 @@ class Person{
     setGender(gender){
         this.gender = gender;
     }
-    
+    getGender(){
+        return this.gender;
+    }
 
     getId(){
         return this.id;
     }
+    
     
     export(){
         return self.JSON;

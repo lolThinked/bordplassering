@@ -43,7 +43,9 @@ let drawSettings = {
         "selectedColor":"#28313E",
         "selectingColor":"#1A1D24",
         "notSelectedColor":"#F9FFEE",
-        "standardAmountOfGuests":8
+        "standardAmountOfGuests":8,
+        "rundbordSymbol":"🔵",
+        "langbordSymbol":"🟦"
     },
     "person":{
         "color":"#6c936c",
@@ -54,9 +56,13 @@ let drawSettings = {
     },
     "statistics":{
         "pushStats":false,
+    },
+    "textStyling":{
+        "male": "🧍",
+        "female": "🧍‍♀️"
     }
 };
-
+let allergies =[];
 let transformX = 1342;
 let transformY = 208;
 

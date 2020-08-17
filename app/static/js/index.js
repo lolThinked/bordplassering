@@ -280,6 +280,7 @@ function update(e){
     //getStats();
     //pushStats();
     //pushStatsFast();
+    //createProjectInfoGUI();
     updateProjectInfoGUI();
 }
 

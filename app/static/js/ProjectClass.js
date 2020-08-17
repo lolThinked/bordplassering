@@ -25,6 +25,7 @@ class Project{
             loadPeopleIntoDrawing(this.guests, this);
             console.log(bord);
             loadPeopleToTheirTables(inData.guests, this);
+            
         }else{
             this.room = room || undefined;
             this.name = name || "Ditt Prosjekt";
@@ -40,6 +41,7 @@ class Project{
             console.log("[SETTING CREATION DATE] - PROJECT");
             this.setCreationDate();
         }
+        createProjectInfoGUI(this);
     }
     
     setName(name){

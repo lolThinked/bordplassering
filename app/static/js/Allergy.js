@@ -7,10 +7,21 @@ class Allergy{
         this.id = id || generateID();
         this.color = color || false;
     }
-
-
-
-
+    setName(name){
+        this.name = name;
+    }
+    setTag(tag){
+        this.tag = tag;
+    }
+    setDescription(description){
+        this.description = description;
+    }
+    setAdvice(advice){
+        this.advice = advice;
+    }
+    setColor(color){
+        this.color = color;
+    }
     getName(){
         return this.name;
     }

@@ -481,13 +481,15 @@ function ifPointInRectangle(pointX, pointY, rectangle, type){
     if(type=="person"){
         sumRectangle = tableScales.person.width*tableScales.person.height;
     }else if(type =="extraHitbox"){
-        sumRectangle =tableScales.rect.width*drawSettings.seatController.radius*2*tableScales.rect.height*drawSettings.seatController.radius*2;
+        console.log("[POINT IN RECTANGLE] (Extra hitbox)");
+        //console.log(tableScales.rect.width, drawSettings.seatController.radius*2, tableScales.rect.height, drawSettings.seatController.radius*2);
+        sumRectangle = ((tableScales.rect.width+(drawSettings.seat.height+ drawSettings.seatController.radius*2)) * (tableScales.rect.height +(drawSettings.seat.height + drawSettings.seatController.radius*2)));
     }
     let difference = sumRectangle-sumTriangleArea;
     if(difference >= (-1)){
-        console.log(difference);
-        console.log(sumRectangle);
-        console.log(sumTriangleArea);
+        //console.log(difference);
+        //console.log(sumRectangle);
+        //console.log(sumTriangleArea);
         return true;
     }
     return false
@@ -1276,9 +1278,18 @@ function deleteSelectedTables(){
     for(tables in selected){
         let table = selected[tables];
         deleteTable(table);
+        
     }
 }
 function deleteTable(table){
+    if(typeof(table) =="string"){
+        for(let tables in bord){
+            if(bord[tables].getId() == table){
+                table = bord[tables];
+                break;
+            }
+        }
+    }
     for(tables in bord){
         let bordTable = bord[tables];
         if(bordTable === table){
@@ -1286,6 +1297,7 @@ function deleteTable(table){
             break;
         }
     }
+    document.getElementById("gui-table-info-content").childNodes[0].removeChild(document.getElementById(table.getId()));
 }
 
 
@@ -1579,6 +1591,40 @@ function getLoadByID(id){
     //xhr.send(id);
     //xhr.send(sendPackage);
 }
+/////////
+function getAllergiesFromServer(){
+    let xhr = new XMLHttpRequest();
+    let url = "/project/getAllergies";
+    xhr.open("GET", url, true);
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Request finished. Do processing here.
+            overView = JSON.parse(xhr.response);
+            console.log("[OVERVIEW REQUEST] - Datatype: "+typeof(overView));
+            loadPresets(overView);
+        }
+    }
+    xhr.send();
+}
+function saveAllergiesToServer(allergies){
+    let sendPackage = allergies;
+    let xhr = new XMLHttpRequest();
+    let url = "/project/saveAllergies";
+    xhr.open("POST", url, true);
+    //Send the proper header information along with the request
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Request finished. Do processing here.
+            console.log(this.responseText);
+        }
+    }
+    xhr.send(JSON.stringify(sendPackage));
+}
+
 
 
 //Redirects to load the requested preset
@@ -2030,19 +2076,33 @@ function loadTable(value){
         }
     }
 }
-function updateProjectInfoGUI(){
+function createProjectInfoGUI(projectRef){
+    if(projectRef ==undefined){
+        if(project==undefined){
+            console.log("[ERROR] - Project not defined");
+            return false
+        }
+    }else{
+        if(project == undefined){
+            project = projectRef;
+        }
+    }
+    console.trace();
     if(project != undefined){
         let headerElement = document.querySelector("#gui-project-info > div > h1");
         let contentElement= document.querySelectorAll("#gui-project-info > div")[1];
+        let projectDateEL = document.createElement("h3");
+        let projectInfoContainerDiv = document.createElement("div");
         let personContainer = document.createElement("div");
         personContainer.className = "gui-project-list-container";
         headerElement.innerHTML = project.getName();
         contentElement.innerHTML ="";
-        contentElement.innerHTML += "<h3>📅: " + project.getDateText() + "</h3>";
+        projectDateEL.innerHTML = "📅: " + project.getDateText();
+        projectInfoContainerDiv.appendChild(projectDateEL);
+        contentElement.appendChild(projectInfoContainerDiv);
+        //contentElement.innerHTML += "<h3>📅: " + project.getDateText() + "</h3>";
         let guests = project.getGuests();
-        /*
-        guests.sort(function(a, b){
-            //console.log(b);
+        /*guests.sort(function(a, b){
             let string1 = a.getSurname().slice();
             let string2 = b.getSurname().slice();
             let comapreValue = string1.localeCompare(string2);
@@ -2053,29 +2113,9 @@ function updateProjectInfoGUI(){
             }else{
                 b
             }
-        });
-        */
+        });*/
         for(let i = 0; i<guests.length; i++){
-            let personDiv = document.createElement("div");
-            let personName = document.createElement("h3");
-            let deletePersonButton = document.createElement("button");
-            deletePersonButton.innerHTML ="🗑";
-            deletePersonButton.className = "deletePersonButton";
-            let tempId = guests[i].getId().slice();
-            //deletePersonButton.onclick = deletePersonAndSave(guest[i].getId());
-            deletePersonButton.addEventListener('click', function(){
-                //confirmDeletePerson("'"+guests[i].getId()+"'");
-                confirmDeletePerson(tempId);
-            });
-            personName.innerHTML = "🧍"+guests[i].getFullName()+"🧍‍♀️";
-            personName.className ="personVisningText";
-            personDiv.onclick=loadPerson;
-            personDiv.id = guests[i].getId();
-            personDiv.className = "personVisningsDiv";
-            personName.id = guests[i].getId();
-            personDiv.appendChild(personName);
-            personDiv.appendChild(deletePersonButton);
-            personContainer.appendChild(personDiv);
+            personContainer.appendChild(createPersonDiv(guests[i]));
         }
         contentElement.appendChild(personContainer);
 
@@ -2089,24 +2129,139 @@ function updateProjectInfoGUI(){
             for(tables in project.getTables()){
                 let table = project.getTables()[tables];
                 if(table.returnType()=="rundbord"||table.returnType()=="langbord"){
-                    let tableDiv = document.createElement("div");
-                    let tableName = document.createElement("h3");
-                    tableName.innerHTML = "🧍"+table.descriptor+"🧍‍♀️";
-                    let id = table.getId().slice();
-                    tableDiv.onclick="loadTable("+id+")";
-                    tableDiv.onclick=loadTable;
-                    //tableDiv.id = project.getTables()[table].getId();
-                    tableDiv.id = table.getId();
-                    tableDiv.className = "tableVisningsDiv";
-                    //tableName.id = project.getTables()[table].getId();
-                    tableName.id = table.getId();
-                    tableDiv.appendChild(tableName);
-                    tableContainer.appendChild(tableDiv);
+                    tableContainer.appendChild(createTableDiv(table));
                 }   
             }
             tableContent.appendChild(tableContainer);
         }
 
+    }
+}
+function createPersonDiv(prs){
+    let personDiv = document.createElement("div");
+    let personName = document.createElement("h3");
+    let deletePersonButton = document.createElement("button");
+    deletePersonButton.innerHTML ="🗑";
+    deletePersonButton.className = "deletePersonButton";
+    let tempId = prs.getId().slice();
+    //deletePersonButton.onclick = deletePersonAndSave(guest[i].getId());
+    deletePersonButton.addEventListener('click', function(){
+        //confirmDeletePerson("'"+prs.getId()+"'");
+        confirmDeletePerson(tempId);
+    });
+    personName.innerHTML = "🧍"+prs.getFullName()+"🧍‍♀️";
+    personName.className ="personVisningText";
+    personDiv.onclick=loadPerson;
+    personDiv.id = prs.getId();
+    personDiv.className = "personVisningsDiv";
+    personName.id = prs.getId();
+    personDiv.appendChild(personName);
+    personDiv.appendChild(deletePersonButton);
+    return personDiv;
+}
+
+function createTableDiv(table){
+    let tableDiv = document.createElement("div");
+    let tableName = document.createElement("h3");
+    let tableDeleteButton = document.createElement("button");
+    tableName.innerHTML = "🧍"+table.descriptor+"🧍‍♀️";
+    tableName.className ="tableVisningsText";
+    let id = table.getId().slice();
+    tableDiv.onclick="loadTable("+id+")";
+    tableDiv.onclick=loadTable;
+    //tableDiv.id = project.getTables()[table].getId();
+    tableDiv.id = table.getId();
+    tableDiv.className = "tableVisningsDiv";
+    tableDeleteButton.innerHTML ="🗑";
+    tableDeleteButton.className = "deleteTableButton";
+    tableDeleteButton.addEventListener('click', function(){
+        //confirmDeletePerson("'"+prs.getId()+"'");
+        deleteTable(id);
+    });
+    //tableName.id = project.getTables()[table].getId();
+    tableName.id = table.getId();
+    tableDiv.appendChild(tableName);
+    tableDiv.appendChild(tableDeleteButton);
+
+    return tableDiv;
+}
+
+function updateProjectInfoGUI(){
+
+    if(project!= undefined){
+        let projectContentEl = document.getElementById("gui-project-info-content");
+        let tableContentDivContainer = document.getElementById("gui-table-info-content");
+        //Update Persons
+        console.log("Updating Project GUI");
+        let guests = project.getGuests();
+        let prsListEls =[];
+        let tblListEls =[];
+        for(let i=0; i<guests.length; i++){
+            let prs = guests[i];
+            ///////
+            //Get DOM ELEMENT
+            let divEl = document.getElementById(prs.getId());
+            if(divEl!= undefined){
+                let gender;
+                if(prs.getGender() =="Mann" || prs.getGender() =="Man"){
+                    gender = drawSettings.textStyling.male;
+                }else{
+                    gender = drawSettings.textStyling.female;
+                }
+                let prsNameString = gender+prs.getFullName()+gender;
+                divEl.childNodes[0].innerHTML = prsNameString;
+                prsListEls.push(divEl);
+            }else{
+                projectContentEl.childNodes[1].appendChild(createPersonDiv(prs));
+            }
+            
+        }
+        /*
+        for(let i=0; i<prsListEls.length; i++){
+            let check = false;
+            for(let j=0;j<project.getGuests().length;j++){
+                if(prsListEls[i].id == project.getGuests()[j].getId()){
+                    check = true;
+                }
+            }
+            if(!check){
+                projectContentEl.removeChild(prsListEls[i]);
+            }
+        }
+        */
+        //Update Tables
+        for(let i=0; i<bord.length; i++){
+            if(bord[i].returnType() =="langbord" || bord[i].returnType() =="rundbord"){
+                let table = bord[i];
+                /////
+                let extras = drawSettings.table.langbordSymbol;
+                if(table.returnType() =="rundbord"){
+                    extras = drawSettings.table.rundbordSymbol;
+                }
+                let tableEl = document.getElementById(table.getId());
+                if(tableEl!=undefined){
+                    tableEl.childNodes[0].innerHTML = table.descriptor + " - "+ extras;
+                    tblListEls.push(tableEl);
+                }else{
+                    //console.log(tableContentDivContainer);
+                    tableContentDivContainer.childNodes[0].appendChild(createTableDiv(table));
+                }
+            }
+            //tblListEls
+        }
+        /*
+        for(let i=0; i<tblListEls.length; i++){
+            let check = false;
+            for(let j=0;j<bord.length;j++){
+                if(prsListEls[i].id == bord[j].getId()){
+                    check = true;
+                }
+            }
+            if(!check){
+                tableContentDivContainer[0].removeChild(prsListEls[i]);
+            }
+        }
+        */
     }
 }
 
@@ -2257,17 +2412,17 @@ function loadPeopleToTheirTables(guestList, prjRef){
             if(person.getSeat() != undefined){
                 seatPos = person.getSeat().getPosition();
             }else{
-                console.log("GOT INFO FROM TABLE CENTER");
+                //console.log("GOT INFO FROM TABLE CENTER");
                 seatPos = person.getTable().returnCenter();
             }
-            console.log("[SEAT POS]");
-            console.log(seatPos);
+            //console.log("[SEAT POS]");
+            //console.log(seatPos);
             personDrawingObject.updatePositionNEW(seatPos[0], seatPos[1]);
-            console.log(personDrawingObject);
+            //console.log(personDrawingObject);
             if(personSeat){
                 person.getSeat().addDrawingObjectReference(personDrawingObject);
             }
-            console.log(person);
+            //console.log(person);
             
         }
 
@@ -2299,6 +2454,7 @@ function confirmDeletePerson(person){
     }
     if(confirm("Er du helt sikker på at du vil slette: " + person.getFullName())){
         deletePersonAndSave(person);
+        document.getElementById("gui-project-info-content").childNodes[1].removeChild(document.getElementById(person.getId()));
     }else{
         console.log("Person not deleted: " + person.getFullName());
     }  
@@ -2369,5 +2525,4 @@ function deletePersonAndSave(person){
         }
     }
     xhr.send(JSON.stringify(data));
-    
 }

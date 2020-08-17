@@ -1,17 +1,4 @@
-2020-08-09 22:58:48,410 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-09 23:01:04,672 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-09 23:02:41,285 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-09 23:09:29,524 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-09 23:16:40,355 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-09 23:25:17,926 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-09 23:30:47,018 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-09 23:31:07,199 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-09 23:31:47,383 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-09 23:32:00,571 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-09 23:32:14,073 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-10 13:46:39,257 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 00:57:04,201 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 00:57:14,093 ERROR: Exception on /project/load/9e4dbc0cc633ff81 [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+2020-08-13 20:58:33,898 ERROR: Exception on /project/load/9e4dbc0cc633ff81 [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -25,12 +12,14 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 246, in getProjectById
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 279, in getProjectById
     projectData["guests"].append(retrieveProjectGuestFromId(guest, identifier))
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 410, in retrieveProjectGuestFromId
-    with open("Saved/Projects/"+projectId+"/Person"+id+".json","r") as f:
-FileNotFoundError: [Errno 2] No such file or directory: 'Saved/Projects/9e4dbc0cc633ff81/Person05b3e2882e740d88.json'
-2020-08-11 00:57:14,160 ERROR: Exception on /project/load/9e4dbc0cc633ff81 [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 443, in retrieveProjectGuestFromId
+    with open("Saved/Projects/"+projectId+"/Person/"+id+".json","r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'Saved/Projects/9e4dbc0cc633ff81/Person/821f32acb7f7cf93.json'
+2020-08-14 00:25:27,420 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 00:32:09,301 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 00:32:46,131 ERROR: Exception on /project/load/9e4dbc0cc633ff81 [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -44,19 +33,13 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 246, in getProjectById
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 279, in getProjectById
     projectData["guests"].append(retrieveProjectGuestFromId(guest, identifier))
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 410, in retrieveProjectGuestFromId
-    with open("Saved/Projects/"+projectId+"/Person"+id+".json","r") as f:
-FileNotFoundError: [Errno 2] No such file or directory: 'Saved/Projects/9e4dbc0cc633ff81/Person05b3e2882e740d88.json'
-2020-08-11 00:57:48,830 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 01:02:59,359 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 01:03:39,613 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 01:05:45,418 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 01:12:48,710 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 01:18:55,136 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 01:19:31,218 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 01:24:48,569 ERROR: Exception on /save [POST] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 443, in retrieveProjectGuestFromId
+    with open("Saved/Projects/"+projectId+"/Person/"+id+".json","r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'Saved/Projects/9e4dbc0cc633ff81/Person/a49914a4df185c0e.json'
+2020-08-14 00:37:29,819 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 00:37:38,776 ERROR: Exception on /project/load/9e4dbc0cc633ff81 [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -70,15 +53,39 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 148, in saveData
-    dic = eval(inData)
-  File "<string>", line 1, in <module>
-NameError: name 'null' is not defined
-2020-08-11 01:41:25,067 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 01:42:03,100 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 01:42:23,935 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 01:43:10,719 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 01:43:29,169 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-11 21:42:20,692 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-13 20:53:19,931 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
-2020-08-13 20:58:27,610 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 279, in getProjectById
+    projectData["guests"].append(retrieveProjectGuestFromId(guest, identifier))
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 443, in retrieveProjectGuestFromId
+    with open("Saved/Projects/"+projectId+"/Person/"+id+".json","r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'Saved/Projects/9e4dbc0cc633ff81/Person/1d84637cde19fe59.json'
+2020-08-14 00:38:07,107 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 00:43:58,488 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 00:52:09,756 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 00:53:56,101 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 01:04:50,524 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 01:10:29,288 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 01:12:02,038 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 01:15:39,970 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 01:23:23,702 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 01:24:11,196 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 02:57:21,564 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 02:57:48,572 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 03:01:07,041 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 03:06:00,862 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 03:07:26,413 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 03:11:24,001 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 03:11:54,060 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 11:49:00,203 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 12:12:18,998 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-14 12:14:18,103 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-15 12:42:14,042 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-15 22:53:23,117 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-15 22:53:59,815 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-16 02:06:49,408 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-16 02:07:29,734 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-16 02:08:25,138 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-16 02:10:32,793 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-16 02:12:51,406 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-16 02:13:41,690 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-16 02:15:12,360 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]
+2020-08-16 02:22:15,011 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:70]

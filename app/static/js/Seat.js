@@ -7,7 +7,7 @@ class SeatController{
         this.y = tempValue[1];
         this.seats = [];
         this.radius = parentTable.returnWidth() + 20;
-        this.distanceBewteenPointsOncircle;
+        this.distanceBewteenPointsOncircle = 0;
         //console.log(this.numberOfSeats);
         if(parentTable.returnType() =="rundbord"){
             let distanceBewteenPointsOncircle = (Math.PI*2)/this.numberOfSeats;
@@ -67,6 +67,7 @@ class SeatController{
                 this.seats[this.numberOfSeats-2] = new Seat(xV, yV, this, this.numberOfSeats-2);
             }
             let distanceBetweenPointsOnLine = centerLine.length/numberPerSide;
+            this.distanceBewteenPointsOncircle = distanceBetweenPointsOnLine/2;
             //Adding other seats
             for(let i=0;i<(this.numberOfSeats-limiter)/2; i++){
                 let startingX = centerLine.start[0] + i*distanceBetweenPointsOnLine*Math.sin(centerLine.angle) + distanceBetweenPointsOnLine/2*Math.sin(centerLine.angle);
@@ -90,7 +91,7 @@ class SeatController{
         }
     }
     addGuestWithSeatNumber(person, seatNumber){
-        console.log(seatNumber);
+        //console.log(seatNumber);
         this.seats[seatNumber].addPerson(person);
     }
     returnDistanceBetweenTables(){
@@ -220,7 +221,8 @@ class Seat{
 
     checkIfCordinatesIsLessThanRadiusAway(mseX, mseY){
         let distanceCheck = drawSettings.seat.width;
-        distanceCheck = this.seatController.returnDistanceBetweenTables()*tableScales.circle.width;
+        //distanceCheck = this.seatController.returnDistanceBetweenTables()+tableScales.circle.width;
+        distanceCheck = this.seatController.returnDistanceBetweenTables()/2 + drawSettings.seat.width;
         let difx = mseX-this.x;
         let dify = mseY-this.y;
         console.log(difx,mseX,this.x, dify);

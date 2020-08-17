@@ -1,14 +1,39 @@
-input[type=text], select, input[type="password"]{
+input[type=text], select, input[type="password"], input[type="number"]{
     width: 55%;
     min-width: 200px;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;
     border-radius: 4px;
     box-sizing: border-box;
+    background-color: transparent;
+    color: #73a4bb;
+    transition:0.2s;
   }
   
+input[type=text]:focus label{
+  position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #9b9b9b;
+    font-weight:700;  
+}
+
+input[type=text]:focus, select:focus, input[type="password"]:focus, input[type="number"]:focus{
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;
+    padding-bottom: 10px;  
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, #11998e, #38ef7d);
+    border-image-slice: 1;
+    outline: none;
+}
+
   input[type=submit] {
     width: 19%;
     background-color: #348539;

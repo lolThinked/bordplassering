@@ -202,7 +202,13 @@ class Bord{
             for(tbls in bord){
                 if(bord[tbls].returnPositionInfo()[0] === "person"){
                     if(bord[tbls].getId() === prs.getId()){
-                        bord[tbls].updatePositionNEW(x,y);
+                        //bord[tbls].updatePositionNEW(x,y);
+                        if(this.bordType =="langbord"){
+                            bord[tbls].updatePositionNEW(this.descriptorX,this.descriptorY);
+                        }else{
+                            bord[tbls].updatePositionNEW(x,y);
+                        }
+                        
                     }
                 }
             }
