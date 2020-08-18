@@ -25,10 +25,10 @@
     color: white;
 }
 
-.personVisningsDiv, .tableVisningsDiv{
+.personVisningsDiv, .tableVisningsDiv, .allergiVisningsDiv{
     display: flex;
 }
-.personVisningText, .tableVisningsText{
+.personVisningText, .tableVisningsText, .allergiVisningsDiv{
     float: left;
     flex: auto;
     flex-grow: 0.8;

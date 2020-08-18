@@ -276,6 +276,15 @@
     margin: 5px;
     cursor: pointer;
 }
+.allergiVisningsDiv{
+    width: 100%;
+    border: 1px dashed #b0b0b0;
+    margin: 5px;
+    cursor: pointer;
+}
+.allergiVisningsDiv:hover{
+    background-color: #4CAF50;
+}
 .personVisningsDiv:hover{
     background-color: #4CAF50;
 }

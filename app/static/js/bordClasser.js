@@ -40,7 +40,7 @@ class Bord{
             //console.log(this.vectorDiagonal);
         }else if(bordType =="rundbord"){
             this.height = this.width= tableScales.circle.width;
-            this.total = 8;
+            this.total = 6;
             this.descriptorX = (this.x + this.width/2);
             this.descriptorY = this.y + this.height/2;
         }
@@ -54,6 +54,10 @@ class Bord{
             this.unseatedPersons.push(guest);
         }
         this.persons.push(guest);
+    }
+    changeTotalSeats(number){
+        this.total = number;
+        this.seats = new SeatController(this);
     }
     getId(){
         return this.id;
@@ -286,20 +290,19 @@ class Bord{
             pARR[0] = this.drawPoints[0][0]+(-1)*drawSettings.seatController.radius*Math.sin(this.rotation)+(-1)*drawSettings.seatController.radius*Math.cos(this.rotation);
             pARR[1] = this.drawPoints[0][1]+(-1)*drawSettings.seatController.radius*Math.cos(this.rotation)+(-1)*drawSettings.seatController.radius*Math.sin(this.rotation);
             pARR = extendedHitboxDrawpoints[1];
-            //extendedHitboxDrawpoints[0] = pARR;
+            
             pARR[0] = this.drawPoints[1][0]+(1)*drawSettings.seatController.radius*Math.sin(this.rotation)+(1)*drawSettings.seatController.radius*Math.cos(this.rotation);
             pARR[1] = this.drawPoints[1][1]+(-1)*drawSettings.seatController.radius*Math.cos(this.rotation)+(-1)*drawSettings.seatController.radius*Math.sin(this.rotation);
             pARR = extendedHitboxDrawpoints[2];
-            //extendedHitboxDrawpoints[1] = pARR;
+            
             pARR[0] = this.drawPoints[2][0]+(1)*drawSettings.seatController.radius*Math.sin(this.rotation)+(1)*drawSettings.seatController.radius*Math.cos(this.rotation);
             pARR[1] = this.drawPoints[2][1]+(1)*drawSettings.seatController.radius*Math.cos(this.rotation)+(1)*drawSettings.seatController.radius*Math.sin(this.rotation);
             pARR = extendedHitboxDrawpoints[3];
-            //extendedHitboxDrawpoints[2] = pARR;
+            
             pARR[0] = this.drawPoints[3][0]+(-1)*drawSettings.seatController.radius*Math.sin(this.rotation)+(-1)*drawSettings.seatController.radius*Math.cos(this.rotation);
             pARR[1] = this.drawPoints[3][1]+(1)*drawSettings.seatController.radius*Math.cos(this.rotation)+(1)*drawSettings.seatController.radius*Math.sin(this.rotation);
-            //extendedHitboxDrawpoints[3] = pARR;
-            console.log(extendedHitboxDrawpoints);
-            console.log(this.drawPoints);
+            //console.log(extendedHitboxDrawpoints);
+            //console.log(this.drawPoints);
             if(ifPointInRectangle(x, y, extendedHitboxDrawpoints, "extraHitbox")){
                 console.log("[TRUE]");
                 return true
@@ -314,12 +317,11 @@ class Bord{
             }
             
         }
-        
         return false;
     }
 
 
-    drawMyself(){
+    async drawMyself(){
         let halvparten =(ctx.measureText(this.descriptor).width/2);
         if(this.bordType =="langbord"){
             //RECTANGLE

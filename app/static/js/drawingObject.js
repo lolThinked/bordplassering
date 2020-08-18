@@ -339,6 +339,7 @@ class drawingObject{
             ctx.strokeStyle = drawSettings.person.textStroke;
             ctx.fillText(this.descriptor, this.descriptorX-halvparten, this.descriptorY);
             ctx.strokeText(this.descriptor, this.descriptorX-halvparten, this.descriptorY);
+            let textHeight = ctx.measureText(this.descriptor).height;
         }
         ctx.strokeStyle = drawSettings.standard.strokeColor;
         ctx.lineWidth =drawSettings.standard.lineWidth;

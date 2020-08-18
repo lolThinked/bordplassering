@@ -1,4 +1,35 @@
 .tableClassName{
     background-color: #454545;
     margin: auto;
+    width: 80%;
+    border: 2px solid white;
+}
+body{
+    background-color: #202020;
+}
+a{
+    color:#ff00fe;
+}
+tr{
+    border: 1px solid black;
+}
+td{
+    background-color: #454545;
+    padding: 2px;
+}
+td:hover{
+    background-color: #151515;
+    color: #b5b5b5;
+    border: 1px solid #a2a2a2;
+    padding: 1px;
+}
+input[type="color"]:hover{
+    cursor: pointer;
+
+}
+button{
+    background-color: azure;
+}
+button:hover{
+    background-color: #395e73;
 }

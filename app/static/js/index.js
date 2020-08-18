@@ -32,6 +32,10 @@ var bord = [];
 let drawingObjects = bord;
 var obstacles = [];
 let drawLater = [];
+
+var myWorker = new Worker('{{ url_for('static', filename="js/worker.js")}}');
+
+
 canvasEl.addEventListener("mousemove", update(event));
 
 canvasEl.addEventListener("mousedown", setBord(event));
@@ -180,17 +184,18 @@ function update(e){
         addTableStacking =0;
     }
     tblPreview =false;
+    let checkIfTableCheck = checkIfTable(mouseX, mouseY);
     //Change mouse to pointer if over table
-    if(checkIfTable(mouseX, mouseY) && !mouseIsPressed){
+    if(checkIfTableCheck && !mouseIsPressed){
         canvasEl.style.cursor = "grab";
-    }else if(checkIfTable(mouseX, mouseY)!= true){
+    }else if(checkIfTableCheck!= true){
         if(mouseIsMove != true){
             canvasEl.style.cursor = "move";
         }
         if(shiftIsPressed){
             canvasEl.style.cursor ="crosshair";
         }
-    }else if(checkIfTable(mouseX, mouseY) && mouseIsPressed){
+    }else if(checkIfTableCheck && mouseIsPressed){
         canvasEl.style.cursor ="grabbing";
     }
     //drawTablePreview();
@@ -209,7 +214,7 @@ function update(e){
     //ctx.drawImage(backgroundImg, scaleBilde*0.1 ,backgroundImg.height*0.1  , scaleBilde*0.8,backgroundImg.height*0.8);
     //redraw();
     
-    let skrapeMerker = document.getElementById("skrapeMerker");
+    //let skrapeMerker = document.getElementById("skrapeMerker");
     //ctx.drawImage(skrapeMerker, 0 , 0, skrapeMerker.width, skrapeMerker.height);
     for(var i = 0; i<obstacles.length; i++){
         //obstacles[i].drawMyself();
@@ -282,6 +287,7 @@ function update(e){
     //pushStatsFast();
     //createProjectInfoGUI();
     updateProjectInfoGUI();
+    myWorker.postMessage("updateGui");
 }
 
 function deleteBord(e){

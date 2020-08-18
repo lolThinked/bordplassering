@@ -235,7 +235,7 @@ class Seat{
         }
     }
     //50cm?
-    drawMyself(){
+    async drawMyself(){
 
         if(!this.person){
             //console.log(this);git add

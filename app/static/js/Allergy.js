@@ -1,11 +1,21 @@
 class Allergy{
     constructor(name, tags, description, advice, id, color){
-        this.name = name || "Ingen navn";
-        this.tags = tags || [];
-        this.description = description || "Ingen beskrivelse";
-        this.advice = advice || "Ingen råd";
-        this.id = id || generateID();
-        this.color = color || false;
+        if(arguments.length == 1 && (typeof(arguments[0]) === "object")){
+            let inData = arguments[0];
+            this.name = inData.name || "Ingen navn";
+            this.tags = inData.tags || "Ingen tag";
+            this.description = inData.description || "Ingen beskrivelse";
+            this.advice = inData.advice || "Ingen råd";
+            this.id = inData.id || generateID();
+            this.color = inData.color || false;
+        }else{
+            this.name = name || "Ingen navn";
+            this.tags = tags || "Ingen tag";
+            this.description = description || "Ingen beskrivelse";
+            this.advice = advice || "Ingen råd";
+            this.id = id || generateID();
+            this.color = color || false;
+        } 
     }
     setName(name){
         this.name = name;

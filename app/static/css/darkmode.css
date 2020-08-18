@@ -35,4 +35,5 @@ body, .new-app{
 .gui-container{
     background-color: #101010;
     border: 1px solid #424242;
+    justify-content: center;
 }

@@ -103,7 +103,22 @@ class Person{
 
     //ADDS and allergy reference to the allergy list
     addAllergy(allergy){
-        this.allergies.Push(allergy);
+        if(typeof(allergy) == "string"){
+            allergy = getAllergyById(allergy);
+        }
+        this.allergies.push(allergy);
+    }
+    removeAllergy(allergy){
+        if(typeof(allergy) == "string"){
+            allergy = getAllergyById(allergy);
+        }
+        for(let aller in this.allergies){
+            if(allergy == this.allergies[aller]){
+                this.allergies.splice(aller,1);
+                return true
+            }
+        }
+        return false
     }
     
 

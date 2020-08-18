@@ -46,12 +46,12 @@ def initializeProjectOverview():
 def initializeAllergyOverview():
     pathA = os.path.exists("Saved/Allergy/overview.json")
     filesize = os.path.getsize("Saved/Allergy/overview.json")
-    with open("Saved/overView.json", "r") as f:
+    with open("Saved/Allergy/overView.json", "r") as f:
         if(filesize !=0):
             if(pathA):
                 overView = json.load(f)
                 return overView
-    return []
+    return {}
     print("[ALLERGY] - Overview Loaded!\n")
     
 projectOverview = initializeProjectOverview()

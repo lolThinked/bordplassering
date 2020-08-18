@@ -9,6 +9,7 @@
   <script>
     //var preLoaded = JSON.parse({{obj|safe}});
     let preLoaded = {{obj|safe}};
+    let allergiesFromServer = {{allergiesList|safe}};
     console.log(preLoaded);
   </script>
 
@@ -27,6 +28,7 @@
   <script src={{ url_for('static', filename='js/ProjectClass.js')}} ></script>
   <script src={{ url_for('static', filename='js/drawingObject.js')}} ></script>
   <script src={{ url_for('static', filename='js/projectFunctions.js')}} ></script>
+  <script src={{ url_for('static', filename='js/worker.js')}} ></script>
   <script>
       
   </script>
@@ -385,8 +387,13 @@
                         <input type="text" id="surname-for-person" class="personInput" placeholder="Etternavn">
                         <input type="number" min="0" id="age-for-person" class="personInput" placeholder="Alder">
                         <input type="text" id="gender-for-person" class="personInput" placeholder="Kjønn">
-                        <button onclick="makePerson()">Legg til [+]</button>
-                        <button onclick="changePerson()">Endre ✎</button>
+                        <div>
+                            <button onclick="makePerson()">Legg til [+]</button>
+                            <button onclick="changePerson()">Endre ✎</button>
+                        </div>
+                        <div class="allergyListDiv" id="allergyListDiv">
+
+                        </div>
                         <form>
                             <select id="allergy-for-person" class="personInput">
                                 <option value="alkohol">alkohol</option>
@@ -395,6 +402,7 @@
                                 <option value="Fisk">Fisk</option>
                                 <option value="Vegan">Vegan</option>
                             </select>
+                            <button type="button" id="addAllergyToSelectedPerson" onclick="addAllergyFromSelectToPerson()"> [+] </button>
                             
                         </form>
                         

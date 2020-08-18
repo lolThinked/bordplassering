@@ -481,7 +481,7 @@ function ifPointInRectangle(pointX, pointY, rectangle, type){
     if(type=="person"){
         sumRectangle = tableScales.person.width*tableScales.person.height;
     }else if(type =="extraHitbox"){
-        console.log("[POINT IN RECTANGLE] (Extra hitbox)");
+        //console.log("[POINT IN RECTANGLE] (Extra hitbox)");
         //console.log(tableScales.rect.width, drawSettings.seatController.radius*2, tableScales.rect.height, drawSettings.seatController.radius*2);
         sumRectangle = ((tableScales.rect.width+(drawSettings.seat.height+ drawSettings.seatController.radius*2)) * (tableScales.rect.height +(drawSettings.seat.height + drawSettings.seatController.radius*2)));
     }
@@ -719,7 +719,7 @@ function addPersonToDrawing(person, projectReference){
         let tempPerson=new drawingObject(200+addTableStacking, 100, "person",0,person.getFullName(), person.getFirstName(), person.getId());
         tempPerson.addReferenceFromId(projectReference);
         drawingObjects.push(tempPerson);
-        addTableStacking+=20;
+        addTableStacking+=50;
         console.log(tempPerson);
         person.setDrawingObject(tempPerson);
     }else{
@@ -931,7 +931,7 @@ function redraw(){
 
 }
 
-function drawFrame(){
+async function drawFrame(){
     ctx.font ="25px Arial";
     //CLEAR FRAME
     ctx.clearRect(-window.innerWidth,-window.innerHeight, window.innerWidth*4, window.innerHeight*4);
@@ -2185,8 +2185,41 @@ function createTableDiv(table){
 
     return tableDiv;
 }
-
-function updateProjectInfoGUI(){
+async function updateOrCreatePersonDIVGUI(projectContentEl, prs){
+    let divEl = document.getElementById(prs.getId());
+        if(divEl!= undefined){
+            let gender;
+            if(prs.getGender() =="Mann" || prs.getGender() =="Man"){
+                gender = drawSettings.textStyling.male;
+            }else{
+                gender = drawSettings.textStyling.female;
+            }
+            let prsNameString = gender+prs.getFullName()+gender;
+            divEl.childNodes[0].innerHTML = prsNameString;
+            prsListEls.push(divEl);
+        }else{
+            projectContentEl.childNodes[1].appendChild(createPersonDiv(prs));
+        }
+}
+async function updateOrCreateTableDIVGUI(tableContentDivContainer, table){
+    if(table.returnType() =="langbord" || table.returnType() =="rundbord"){
+        let table = bord[i];
+        /////
+        let extras = drawSettings.table.langbordSymbol;
+        if(table.returnType() =="rundbord"){
+            extras = drawSettings.table.rundbordSymbol;
+        }
+        let tableEl = document.getElementById(table.getId());
+        if(tableEl!=undefined){
+            tableEl.childNodes[0].innerHTML = table.descriptor + " - "+ extras;
+            tblListEls.push(tableEl);
+        }else{
+            //console.log(tableContentDivContainer);
+            tableContentDivContainer.childNodes[0].appendChild(createTableDiv(table));
+        }
+    }
+}
+async function updateProjectInfoGUI(){
 
     if(project!= undefined){
         let projectContentEl = document.getElementById("gui-project-info-content");
@@ -2200,6 +2233,7 @@ function updateProjectInfoGUI(){
             let prs = guests[i];
             ///////
             //Get DOM ELEMENT
+            /*
             let divEl = document.getElementById(prs.getId());
             if(divEl!= undefined){
                 let gender;
@@ -2214,7 +2248,9 @@ function updateProjectInfoGUI(){
             }else{
                 projectContentEl.childNodes[1].appendChild(createPersonDiv(prs));
             }
-            
+            */
+           //ASYNCED
+           updateOrCreatePersonDIVGUI(projectContentEl,prs);
         }
         /*
         for(let i=0; i<prsListEls.length; i++){
@@ -2231,6 +2267,7 @@ function updateProjectInfoGUI(){
         */
         //Update Tables
         for(let i=0; i<bord.length; i++){
+            /*
             if(bord[i].returnType() =="langbord" || bord[i].returnType() =="rundbord"){
                 let table = bord[i];
                 /////
@@ -2247,7 +2284,10 @@ function updateProjectInfoGUI(){
                     tableContentDivContainer.childNodes[0].appendChild(createTableDiv(table));
                 }
             }
+            */
             //tblListEls
+            table = bord[i];
+            updateOrCreatePersonDIVGUI(tableContentDivContainer,table);
         }
         /*
         for(let i=0; i<tblListEls.length; i++){
@@ -2294,9 +2334,37 @@ function loadPerson(value){
     let dataToLoop = personObject.getDataForLoadPerson();
     for(let i = 0; i<dataToLoop.length; i++){
         iEls[i].value = dataToLoop[i];
-        console.log(iEls[i]);
-        console.log(dataToLoop[i]);
+        //console.log(iEls[i]);
+        //console.log(dataToLoop[i]);
     }
+    let personAllergyList = personObject.getAllergies();
+    let allergyContainerDivEl = document.getElementById("allergyListDiv");
+    allergyContainerDivEl.innerHTML = "";
+    for(let alrg in personAllergyList){
+        let allergy = personAllergyList[alrg];
+        let tempDiv = document.createElement("div");
+        let alrgName = document.createElement("h3");
+        tempDiv.className = "allergiVisningsDiv";
+        let deleteBtn = document.createElement("button");
+        deleteBtn.innerHTML ="🗑";
+        deleteBtn.className = "deletePersonButton";
+        deleteBtn.addEventListener("click", function(){
+            personObject.removeAllergy(allergy.getId());
+        });
+
+        alrgName.innerHTML = allergy.getName()+"("+allergy.getTag()+")";
+        alrgName.style.color =allergy.getColor();
+        
+
+
+        tempDiv.appendChild(alrgName);
+        tempDiv.appendChild(deleteBtn);
+        allergyContainerDivEl.appendChild(tempDiv);
+
+
+    }
+
+
     document.getElementById("IDPERSON").innerHTML = id;
 }
 
@@ -2526,3 +2594,47 @@ function deletePersonAndSave(person){
     }
     xhr.send(JSON.stringify(data));
 }
+
+function initAllergyObjects(){
+    let allergySelectEl = document.getElementById("allergy-for-person");
+    allergySelectEl.innerHTML = "";
+    if(allergiesFromServer != undefined && allergiesFromServer!=0){
+
+    }else{
+        //Request Allergies
+    }
+    for(let allerg in allergiesFromServer){
+        let allergyObj = allergiesFromServer[allerg];
+        let optionEl = document.createElement("option");
+        optionEl.value = allergyObj.id;
+        optionEl.innerHTML = allergyObj.name +"("+allergyObj.tags+")";
+        optionEl.style = "color:"+allergyObj.color+";";
+        optionEl.title = allergyObj.description;
+
+        allergySelectEl.appendChild(optionEl);
+
+        allergies.push(new Allergy(allergyObj));
+    }
+    console.log(allergies);
+}
+
+function addAllergyFromSelectToPerson(){
+    let id=document.getElementById("IDPERSON").innerHTML;
+    let person = project.getGuestById(id);
+
+    //Get selectedAllergy 
+    let allergyId = document.getElementById("allergy-for-person").value;
+    
+    let allergy=getAllergyById(allergyId);
+    person.addAllergy(allergy);
+
+}
+function getAllergyById(id){
+    console.log(id);
+    for(let i=0; i<allergies.length; i++){
+        if(allergies[i].getId() == id){
+            return allergies[i]; 
+        }
+    }
+}
+

@@ -6,20 +6,24 @@
 </head>
 <script>
     let preLoaded = {{allergiesList|safe}};
+    console.log(preLoaded);
 </script>
     
     <h1>List of Allergies</h1>
     <div class="allergyListContainer" id="allergyListContainerID">
         <table id="allergyTable" class="tableClassName">
-            <tr>
-                <td>Navn</td>
-                <td>Forkortelse(r)</td>
-                <td>Beskrivelse</td>
-                <td>Råd</td>
-                <td>Farge</td>
-                <td>Slett</td>
-                <td class="tableIdClass">ID</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Navn</th>
+                    <th>Forkortelse(r)</th>
+                    <th>Beskrivelse</th>
+                    <th>Råd</th>
+                    <th>Farge</th>
+                    <th>Slett</th>
+                    <th class="tableIdClass">ID</th>
+                </tr>
+            </thead>
+            
             
         </table>
     </div>
@@ -32,18 +36,23 @@
 
 <script>
     let tableEL = document.getElementById("allergyTable");
-    
+    loadAllergiesIntoTable();
 
-    function deleteAllergy(id){
+    function loadAllergiesIntoTable(){
+        for(let allergy in preLoaded){
 
+            tableEL.appendChild(createTableRow(preLoaded[allergy]));
+        }
     }
 
+    
     function createTableRow(allergyObject){
         let trEl = document.createElement("tr");
         
         let colorPicker = document.createElement("input");
         colorPicker.type = "color";
         colorPicker.id = allergyObject.id;
+        colorPicker.value = allergyObject.color;
 
         let deleteButtonEl = document.createElement("button");
         deleteButtonEl.innerHTML = "🗑";
@@ -107,12 +116,35 @@
         return pEl;
     }
     function saveChanges(){
-
+        let id;
+        for(let i =1; i<tableEL.rows.length;i++){
+            if(id = tableEL.rows[i].cells[6].innerHTML){
+                saveSpecificAllergy(id);
+            }
+        }
     }
     function saveSpecificAllergy(id){
+        
+        let url = "/admin/allergies/save/"+id;
+        let xhr = new XMLHttpRequest();
+        let save = getRowWithId(id);
+        console.log(save);
+        xhr.open("POST", url, true);
+        //Send the proper header information along with the request
+        xhr.setRequestHeader("Content-Type", "application/json");
 
+        xhr.onreadystatechange = function() { // Call a function when the state changes.
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                // Request finished. Do processing here.
+            }
+        }
+        xhr.send(JSON.stringify(save));
     }
     function deleteAllergy(id){
+        if(!confirm("Er du sikker på at du vil slette allergien, ingen vei tilbake.")){
+            return
+        }
+        deleteAllergyFromTable(id);
         id = {"id":id};
         let xhr = new XMLHttpRequest();
         let url = "/admin/allergies/delete/"+id.id;
@@ -126,12 +158,37 @@
             }
         }
         xhr.send(JSON.stringify(id));
-        //xhr.send(save);
-        // xhr.send(new Int8Array()); 
-        // xhr.send(document);
         return;
     }
+    function deleteAllergyFromTable(id){
+        for(let i =1; i<tableEL.rows.length;i++){
+            if(tableEL.rows[i].cells[6].innerHTML == id){
+                tableEL.deleteRow(i);
+                break;
+            }
+        }
+    }
 
+    function getRowWithId(id){
+        let tempObj ={"name": "Navn","tags": ["Tags"],"description": "Beskrivelse","advice": "Råd", "color": "black", "id":id};
+        let tblRow;
+        for(let i =1; i<tableEL.rows.length;i++){
+            if(tableEL.rows[i].cells[6].innerHTML == id){
+                tblRow = tableEL.rows[i];
+                break;
+            }
+        }
+        tempObj.name = tblRow.cells[0].innerHTML;
+        tempObj.tags = tblRow.cells[1].innerHTML;
+        tempObj.description = tblRow.cells[2].innerHTML;
+        tempObj.advice = tblRow.cells[3].innerHTML;
+        //console.log(tempObj.color);
+        tempObj.color = tblRow.cells[4].childNodes[0].value;
+        //console.log(tempObj.color);
+        tempObj.id = id;
+        //console.log(tempObj);
+        return tempObj;
+    }
 
 
 

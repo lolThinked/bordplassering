@@ -42,6 +42,7 @@ class Project{
             this.setCreationDate();
         }
         createProjectInfoGUI(this);
+        initAllergyObjects();
     }
     
     setName(name){

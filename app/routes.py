@@ -38,7 +38,7 @@ def index():
     #print(os.path.exists("templates/index_flaskpage.html"))
     liste = makeListFromOverview(projectOverview)
     #print(liste)
-    return render_template("index_flaskpage.html", obj=0, user= current_user,projects=liste)
+    return render_template("index_flaskpage.html", obj=0, user= current_user,projects=liste, allergiesList=allergyOverview)
 
 
 
@@ -294,23 +294,25 @@ def loadProjectHtml(identifier):
     return redirect(url_for('index'))
 
 
-
+@login_required
 @app.route("/saveData/allergy/<identifier>", methods=["post"])
+@app.route("/admin/allergies/save/<identifier>", methods=["post"])
 def saveAllergyWithIdentifier(identifier):
     inData = request.data
-    #print(inData)
     jsonData = eval(inData)
     allergyOverview[identifier] = jsonData
     with open("Saved/Allergy/overview.json", "w") as f:
         json.dump(allergyOverview, f)
-    '''
-    with open("Saved/Allergy/"+jsonData["id"]+".json", "w+") as f:
-        json.dump(jsonData, f)
-    if(os.path.exists("Saved/Allergy/list.txt")):
-        with open("Saved/Allergy/list.txt", "a") as f:
-            #listIDS = [line.rstrip('\n') for line in f]
-            f.write(identifier + "\n")
-    '''
+    return jsonify(message = "OK")
+
+@login_required
+@app.route("/admin/allergies/delete/<identifier>", methods=["post"])
+def deleteAllergyFromAllergies(identifier):
+    inData = request.data
+    jsonData = eval(inData)
+    allergyOverview.pop(identifier)
+    with open("Saved/Allergy/overview.json", "w") as f:
+        json.dump(allergyOverview, f)
     return jsonify(message = "OK")
 
 @app.route("/getData/allergy/all")
