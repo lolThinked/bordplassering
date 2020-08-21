@@ -1,5 +1,7 @@
 body, .new-app{
     background-color: #d0bdaa;
+    background-repeat: repeat;
+    background-image: url(images/download.png);
 }
 .topnav{
     background-color:#0a0a0a;

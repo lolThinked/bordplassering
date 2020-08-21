@@ -12,12 +12,12 @@ newAppGUIEl = document.getElementById("new-GUI");
 
 
 //TABLE PREVIEW
-let tableCanvas = document.querySelector(".tablePreview");
-let tblctx = tableCanvas.getContext("2d");
+//let tableCanvas = document.querySelector(".tablePreview");
+//let tblctx = tableCanvas.getContext("2d");
 let tblPreview = false;
 var teller = 0;
-var gui = document.getElementById("canvasGui");
-var counterEl = document.getElementById("statistics");
+//var gui = document.getElementById("canvasGui");
+//var counterEl = document.getElementById("statistics");
 canvasEl.addEventListener('DOMMouseScroll',scaler,false);
 canvasEl.addEventListener('mousewheel',scaler,false);
 document.addEventListener("keydown", checkKey);
@@ -33,7 +33,7 @@ let drawingObjects = bord;
 var obstacles = [];
 let drawLater = [];
 
-var myWorker = new Worker('{{ url_for('static', filename="js/worker.js")}}');
+
 
 
 canvasEl.addEventListener("mousemove", update(event));
@@ -175,6 +175,7 @@ function update(e){
     let diffX = mouseX-clickOriginX, diffY = mouseY-clickOriginY;
     //CHECK SNAP OR MOVE TABLE
     
+    
 
     if(tableInSelectedGroup && mouseIsPressed){
         for(tables in selected){
@@ -209,17 +210,7 @@ function update(e){
     if(mouseIsPressed && selected.length==0 && !shiftIsPressed){
         translateBackground(e);
     }
-
-
-    //ctx.drawImage(backgroundImg, scaleBilde*0.1 ,backgroundImg.height*0.1  , scaleBilde*0.8,backgroundImg.height*0.8);
-    //redraw();
     
-    //let skrapeMerker = document.getElementById("skrapeMerker");
-    //ctx.drawImage(skrapeMerker, 0 , 0, skrapeMerker.width, skrapeMerker.height);
-    for(var i = 0; i<obstacles.length; i++){
-        //obstacles[i].drawMyself();
-        //console.log(obstacles);
-    }
 
     
     //SELECT AREA
@@ -230,15 +221,15 @@ function update(e){
         selectArea(clickOriginX, clickOriginY, mouseX, mouseY);
     }
     
+    
     var loopLength = bord.length;
-    var counterForStats=0;
     for(var i =0; i<loopLength; i++){
         checkIfInSelecting(bord[i]);
         checkIfInSelected(bord[i]);
         //bord[i].drawMyself();
-        counterForStats += bord[i].returnNumberOfSeats();
+        //counterForStats += bord[i].returnNumberOfSeats();
     }
-    //counterEl.innerHTML = "<h1>0/"+counterForStats+"</h1>";
+  
 
 
     var loopLength = bord.length;
@@ -249,10 +240,51 @@ function update(e){
             farge = "green";
         }
     }
+    
+    ctx.fillText("-", ((e.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0]), ((e.clientY/contextMatrix[3])-contextMatrix[5]/contextMatrix[3]));
 
-    ctx.fillText("🧍", ((e.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0]), ((e.clientY/contextMatrix[3])-contextMatrix[5]/contextMatrix[3]));
+    
+    /*
+    var d = new Date();
+    var n = d.getTime();
+    let timeDiff = n-previousTime;
+    previousTime = n;
+    */
+    //counterEl.innerHTML = "<h1>"+ timeDiff + "</h1>";
+    //counterEl.innerHTML = "<h1>FPS : " + fpsCounter(timeDiff) + "</h1>";
+    //fpsCounter(timeDiff);
+    previousEvent = e;
+   
+    drawFrame();
+   
+    //getStats();
+    //pushStats();
+    //pushStatsFast();
+    //createProjectInfoGUI();
+    updateProjectInfoGUI();
+    
+    myWorker.postMessage("updateGui");    
+}
 
-    // //CHECKING COLITIONS
+myWorker.onmessage = function(e) {
+    result.textContent = e.data;
+    console.log('Message received from worker');
+  }
+function deleteBord(e){
+    mouseIsPressed = false;
+    addPersonToTable();
+    addSelectingToSelected();
+    
+    translationLimit();
+    redraw();
+    drawFrame();
+    
+}
+
+document.getElementById("create-project-date-input").value = new Date().toISOString;
+
+
+// //CHECKING COLITIONS
     // drawLater = [];
     // checkEveryColition();
     // //RED
@@ -272,33 +304,3 @@ function update(e){
     //     //bord[drawLater[i][0]].drawMyself();
     // }
     // drawTablePreview();
-
-    var d = new Date();
-    var n = d.getTime();
-    let timeDiff = n-previousTime;
-    previousTime = n;
-    //counterEl.innerHTML = "<h1>"+ timeDiff + "</h1>";
-    counterEl.innerHTML = "<h1>FPS : " + fpsCounter(timeDiff) + "</h1>";
-    //fpsCounter(timeDiff);
-    previousEvent = e;
-    drawFrame();
-    //getStats();
-    //pushStats();
-    //pushStatsFast();
-    //createProjectInfoGUI();
-    updateProjectInfoGUI();
-    myWorker.postMessage("updateGui");
-}
-
-function deleteBord(e){
-    mouseIsPressed = false;
-    addPersonToTable();
-    addSelectingToSelected();
-    
-    translationLimit();
-    redraw();
-    drawFrame();
-    
-}
-
-document.getElementById("create-project-date-input").value = new Date().toISOString;

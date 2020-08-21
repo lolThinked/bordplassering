@@ -1,0 +1,24 @@
+<div class="topnav" id="topnav">
+    <a class="active" href="/" onclick="goHome()">Hjem</a>
+    <a href="#about">Plantegning</a>
+    <a href="#contact">Administrering</a>
+    {% if current_user.is_anonymous %}
+    <a href="{{url_for('login')}}">Login</a>
+    {% else %}
+    <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
+    <a href="{{ url_for('allergies') }}">Allergier</a>
+    <a href="{{url_for('logout')}}">Logout</a>
+    {% endif %}
+
+    <div class="login-container">
+        {% if current_user.is_authenticated%}
+            <a href="{{url_for('myPage')}}">{{user.username}}</a>
+        {% else %}
+      <form action="/action_page.php">
+        <input type="text" placeholder="Username" name="username" id="usernameInput">
+        <input type="text" placeholder="Password" name="psw" id="passwordInput">
+        <button type="submit">Login</button>
+      </form>
+        {% endif %}
+    </div>
+  </div>

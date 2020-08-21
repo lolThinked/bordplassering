@@ -13,6 +13,9 @@ a{
 tr{
     border: 1px solid black;
 }
+tr:hover{
+    color: #7dbdff;
+}
 td{
     background-color: #454545;
     padding: 2px;

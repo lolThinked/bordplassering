@@ -757,12 +757,13 @@ function scale(x,y, translateX, translateY){
         update();
         translationLimit();
     }
+    console.log(x,y);
     console.log("[SCALE FUNCTION] - FAILED");
 }
 
 //SCALE ON MOUSESCROLL
 var scaler = function(evt){
-    console.log("[SCALER FUNCTION]");
+    //console.log("[SCALER FUNCTION]");
     //Mouse X and Y (Canvas reference)
     //Getting cordinates for mouse position before translation and scaling
     let prevX = (evt.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0];
@@ -799,8 +800,7 @@ var scaler = function(evt){
     let translateY = (currentY-prevY);
     //translateX = prevX-currentX;
     //translateY = prevY- currentY;
-    console.log("[WHEELDELTA] : "+ evt.wheelDelta);
-    console.log
+    //console.log("[WHEELDELTA] : "+ evt.wheelDelta);
     //console.log(evt.wheelDelta);
 
     //Calling zoom functions
@@ -918,7 +918,7 @@ function redraw(){
         counterForStats += bord[i].returnNumberOfSeats();
     }
     
-    counterEl.innerHTML = "<h1>0/"+counterForStats+"</h1>";
+    //counterEl.innerHTML = "<h1>0/"+counterForStats+"</h1>";
     
     //ctx.fillStyle = "white";
     //ctx.fillRect(((ctx.canvas.width/2-contextMatrix[4])/contextMatrix[0]), ((ctx.canvas.height/2-contextMatrix[5])/contextMatrix[0]), 20, 20);ctx.fillRect(((ctx.canvas.width/2-contextMatrix[4])/contextMatrix[0]), ((ctx.canvas.height/2-contextMatrix[5])/contextMatrix[0]), 20, 20);
@@ -2196,14 +2196,14 @@ async function updateOrCreatePersonDIVGUI(projectContentEl, prs){
             }
             let prsNameString = gender+prs.getFullName()+gender;
             divEl.childNodes[0].innerHTML = prsNameString;
-            prsListEls.push(divEl);
+            //prsListEls.push(divEl);
         }else{
             projectContentEl.childNodes[1].appendChild(createPersonDiv(prs));
         }
 }
 async function updateOrCreateTableDIVGUI(tableContentDivContainer, table){
     if(table.returnType() =="langbord" || table.returnType() =="rundbord"){
-        let table = bord[i];
+        //let table = bord[i];
         /////
         let extras = drawSettings.table.langbordSymbol;
         if(table.returnType() =="rundbord"){
@@ -2212,7 +2212,7 @@ async function updateOrCreateTableDIVGUI(tableContentDivContainer, table){
         let tableEl = document.getElementById(table.getId());
         if(tableEl!=undefined){
             tableEl.childNodes[0].innerHTML = table.descriptor + " - "+ extras;
-            tblListEls.push(tableEl);
+            //tblListEls.push(tableEl);
         }else{
             //console.log(tableContentDivContainer);
             tableContentDivContainer.childNodes[0].appendChild(createTableDiv(table));
@@ -2225,7 +2225,7 @@ async function updateProjectInfoGUI(){
         let projectContentEl = document.getElementById("gui-project-info-content");
         let tableContentDivContainer = document.getElementById("gui-table-info-content");
         //Update Persons
-        console.log("Updating Project GUI");
+        //console.log("Updating Project GUI");
         let guests = project.getGuests();
         let prsListEls =[];
         let tblListEls =[];
@@ -2287,7 +2287,7 @@ async function updateProjectInfoGUI(){
             */
             //tblListEls
             table = bord[i];
-            updateOrCreatePersonDIVGUI(tableContentDivContainer,table);
+            updateOrCreateTableDIVGUI(tableContentDivContainer,table);
         }
         /*
         for(let i=0; i<tblListEls.length; i++){
@@ -2626,8 +2626,9 @@ function addAllergyFromSelectToPerson(){
     let allergyId = document.getElementById("allergy-for-person").value;
     
     let allergy=getAllergyById(allergyId);
-    person.addAllergy(allergy);
-
+    if(allergy!=undefined){
+        person.addAllergy(allergy);
+    }
 }
 function getAllergyById(id){
     console.log(id);

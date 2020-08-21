@@ -11,6 +11,7 @@
     let preLoaded = {{obj|safe}};
     let allergiesFromServer = {{allergiesList|safe}};
     console.log(preLoaded);
+    
   </script>
 
 
@@ -30,6 +31,7 @@
   <script src={{ url_for('static', filename='js/projectFunctions.js')}} ></script>
   <script src={{ url_for('static', filename='js/worker.js')}} ></script>
   <script>
+      
       
   </script>
     <!-- Old scripts 
@@ -102,31 +104,7 @@
         </div>
         
         
-        
-        <div class="topnav" id="topnav">
-            <a class="active" href="/" onclick="goHome()">Hjem</a>
-            <a href="#about">Plantegning</a>
-            <a href="#contact">Administrering</a>
-            {% if current_user.is_anonymous %}
-            <a href="{{url_for('login')}}">Login</a>
-            {% else %}
-            <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
-            <a href="{{ url_for('allergies') }}">Allergier</a>
-            <a href="{{url_for('logout')}}">Logout</a>
-            {% endif %}
-
-            <div class="login-container">
-                {% if current_user.is_authenticated%}
-                    <a href="{{url_for('myPage')}}">{{user.username}}</a>
-                {% else %}
-              <form action="/action_page.php">
-                <input type="text" placeholder="Username" name="username" id="usernameInput">
-                <input type="text" placeholder="Password" name="psw" id="passwordInput">
-                <button type="submit">Login</button>
-              </form>
-                {% endif %}
-            </div>
-          </div>
+        {% include '_topnav.html' %}
         <div class="new-content" id="new-content">
             <div class="new-content-header-menu" id="new-content-header-menu">
                 <a  onclick="newContentHeaderMenuSetActive(event)" id="nchm-saved">Lagrede oppsett</a>
@@ -461,96 +439,10 @@
 
 
     
+    <img src="static/images/scratches-hd-png--2048.png" id="skrapeMerker" style="display: none;"></img>
     
-    <div id="canvasGui" class="canvasGui" style="display: none;">
-        <div class="DustLayer">
-            <img src="static/images/scratches-hd-png--2048.png" id="skrapeMerker" style="display: none;"></img>
-        </div>
-        <div class="addTableContainer" id="addTableContainer">
-                <div class="hideShowTables"     onclick="hideShowAddTables()">
-                        <h1 style="margin-top: -2px">︿</h1>
-                    </div>
-        
-            <div class="utilityButtons customScrollBar" id="utilityButtons">
-                
-                <div class="utilityButton" onclick="addTable('lang')">
-                    <img src="static/images/Langbord.png" class="utilityImages"style=""></img>
-                    <h2 style="display: none;" >lang til</h2>
-                </div>
-                <div class="utilityButton" onclick="addTable('rund')">
-                    <img src="static/images/Rundbord.png" class="utilityImages"style=""></img>
-                    <h2 style="display: none;" >rund til</h2>
-                </div>
-                <div class="utilityButton" onclick="addTable('rund')">
-                        <img src="static/images/rund.png" class="utilityImages"style="display: none;"></img>
-                        <h2>Rundt</h2>
-                </div>
-                <div class="utilityButton" onclick="addTable('lang')">
-                        <img src="static/images/rund.png" class="utilityImages"style="display: none;"></img>
-                        <h2>Langt</h2>
-                </div>
-            </div>
-        </div>
-        <div class="stats" id="statistics">
-            <h1>100/200</h1>
-        </div>
-        <div class="currentHall">
-            <h1>HovedHallen</h1>
-        </div>
-
-
-        <div class="tablePreviewDiv" id="tablePreviewDiv">
-            <div class="hideShowPreview" onclick="hideShowTablePreview()">
-                <h2>❯</h2>
-            </div>
-            <div class="tableButtons">
-                <img src="static/Ikoner/degreesWhite.png" class="tblButtonsIcons" onclick="turnTableQuarter()"></img>
-                <img src="static/Ikoner/deletesmaller.png" class="tblButtonsIcons" onclick="deleteTableOUTDATED()"></img>
-                <img src="static/Ikoner/degrees30.png" class="tblButtonsIcons" onclick="rotateTableAngle(30)"></img>
-            </div>
-            <input type="text" placeholder="Navn på bord" class="tekstInput">
-                <button type="submit" class="bordSubmitClass">
-                    Legg til
-                </button>
-            </input>
-            <canvas id="tablePreview" class="tablePreview" height="200px"></canvas>
-        </div>
-
-
-
-        <div class="mouseTools">
-            <div class="mouseToolsHideShow" onclick="hideShowMouseTools()" id="mouseToolsHideShow">
-                    <h1 style="margin-top: 37px;">﹀</h1>
-                    <!-- <h1>︿</h1> -->
-
-            </div>
-            <div class="mouseToolsImages" id="mouseToolsImages">
-                <img src="static/Ikoner/Device Apps & Settings/PNG/128/566642 - camera capture lens.png" class="mouseToolsImage"></img>
-                <img src="static/Ikoner/Device Apps & Settings/PNG/128/566644 - arrow cloud cloud c.png" class="mouseToolsImage"></img>
-                <img src="static/Ikoner/Device Apps & Settings/PNG/128/566639 - calculate calculati.png" class="mouseToolsImage"></img>
-                <img src="static/Ikoner/multiSelectBlack.png" class="mouseToolsImage"></img>
-            </div>
-            
-        </div>
-        <div class="presetsPreview">
-            
-            <div class="presetsMeny">
-                <h1>Meny</h1>
-            </div>
-            <div class="presetsList customScrollBar" id="presetsList">
-                <img src="static/images/Saved/Preset1.png" width="200px"><img>
-                <img src="static/images/Saved/Preset1.png" width="200px"><img>
-                <img src="static/images/Saved/Preset1.png" width="200px"><img>
-                <img src="static/images/Saved/Preset1.png" width="200px"><img>
-                <img src="static/images/Saved/Preset1.png" width="200px"><img>
-            </div>
-            <div class="hideShowPresets" onclick="hideshowpresets()">
-                    <h1>❮</h1>
-                    <!-- <h1>❯</h1> -->
-            </div>
-        </div>
-    </div>
-    
+    <!-- <img src="static/Ikoner/download.png" alt="download"> -->
+  <script>var myWorker = new Worker('{{ url_for('static', filename="js/worker.js")}}');</script>
   <script src="static/js/index.js"></script>
   <script>
     if(preLoaded != 0){
@@ -559,6 +451,7 @@
 
     //retrieveOverview();
     updatePresets();
+    
     </script>
  
   

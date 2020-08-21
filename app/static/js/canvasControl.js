@@ -1,4 +1,5 @@
-var canvas = document.getElementById('canvas');
+var canvas = window.document.getElementById('canvas');
+console.log(window);
 
 
 
