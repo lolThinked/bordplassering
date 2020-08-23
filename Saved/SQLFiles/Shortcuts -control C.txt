@@ -1,1 +1,9 @@
 Person(firstName="Fabian", surName="Hopland",gender="male",email="sktthinked@gmail.com",age=20)
+
+
+from app.models import Role
+fabian = User(username="Fabian", email="fabianhopland@gmail.com")
+fabian.set_password("s1a1n1g1")
+fabian.roles.append(Role(name="Admin"))
+db.session.add(fabian)
+db.session.commit()

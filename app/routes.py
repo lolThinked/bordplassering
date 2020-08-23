@@ -4,7 +4,8 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswor
 
 #from flask_login import LoginManager
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Project, Person
+#from flask_user import roles_required, UserManager
+from app.models import User, Person, Project
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -20,6 +21,23 @@ import base64
 
 from app.globalFile import overView, idList, projectOverview, allergyOverview
 from app.email import send_password_reset_email
+
+def roles_required(func):
+    def wrapper_roles_required(*args, **kwargs):
+        #print(args[0]) 
+        #if current_user.roles
+        #func(*args, **kwargs)
+        func()
+    #return wrapper_roles_required
+
+def requires_admin(func):
+    def wrapper_requires_admin():
+        if(current_user != None):
+            if(current_user.hasRoles("Admin")):
+                func()
+            else:
+                return jsonify(message = "FAILED")
+    return wrapper_requires_admin()
 
 
 @app.before_request
@@ -139,11 +157,16 @@ def user(username):
 def myPage():
     return render_template("index_flaskpage.html", obj=0, user= current_user)
 
+
 @app.route('/admin/allergies')
 @login_required
+#@roles_required('Admin')
 def allergies():
-    print(allergyOverview)
-    return render_template('allergies.html', user=current_user, allergiesList=allergyOverview)
+    if(current_user.hasRole("Admin")):
+        print(allergyOverview)
+        return render_template('allergies.html', user=current_user, allergiesList=allergyOverview)
+    else:
+        return render_template("requires_Admin.html", user=current_user)
 
 
 @app.route("/save", methods=["post"])
@@ -229,6 +252,16 @@ def saveProjectWithIdentifier(identifier):
             #print(person)
             json.dump(person, f)
     print("\n[PROJECT] - SAVED!")
+    projects = db.session.query(Project).all()
+    projectExists = False
+    for eachProject in projects:
+        print(eachProject.projectLink + " - " + identifier)
+        if(eachProject.projectLink == identifier):
+            current_user.projects.append(eachProject)
+            projectExists = True
+    if projectExists==False:
+        current_user.projects.append(Project(projectLink=str(identifier), name=jsonData["project"]["name"]))
+    db.session.commit()
     return jsonify(message = "Saved!")
 
 @app.route("/project/deletePerson/<identifier>", methods=["post"])
@@ -291,10 +324,17 @@ def getProjectById(identifier):
 @app.route("/project/")
 @app.route("/project/<identifier>")
 def loadProjectHtml(identifier):
-    return redirect(url_for('index'))
+    print(identifier)
+    prePData = getProjectById(identifier)
+    return render_template("project.html", obj=0, user= current_user, allergiesList=allergyOverview, preLoadedProjectData=prePData)
+
+
+
 
 
 @login_required
+#@roles_required('Admin')
+@requires_admin
 @app.route("/saveData/allergy/<identifier>", methods=["post"])
 @app.route("/admin/allergies/save/<identifier>", methods=["post"])
 def saveAllergyWithIdentifier(identifier):
@@ -306,6 +346,7 @@ def saveAllergyWithIdentifier(identifier):
     return jsonify(message = "OK")
 
 @login_required
+#@roles_required('Admin')
 @app.route("/admin/allergies/delete/<identifier>", methods=["post"])
 def deleteAllergyFromAllergies(identifier):
     inData = request.data
@@ -438,10 +479,17 @@ def getScreenshotFromID(id):
 def makeListFromOverview(overviewInput):
     #print(overviewInput)
     liste = []
-    for item in overviewInput:
-        liste.append(overviewInput[item])
-    #print(liste)
-    return liste
+    print("TESTING")
+    if(current_user.hasRole("Admin")):
+        for item in overviewInput:
+            liste.append(overviewInput[item])
+        return liste
+    else:
+        newList =[]
+        for projectIds in current_user.projects:
+            print(projectIds.projectLink)
+            newList.append(overviewInput[projectIds.projectLink])
+        return newList
 
 def retrieveGuestFromId(id):
     with open("Saved/Person/"+id+".json","r") as f:

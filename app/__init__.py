@@ -32,14 +32,17 @@ from app import routes, models, errors
 #print(os.getcwd())
 
 from app import app, db
-from app.models import User, Project, Person
+from app.models import User, Person, Role
+from app.models import Project
+from flask_user import UserManager
+#user_manager = UserManager(app, db, User)
 
 
 @app.shell_context_processor
 def make_shell_context():
     print("TESTING")
-    return {'db': db, 'User': User, 'Project': Project, 'Person':Person}
-
+    return {'db': db, 'User': User, 'Person':Person, "Role":Role,"Project":Project }
+#'Project': Project
 
 if not app.debug:
     if app.config['MAIL_SERVER']:

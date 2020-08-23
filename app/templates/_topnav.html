@@ -1,12 +1,14 @@
 <div class="topnav" id="topnav">
     <a class="active" href="/" onclick="goHome()">Hjem</a>
     <a href="#about">Plantegning</a>
-    <a href="#contact">Administrering</a>
+    <a href="https://manefisken.no/">Månefisken</a>
     {% if current_user.is_anonymous %}
     <a href="{{url_for('login')}}">Login</a>
     {% else %}
     <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
-    <a href="{{ url_for('allergies') }}">Allergier</a>
+      {% if current_user.hasRole("Admin") %}
+      <a href="{{ url_for('allergies') }}">Allergier</a>
+      {% endif %}
     <a href="{{url_for('logout')}}">Logout</a>
     {% endif %}
 

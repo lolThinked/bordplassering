@@ -1,11 +1,14 @@
 .tableClassName{
     background-color: #454545;
+    background-color: #0a0b13;
     margin: auto;
     width: 80%;
     border: 2px solid white;
 }
 body{
     background-color: #202020;
+    background-color: #171c2a;
+    background-image: none;
 }
 a{
     color:#ff00fe;
@@ -18,6 +21,7 @@ tr:hover{
 }
 td{
     background-color: #454545;
+    background-color: #17192a;
     padding: 2px;
 }
 td:hover{

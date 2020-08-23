@@ -29,21 +29,13 @@
   <script src={{ url_for('static', filename='js/ProjectClass.js')}} ></script>
   <script src={{ url_for('static', filename='js/drawingObject.js')}} ></script>
   <script src={{ url_for('static', filename='js/projectFunctions.js')}} ></script>
+  <script src={{ url_for('static', filename='js/newContentFunctions.js')}} ></script>
   <script src={{ url_for('static', filename='js/worker.js')}} ></script>
   <script>
       
       
   </script>
-    <!-- Old scripts 
-  <script src="js/globals.js"></script>
-  
-  <script src="js/bordClasser.js"></script>
-  <script src="js/obstacleClass.js"></script>
-  <script src="js/functions.js"></script>
-  <script src="js/hideshowfunctions.js"></script>
-  <script src="js/onclickfunctions.js"></script>
-  <script src="js/roomDrawing.js"></script>
-  -->
+    
 
   <link rel="stylesheet" href={{ url_for('static', filename='css/index.css')}} ></link>
   <link rel="stylesheet" href={{ url_for('static', filename='css/newApp.css')}} ></link>
@@ -54,13 +46,8 @@
   <link rel="stylesheet" href={{ url_for('static', filename='css/darkmode.css')}} ></link>
   <link rel="stylesheet" href={{ url_for('static', filename='css/newGui.css')}} ></link>
   <link rel="stylesheet" href={{ url_for('static', filename='css/weddingStyle.css')}} ></link>
+  <link rel="stylesheet" href={{ url_for('static', filename='css/demostyle.css')}} ></link>
   
-  <!-- Old Stylesheets 
-  <link rel="stylesheet" href="css/index.css">
-  <link rel="stylesheet" href="css/newApp.css">
-  <link rel="stylesheet" href="css/formstyle.css">
-  <link rel="stylesheet" href="css/header.css">
-  -->
   <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans|Roboto:100&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Assistant:200&display=swap" rel="stylesheet">
   
@@ -228,9 +215,12 @@
                             <div class="create-project-step-info" id="create-project-step-info-0">
                                 <h1>Prosjekt</h1>
                                 <h3>Ved å følge veiledingen vil du kunne opprette et prosjekt!</h3>
-                                {% for project in projects %}
-                                    {% include '_project.html' %}
-                                {% endfor %}
+                                <div class="projects-container">
+                                    {% for project in projects %}
+                                        {% include '_project.html' %}
+                                    {% endfor %}
+                                </div>
+                                
                             </div>
                             <div class="create-project-step-content" id="create-project-step-content-0">
                                 <a href="#cp-step-1"><h2>Neste -></h2></a>
@@ -444,7 +434,9 @@
     <!-- <img src="static/Ikoner/download.png" alt="download"> -->
   <script>var myWorker = new Worker('{{ url_for('static', filename="js/worker.js")}}');</script>
   <script src="static/js/index.js"></script>
+  
   <script>
+      document.getElementById("create-project-date-input").value = new Date().toISOString;
     if(preLoaded != 0){
         loadSaveParam(preLoaded);
     }

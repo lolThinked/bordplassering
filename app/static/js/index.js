@@ -281,7 +281,7 @@ function deleteBord(e){
     
 }
 
-document.getElementById("create-project-date-input").value = new Date().toISOString;
+
 
 
 // //CHECKING COLITIONS

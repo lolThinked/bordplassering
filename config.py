@@ -13,4 +13,12 @@ class Config(object):
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_DEFAULT_SENDER = '"MyApp" <noreply@example.com>'
     ADMINS = ['your-email@example.com']
+
+    # Flask-User settings
+    USER_APP_NAME = "Flask-User Basic App"      # Shown in and email templates and page footers
+    USER_ENABLE_EMAIL = False        # Enable email authentication
+    USER_ENABLE_USERNAME = False    # Disable username authentication
+    USER_EMAIL_SENDER_NAME = USER_APP_NAME
+    USER_EMAIL_SENDER_EMAIL = "noreply@example.com"

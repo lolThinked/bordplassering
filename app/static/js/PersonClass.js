@@ -15,9 +15,9 @@ class Person{
             
         }else{
             this.firstName = firstName || undefined;
-            this.surName = surName || undefined;;
-            this.age = age || undefined;;
-            this.gender = gender || undefined;;
+            this.surName = surName || undefined;
+            this.age = age || undefined;
+            this.gender = gender || undefined;
             this.email = email ||undefined;
             this.allergies = allergies || [];
             this.id = id || generateID();
@@ -33,7 +33,11 @@ class Person{
         let tempObj = {};
 
         tempObj.firstName = this.firstName;
-        tempObj.surName = this.surName;
+        if(this.surName == undefined){
+            tempObj.surName = "";
+        }else{
+            tempObj.surName = this.surName;
+        }
         tempObj.age = this.age;
         tempObj.gender = this.gender;
         tempObj.email = this.email;

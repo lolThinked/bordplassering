@@ -1,0 +1,106 @@
+body, .new-app{
+    background-color: #0f141a;
+    background-image: linear-gradient(0deg, #000000, #0f141a);
+    background-color: #0a0a0a;
+}
+.topnav{
+    background-color: #0a0a0a;
+    overflow: hidden;
+    z-index: 21;
+    width: 100%;
+    position: relative;
+}
+.new-content{
+    background-color: #0a0a0a;
+    font-family: 'Alegreya Sans', sans-serif;
+    width: 100%;
+    margin-top: 0px;
+    border: none;
+}
+.new-content-header-menu{
+    background-color: #32313c;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+}
+.new-content-header-menu a{
+    float: left;
+    padding-bottom: 12px;
+    padding-top: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 26px;
+    width: 25%;
+    text-align: center;
+}
+.new-content-header-menu a:hover{
+    background-color: #3a765b;
+}
+.new-content-header-menu a.active{
+    background-color: #0a0a0a;
+    border-inline-start: 1px solid #067406;
+    border-inline-end: 1px solid #067406;
+    cursor: pointer;
+}
+.new-content-menu{
+    background-color: #0a0a0a;
+}
+
+
+.saved-room{
+    background-color: rgb(0, 0, 0);
+    width: 20%;
+    border: 1px dashed #4a4a4a;
+    margin: 15px;
+    cursor: pointer;
+}
+.saved-room:hover{
+    background-color: rgb(58 90 118);
+    border: 1px solid #6788ff;
+    -webkit-box-shadow: 0px 0px 39px 9px rgb(13 64 79);
+    -moz-box-shadow: 0px 0px 39px 9px rgba(0,0,0,1);
+    box-shadow: 0px 0px 39px 9px rgb(13 64 79);
+}
+
+.saved-room h4{
+    position: relative;
+    top: 0px;
+    margin: 0;
+    color: #88d5e4;
+    background-color: inherit;
+}
+
+.create-project-step-container{
+    width: -webkit-fill-available;
+    border: 1px dashed #969696;
+    margin: 20px;
+    background-color: inherit;
+    border-radius: 0;
+}
+.projects-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.create-project-previous-project:hover{
+    background-color: #d3fff3;
+    background-color: #000000;
+    border: 1px solid #57d857;
+    -webkit-box-shadow: 0px 0px 39px 9px rgb(10 60 46);
+    -moz-box-shadow: 0px 0px 39px 9px rgba(0,0,0,1);
+    box-shadow: 0px 0px 39px 9px rgb(10 60 46);
+    color: white;
+    border-radius: 40px;
+    transition-duration: 0.2s;
+}
+.create-project-previous-project{
+    border: 1px dotted white;
+    width: auto;
+    margin: auto;
+    margin-bottom: 0;
+    background-color: #bdc1d21f;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 5px;
+}
