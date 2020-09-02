@@ -176,8 +176,9 @@ function update(e){
     mouseX = (e.clientX/contextMatrix[0])-contextMatrix[4]/contextMatrix[0];
     mouseY = (e.clientY/contextMatrix[3])-contextMatrix[5]/contextMatrix[3];
     let diffX = mouseX-clickOriginX, diffY = mouseY-clickOriginY;
-    //CHECK SNAP OR MOVE TABLE
-    
+    if(mouseIsPressed && selected.length==0 && !shiftIsPressed){
+        translateBackground(e);
+    }
     
 
     if(tableInSelectedGroup && mouseIsPressed){
@@ -210,9 +211,7 @@ function update(e){
         translateBackground(e);
     }
     */
-    if(mouseIsPressed && selected.length==0 && !shiftIsPressed){
-        translateBackground(e);
-    }
+    
     
 
     
