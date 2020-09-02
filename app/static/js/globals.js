@@ -21,6 +21,7 @@ obstacleColor = "black";
 let obstacleTextColor = "rgba(185, 185, 185, 0.3)";
 let strokeColor =  "#222222";
 
+let drawSeatBoolean = false;
 let drawSettings = {
     "seat":{
         "occupied":"#a3322a",
@@ -135,6 +136,8 @@ let canvasVariablesSet= false;
 let canvasEl;
 let newAppGUIEl;
 let ctx;
+let backgroundCanvasEl;
+let backgroundCTX;
 let overView;
 let editingModeDelete = false;
 

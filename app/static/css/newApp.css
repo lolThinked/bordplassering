@@ -200,7 +200,7 @@
     color: #4d4d4d;
 }
 .create-project-select-room{
-    overflow: auto;
+    /* overflow: auto; */
     display: inline-flex;
     flex-wrap: wrap;
     padding: 10px;
@@ -215,14 +215,8 @@
     margin: auto;
     margin-bottom: 25px;
 }
-.create-project-room:active{
-    -webkit-box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.4);
-    -moz-box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.4);
-    box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.4);
-    background-color: #ffffff;
-    cursor: pointer;
-    border: 0px solid white;
-}
+
+
 .create-project-room:hover{
     -webkit-box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.4);
     -moz-box-shadow: 0px 0px 33px 24px rgba(0,0,0,0.4);
@@ -230,6 +224,15 @@
     background-color: #ffffff;
     cursor: pointer;
     border: 0px solid white;
+}
+.create-project-room:active, .create-project-room.active, .create-project-room.active h2{
+    -webkit-box-shadow: 0px 0px 33px 24px rgb(68 101 150 / 56%);
+    -moz-box-shadow: 0px 0px 33px 24px rgb(68 101 150 / 56%);
+    box-shadow: 0px 0px 33px 24px rgb(68 101 150 / 56%);
+    background-color: #40b0ff;
+    cursor: pointer;
+    border: 1px solid #1091ff;
+    color:white;
 }
 .create-project-room h2{
     color: #656565;

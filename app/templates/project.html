@@ -202,12 +202,11 @@
         </div>
     </div>
     <canvas id="canvas" class="canvas" style="display: none;" onmouseup="deleteBord(event)" onmousedown="setBord(event)" onmousemove="update(event)" >You need to update your browser to run canvas</canvas>
-
+    <canvas id="backgroundCanvas" class="backgroundCanvas" style="display: none;">You need to update your browser to run canvas</canvas>
 
     
     <img src='{{ url_for('static', filename="images/scratches-hd-png--2048.png")}}'  id="skrapeMerker" style="display: none;"></img>
     
-    <!-- <img src="static/Ikoner/download.png" alt="download"> -->
   <script>var myWorker = new Worker('{{ url_for('static', filename="js/worker.js")}}');</script>
   <script src="{{ url_for('static', filename='js/index.js')}}" ></script>
   

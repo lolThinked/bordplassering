@@ -238,25 +238,26 @@ function returnWidthHeightCenter(room){
 
 transformX = 0;
 transformY = 0;
+
 function drawRoom(room){
     //let widthHeight = returnWidthHeightRoom(room);
     //let transformX = (widthHeight[0]/2);
     //let transformY = (widthHeight[1]);
     //transformY = 1342;
     //transformX = 208;
-    ctx.fillStyle = roomColor;
-    ctx.strokeStyle= strokeColor;
+    backgroundCTX.fillStyle = roomColor;
+    backgroundCTX.strokeStyle= strokeColor;
 
-    ctx.beginPath();
-    ctx.moveTo(room[0].x + transformX, -(room[0].y) + transformY);
+    backgroundCTX.beginPath();
+    backgroundCTX.moveTo(room[0].x + transformX, -(room[0].y) + transformY);
     for(let i =0; i<(room.length-1); i++){
         let pt = room[i+1];
-        ctx.lineTo(pt.x +transformX, -(pt.y) + transformY );
+        backgroundCTX.lineTo(pt.x +transformX, -(pt.y) + transformY );
     }
-    ctx.lineTo(room[0].x + transformX, -(room[0].y) + transformY);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
+    backgroundCTX.lineTo(room[0].x + transformX, -(room[0].y) + transformY);
+    backgroundCTX.closePath();
+    backgroundCTX.stroke();
+    backgroundCTX.fill();
 }
 function drawRoomPart(room){
     //let widthHeight = returnWidthHeightRoom(room);
@@ -264,52 +265,59 @@ function drawRoomPart(room){
     //let transformY = (widthHeight[1]);
     //transformY = 1342;
     //transformX = 208;
-    ctx.fillStyle = roomPartColor;
-    ctx.strokeStyle= strokeColor;
-    ctx.beginPath();
-    ctx.moveTo(room[0].x + transformX, -(room[0].y) + transformY);
+    backgroundCTX.fillStyle = roomPartColor;
+    backgroundCTX.strokeStyle= strokeColor;
+    backgroundCTX.beginPath();
+    backgroundCTX.moveTo(room[0].x + transformX, -(room[0].y) + transformY);
     for(let i =0; i<(room.length-1); i++){
         let pt = room[i+1];
-        ctx.lineTo(pt.x +transformX, -(pt.y) + transformY );
+        backgroundCTX.lineTo(pt.x +transformX, -(pt.y) + transformY );
     }
-    ctx.lineTo(room[0].x + transformX, -(room[0].y) + transformY);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
+    backgroundCTX.lineTo(room[0].x + transformX, -(room[0].y) + transformY);
+    backgroundCTX.closePath();
+    backgroundCTX.stroke();
+    backgroundCTX.fill();
 }
 function drawRoomObstacle(obstacleList){
     //let transformY = 1342;
     //let transformX = 208;
-    ctx.fillStyle = obstacleColor;
-    ctx.strokeStyle = strokeColor;
-    //ctx.fillRect(0,0,100,100);
-    //ctx.fillRect(2144+transformX,-455 + transformY,100,100);
+    backgroundCTX.fillStyle = obstacleColor;
+    backgroundCTX.strokeStyle = strokeColor;
+    //backgroundCTX.fillRect(0,0,100,100);
+    //backgroundCTX.fillRect(2144+transformX,-455 + transformY,100,100);
     for(let i = 0; i < obstacleList.length; i++){
         let obs = obstacleList[i];
         //console.log(obs.y);
         if(obstacleList[i].type ==="R"){
-            ctx.fillRect(obs.x+transformX, -(obs.y)+transformY, obs.width, obs.height);
-            ctx.strokeRect(obs.x+transformX, -(obs.y)+transformY, obs.width, obs.height);
+            backgroundCTX.fillRect(obs.x+transformX, -(obs.y)+transformY, obs.width, obs.height);
+            backgroundCTX.strokeRect(obs.x+transformX, -(obs.y)+transformY, obs.width, obs.height);
             
-            //ctx.fill();
+            //backgroundCTX.fill();
         }else if(obstacleList[i].type ==="C"){
-            ctx.beginPath();
-            ctx.arc(obs.x+transformX, -obs.y+transformY, obs.width, 2*Math.PI, false);
-            ctx.closePath();
-            ctx.stroke();
-            ctx.fill();
+            backgroundCTX.beginPath();
+            backgroundCTX.arc(obs.x+transformX, -obs.y+transformY, obs.width, 2*Math.PI, false);
+            backgroundCTX.closePath();
+            backgroundCTX.stroke();
+            backgroundCTX.fill();
         }else if(obs.type ==="T"){
-            ctx.fillStyle = obstacleTextColor;
-            ctx.fillText(obs.text, obs.x+transformX - (obs.text.length * 10), -obs.y+transformY);
+            backgroundCTX.fillStyle = obstacleTextColor;
+            backgroundCTX.fillText(obs.text, obs.x+transformX - (obs.text.length * 10), -obs.y+transformY);
         }
     }
-    ctx.fillStyle ="white";
+    backgroundCTX.fillStyle ="white";
 }
 
 
 
-
+function drawBackgroundFrame(room){
+    backgroundCTX.clearRect(-window.innerWidth,-window.innerHeight, window.innerWidth*4, window.innerHeight*4);
+    drawRoomPartObstacle(room);
+    //DRAW DUSTMARKS
+    
+    backgroundCTX.drawImage(skrapeMerker, 0 , 0, skrapeMerker.width, skrapeMerker.height)
+}
 function drawRoomPartObstacle(room){
+    
     if(room ==="Cafe"){
         //console.log("[DRAW ROOM PART OBSTACLE] - Cafe");
         drawRoom(cafe);
@@ -333,3 +341,6 @@ function drawRoomPartObstacle(room){
         drawRoomObstacle(hovedhallenObstacles);
     }
 }
+
+
+

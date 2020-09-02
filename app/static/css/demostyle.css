@@ -2,6 +2,7 @@ body, .new-app{
     background-color: #0f141a;
     background-image: linear-gradient(0deg, #000000, #0f141a);
     background-color: #0a0a0a;
+    transition-duration: 0.2s;
 }
 .topnav{
     background-color: #0a0a0a;
@@ -32,6 +33,8 @@ body, .new-app{
     font-size: 26px;
     width: 25%;
     text-align: center;
+    border-bottom: 1px solid green;
+    /* border-top: 1px solid green; */
 }
 .new-content-header-menu a:hover{
     background-color: #3a765b;
@@ -41,6 +44,8 @@ body, .new-app{
     border-inline-start: 1px solid #067406;
     border-inline-end: 1px solid #067406;
     cursor: pointer;
+    border-bottom: 0px solid green;
+    border-top: 0px solid green;
 }
 .new-content-menu{
     background-color: #0a0a0a;

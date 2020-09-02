@@ -11,6 +11,7 @@ function initializeListeners(){
 function checkKey(e){
     e = e || window.event;
     let key = e.key;
+    updateProjectInfoGUI();
     if(!checkIfInType()){
             //console.log(e);
         if(key =="."){
@@ -729,32 +730,27 @@ function addPersonToDrawing(person, projectReference){
         console.log(tempPerson);
         person.setDrawingObject(tempPerson);
     }
-    
-    //console.log(bord);
-    //console.log(drawingObjects);
 }
+
+///////////////////////////
+
 function translate(x,y){
-    //console.log("translate X:" + x); 
     contextMatrix[4] += contextMatrix[0] * x + contextMatrix[2] * y;
     contextMatrix[5] += contextMatrix[1] * x + contextMatrix[3] * y;
     ctx.translate(x,y);
-    //console.log("MATRIX[4]: " + contextMatrix[4]);
+    backgroundCTX.translate(x,y);
+    drawBackgroundFrame(currentRoom);
 }
 function scale(x,y, translateX, translateY){
     if(typeof(x) === "number" && typeof(y) === "number"){
-        //console.log("[SCALE FUNCTION]");
-        //console.log(contextMatrix); //Good
-        //console.table();
-        //console.trace();
-        //console.log(x,y);
         contextMatrix[0] *= x;
         contextMatrix[1] *= x;
         contextMatrix[2] *= y;
         contextMatrix[3] *= y;
         ctx.scale(x,y);
+        backgroundCTX.scale(x,y);
         translate(translateX, translateY);
-        //redraw();
-        update();
+        //update();
         translationLimit();
     }
     //console.log(x,y);
@@ -885,7 +881,7 @@ function scaleToScreen(room){
     console.log("[MATRIX] : " + contextMatrix);
 
     drawFrame();
-
+    drawBackgroundFrame(currentRoom)
 }
 
 function drawCenterRectangle(){
@@ -926,9 +922,6 @@ function redraw(){
         console.log("DRAW LATER:" + drawLater);
         bord[drawLater[i]].drawMyself();
     }
-
-
-
 }
 
 async function drawFrame(){
@@ -936,19 +929,18 @@ async function drawFrame(){
     //CLEAR FRAME
     ctx.clearRect(-window.innerWidth,-window.innerHeight, window.innerWidth*4, window.innerHeight*4);
     ctx.strokeStyle = 'white';
-    //DRAW DUSTMARKS
-    let skrapeMerker = document.getElementById("skrapeMerker");
-    ctx.drawImage(skrapeMerker, 0 , 0, skrapeMerker.width, skrapeMerker.height);
-    
+    ;
+    /*
     //DRAW OBSTACLES
     for(var i = 0; i<obstacles.length; i++){
         obstacles[i].drawMyself();
     }
     //console.log("[DRAWFRAME] - after obstacles");
+    */
 
-    drawRoomPartObstacle(currentRoom);
+    //drawRoomPartObstacle(currentRoom);
     //DRAW SELECTIONBOX
-    if(!mouseIsMove && !tableInSelectedGroup && mouseIsPressed){
+    if(!mouseIsMove && !tableInSelectedGroup && mouseIsPressed && shiftIsPressed){
         drawSelectBox(clickOriginX, clickOriginY, mouseX, mouseY);
     }
 
@@ -1410,6 +1402,9 @@ function setCanvasSize(){
     ctx.canvas.width  = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
     ctx.setTransform(o[0],o[1],o[2],o[3],o[4],o[5]);
+    backgroundCTX.canvas.width  = window.innerWidth;
+    backgroundCTX.canvas.height = window.innerHeight;
+    backgroundCTX.setTransform(o[0],o[1],o[2],o[3],o[4],o[5]);
 /*
     console.log("[MATRIX] -CANVAS SIZE : ");
     console.log(contextMatrix);
@@ -1422,6 +1417,7 @@ function setCanvasSize(){
     //ctx.canvas.width = document.getElementById("canvas").innerWidth;
     //ctx.canvas.height = document.getElementById("canvas").innerHeight;
     update();
+    drawBackgroundFrame(currentRoom);
 }
 
 
@@ -1747,6 +1743,7 @@ function setupCSSForDrawing(){
     
     bodyEl.style.overflow =  "hidden"; 
     canvasEl.style.display = "block";
+    backgroundCanvasEl.style.display = "block";
     document.getElementsByClassName("topnav")[0].style.display = "static";
     setTimeout(() => {
         try{
@@ -1823,8 +1820,18 @@ function checkIfInType(){
 
 function projectCreationSetRoom(e, room){
     let roomELs = document.querySelectorAll(".create-project-room");
-    //console.log(e);
+    roomELs.forEach(element => {
+        if(element.id.slice(15,element.id.length) == room.toLowerCase()){
+            element.classList.add("active"); 
+        }else{
+            element.classList.remove("active");
+        }
+        element.id.slice(15,element.id.length)
+        console.log(element.className, room, element.classList);
+    });
+    console.log(e);
     document.getElementById("selected-room-for-project").innerHTML = room;
+
 
 }
 

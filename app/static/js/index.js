@@ -5,6 +5,9 @@ var backgroundImg = false;
 canvasEl = document.querySelector(".canvas");
 ctx = canvasEl.getContext("2d");
 
+backgroundCanvasEl = document.getElementById("backgroundCanvas");
+backgroundCTX = backgroundCanvasEl.getContext("2d");
+
 initializeListeners();
 let newAppEL = document.getElementById("new-app");
 let newAppMenuEL = document.getElementById("new-content");
@@ -32,7 +35,7 @@ var bord = [];
 let drawingObjects = bord;
 var obstacles = [];
 let drawLater = [];
-
+let skrapeMerker = document.getElementById("skrapeMerker");
 
 
 
@@ -261,7 +264,7 @@ function update(e){
     //pushStats();
     //pushStatsFast();
     //createProjectInfoGUI();
-    updateProjectInfoGUI();
+    //updateProjectInfoGUI();
     
     myWorker.postMessage("updateGui");    
 }

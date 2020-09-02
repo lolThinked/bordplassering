@@ -49,7 +49,11 @@ class User(UserMixin, db.Model):
             if(eachRole.name == role):
                 return True
         return False
-    
+    def hasProject(self, projectId):
+        for eachProject in self.projects:
+            if(eachProject.projectLink == projectId):
+                return True
+        return False
     def isAdmin(self):
         for eachRole in self.roles:
             if(eachRole.name == "Admin"):

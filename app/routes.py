@@ -33,11 +33,27 @@ def roles_required(func):
 def requires_admin(func):
     def wrapper_requires_admin():
         if(current_user != None):
-            if(current_user.hasRoles("Admin")):
+            if(current_user.hasRole("Admin")):
                 func()
             else:
                 return jsonify(message = "FAILED")
     return wrapper_requires_admin()
+def requires_project(func, *args, **kwargs):
+    def wrapper_requires_project(*args, **kwargs):
+        print(*args)
+        print(args)
+        
+        print(kwargs)
+        identifier = kwargs["identifier"]
+        if(current_user != None):
+            if(current_user.hasProject(identifier) or current_user.hasRole("Admin")):
+                print("HAS PROJECT OR IS ADMIN --------------")
+                print(func)
+                return func(identifier)
+            else:
+                print("FAILED -----------------------------------")
+                return render_template("requires_Admin.html", user=current_user)
+    return wrapper_requires_project
 
 
 @app.before_request
@@ -202,7 +218,7 @@ def loadJsonSave():
 
 @app.route('/<identifier>')
 def found(identifier):
-  return render_template("index_flaskpage.html", obj=overView[identifier],user= current_user)
+  return render_template("index_flaskpage.html", obj=overView[identifier],user= current_user,allergiesList=allergyOverview)
 
 
 @app.route("/getData/idList")
@@ -321,14 +337,35 @@ def getProjectById(identifier):
 
 
 @login_required
+@requires_project
 @app.route("/project/")
 @app.route("/project/<identifier>")
+@app.route("/project/<identifier>/edit")
+@login_required
+@requires_project
 def loadProjectHtml(identifier):
     print(identifier)
     prePData = getProjectById(identifier)
     return render_template("project.html", obj=0, user= current_user, allergiesList=allergyOverview, preLoadedProjectData=prePData)
 
 
+@login_required
+@app.route("/project/<identifier>/view")
+def loadProjectHtmlViewer(identifier):
+    print(identifier)
+    prePData = getProjectById(identifier)
+    return render_template("project.html", obj=0, user= current_user, allergiesList=allergyOverview, preLoadedProjectData=prePData)
+
+
+
+
+@requires_project
+@app.route("/project/<identifier>/guests")
+@login_required
+def loadProjectGuestView(identifier):
+    #print(identifier)
+    prePData = getProjectById(identifier)
+    return render_template("project.html", obj=0, user= current_user, allergiesList=allergyOverview, preLoadedProjectData=prePData)
 
 
 

@@ -115,10 +115,11 @@ class SeatController{
         return
     }
     drawSeats(){
-        for(let i = 0; i<this.numberOfSeats; i++){
-            this.seats[i].drawMyself();
+        if(drawSeatBoolean){
+            for(let i = 0; i<this.numberOfSeats; i++){
+                this.seats[i].drawMyself();
+            }
         }
-        
     }
     rotateSeats(x,y, angle){
         for(let i=0; i<this.seats.length; i++){
