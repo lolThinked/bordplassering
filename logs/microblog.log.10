@@ -1,4 +1,4 @@
-2020-08-22 20:08:24,884 ERROR: Exception on / [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+2020-08-23 04:48:31,629 ERROR: Exception on / [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,7 +14,7 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 49, in index
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 59, in index
     return render_template("index_flaskpage.html", obj=0, user= current_user,projects=liste, allergiesList=allergyOverview)
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\templating.py", line 140, in render_template
     ctx.app,
@@ -28,81 +28,71 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\templates\_topnav.html", line 9, in template
-    {% if current_user.isAdmin}
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 1005, in render
-    return concat(self.root_render_func(self.new_context(vars)))
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\templates\index_flaskpage.html", line 107, in top-level template code
-    {% include '_topnav.html' %}
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\templates\index_flaskpage.html", line 233, in top-level template code
+    {% for project in projects %}
+TypeError: 'NoneType' object is not iterable
+2020-08-23 04:48:37,815 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 04:48:39,844 ERROR: Exception on / [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 59, in index
+    return render_template("index_flaskpage.html", obj=0, user= current_user,projects=liste, allergiesList=allergyOverview)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\templating.py", line 140, in render_template
+    ctx.app,
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\templating.py", line 120, in _render
+    rv = template.render(context)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
     reraise(exc_type, exc_value, tb)
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\templates\_topnav.html", line 9, in template
-    {% if current_user.isAdmin}
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\environment.py", line 497, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 901, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 883, in subparse
-    rv = self.parse_statement()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 130, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 223, in parse_if
-    drop_needle=True)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 165, in parse_statements
-    result = self.subparse(end_tokens)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 883, in subparse
-    rv = self.parse_statement()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 130, in parse_statement
-    return getattr(self, 'parse_' + self.stream.current.value)()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 211, in parse_if
-    node.test = self.parse_tuple(with_condexpr=False)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 620, in parse_tuple
-    args.append(parse())
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 612, in <lambda>
-    parse = lambda: self.parse_expression(with_condexpr=False)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 433, in parse_expression
-    return self.parse_or()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 450, in parse_or
-    left = self.parse_and()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 459, in parse_and
-    left = self.parse_not()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 470, in parse_not
-    return self.parse_compare()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 474, in parse_compare
-    expr = self.parse_math1()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 496, in parse_math1
-    left = self.parse_concat()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 507, in parse_concat
-    args = [self.parse_math2()]
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 517, in parse_math2
-    left = self.parse_pow()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 528, in parse_pow
-    left = self.parse_unary()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 547, in parse_unary
-    node = self.parse_postfix(node)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 672, in parse_postfix
-    node = self.parse_subscript(node)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\parser.py", line 700, in parse_subscript
-    next(self.stream)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\lexer.py", line 359, in __next__
-    self.current = next(self._iter)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\lexer.py", line 562, in wrap
-    for lineno, token, value in stream:
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\jinja2\lexer.py", line 683, in tokeniter
-    filename)
-jinja2.exceptions.TemplateSyntaxError: unexpected '}'
-2020-08-22 20:08:48,002 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-22 20:09:15,330 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-22 20:17:31,100 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-22 20:18:57,457 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-22 20:19:16,141 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-22 20:23:05,905 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-22 20:24:08,552 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-23 00:36:57,506 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-23 00:39:16,197 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-23 00:41:47,141 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-23 01:38:33,578 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-23 01:41:36,617 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
-2020-08-23 02:09:52,215 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:72]
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\templates\index_flaskpage.html", line 233, in top-level template code
+    {% for project in projects %}
+TypeError: 'NoneType' object is not iterable
+2020-08-23 04:49:08,252 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 04:49:55,115 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 04:50:50,391 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 04:51:18,549 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 04:51:26,333 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 04:52:40,921 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 04:53:08,828 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 04:54:52,305 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 05:06:09,531 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 05:08:00,108 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 05:09:12,855 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-08-23 05:09:19,893 ERROR: Exception on /project/favicon.ico [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 317, in loadProjectHtml
+    return render_template("project.html", obj=0, user= current_user, allergiesList=allergyOverview, preLoadedProjectData=getProjectById(identifier))
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 299, in getProjectById
+    with open("Saved/Projects/"+identifier+"/project.json", "r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'Saved/Projects/favicon.ico/project.json'
+2020-08-23 05:10:59,517 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]

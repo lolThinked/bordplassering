@@ -108,4 +108,5 @@ body, .new-app{
     border-radius: 10px;
     cursor: pointer;
     padding: 5px;
+    transition-duration: 0.1s;
 }

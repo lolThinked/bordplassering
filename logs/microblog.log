@@ -1,4 +1,13 @@
-2020-09-01 12:04:47,116 ERROR: Exception on /save [POST] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+2020-12-06 16:23:29,182 ERROR: Exception on /project/save/41f1cf3edd3b8328 [POST] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\engine\default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: projects.name
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,58 +21,76 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 192, in saveData
-    dic = eval(inData)
-  File "<string>", line 1, in <module>
-NameError: name 'null' is not defined
-2020-09-01 12:07:13,102 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:37:04,165 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:37:34,359 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:38:59,361 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:41:16,671 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:42:02,259 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:45:33,438 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:45:45,721 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:46:20,145 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:48:53,246 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:49:41,650 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:50:47,043 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:52:33,651 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 19:57:21,522 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-01 23:24:08,698 ERROR: Exception on /champselect [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 280, in saveProjectWithIdentifier
+    db.session.commit()
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\orm\scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\orm\session.py", line 1026, in commit
+    self.transaction.commit()
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\orm\session.py", line 493, in commit
+    self._prepare_impl()
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\orm\session.py", line 472, in _prepare_impl
+    self.session.flush()
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\orm\session.py", line 2451, in flush
+    self._flush(objects)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\orm\session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\util\langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\util\compat.py", line 129, in reraise
     raise value
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 221, in found
-    return render_template("index_flaskpage.html", obj=overView[identifier],user= current_user,allergiesList=allergyOverview)
-KeyError: 'champselect'
-2020-09-02 01:17:04,318 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:18:04,270 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:19:49,861 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:23:46,906 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:25:26,264 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:31:01,693 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:33:05,574 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:35:11,574 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:38:41,752 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:39:11,932 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:39:29,427 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:42:17,394 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:47:42,878 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:56:25,505 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 01:59:56,944 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 02:00:55,731 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 02:06:09,629 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 02:07:28,603 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 02:07:51,868 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-09-02 02:10:39,646 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\orm\session.py", line 2549, in _flush
+    flush_context.execute()
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\orm\unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\orm\unitofwork.py", line 589, in execute
+    uow,
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\orm\persistence.py", line 245, in save_obj
+    insert,
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\orm\persistence.py", line 1120, in _emit_insert_statements
+    statement, params
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\engine\base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\sql\elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\engine\base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\engine\base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\engine\base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\util\compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\util\compat.py", line 128, in reraise
+    raise value.with_traceback(tb)
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\engine\base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\sqlalchemy\engine\default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: projects.name
+[SQL: INSERT INTO projects (name, "projectLink", timestamp) VALUES (?, ?, ?)]
+[parameters: ('St. Hallvardguttene konsert', '41f1cf3edd3b8328', '2020-12-06 15:23:29.181859')]
+(Background on this error at: http://sqlalche.me/e/gkpj)
+2020-12-06 16:27:10,597 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-06 16:29:34,772 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-06 16:31:12,465 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-06 16:32:54,341 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-06 16:34:28,559 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-06 16:43:32,699 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-06 16:47:37,962 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-06 16:52:47,095 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-06 16:57:37,268 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-06 16:59:10,410 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-06 16:59:41,610 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-06 17:03:25,574 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-07 16:27:18,152 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-07 16:28:29,342 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-07 16:33:32,355 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-07 16:34:41,078 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-07 16:42:42,577 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-07 16:43:04,784 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-07 16:43:49,748 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-07 16:45:19,721 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-07 16:59:28,164 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-07 17:00:26,301 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-12-07 17:07:29,162 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]

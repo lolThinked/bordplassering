@@ -51,6 +51,7 @@ class Person{
         }else{
             tempObj.table = "undefined";
         }
+        //console.log(this.table);
         if(this.seat != undefined){
             tempObj.seat = this.seat.getId();
         }else{

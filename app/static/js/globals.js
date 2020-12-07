@@ -46,7 +46,8 @@ let drawSettings = {
         "notSelectedColor":"#F9FFEE",
         "standardAmountOfGuests":8,
         "rundbordSymbol":"🔵",
-        "langbordSymbol":"🟦"
+        "langbordSymbol":"🟦",
+        "koronaSymbol":"🦠"
     },
     "person":{
         "color":"#6c936c",
@@ -61,6 +62,13 @@ let drawSettings = {
     "textStyling":{
         "male": "🧍",
         "female": "🧍‍♀️"
+    },
+    "korona":{
+        "width":100,
+        "height":100,
+        "occupied":"#a3322a",
+        "free":"#237796",
+        "linewidth":2
     }
 };
 let allergies =[];
@@ -71,7 +79,8 @@ let tableScales = {
     "snap" : 10,
     "rect" : {"width" : 200, "height" : 95},
     "circle" : {"width" : 170/2, "height" : 170/2},
-    "person":{"width":40,"height":40}
+    "person":{"width":40,"height":40},
+    "korona":{"width":100, "height":100}
 };
 let transformValues = {
     "hovedhallen" :{x:-458.5 , y:1066},

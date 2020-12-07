@@ -25,6 +25,18 @@ canvasEl.addEventListener('DOMMouseScroll',scaler,false);
 canvasEl.addEventListener('mousewheel',scaler,false);
 document.addEventListener("keydown", checkKey);
 document.addEventListener("keyup", checkKey);
+
+if("ontouchstart" in document.documentElement){
+    canvasEl.addEventListener("ontouchstart", setBord);
+    canvasEl.addEventListener("ontouchmove", update);
+    canvasEl.addEventListener("ontouchend", deleteBord);
+    console.log("your device is a touch screen device.");
+}else{
+    console.log("your device is NOT a touch device");
+    canvasEl.addEventListener("mousemove", update);
+    canvasEl.addEventListener("mousedown", setBord);
+    canvasEl.addEventListener("mouseup", deleteBord);
+}
 let farge = "red";
 let forrigeFargeDiv = 0;
 
@@ -39,14 +51,9 @@ let skrapeMerker = document.getElementById("skrapeMerker");
 
 
 
-canvasEl.addEventListener("mousemove", update(event));
 
-canvasEl.addEventListener("mousedown", setBord(event));
-canvasEl.addEventListener("mouseup", deleteBord());
 
-canvasEl.addEventListener("ontouchstart", setBord(event));
-canvasEl.addEventListener("ontouchmove", update(event));
-canvasEl.addEventListener("ontouchend", deleteBord());
+
 
 window.addEventListener("resize", changeWindowSizeFunction);
 

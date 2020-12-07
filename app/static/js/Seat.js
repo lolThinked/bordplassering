@@ -88,6 +88,9 @@ class SeatController{
                 yV = seatPointY - this.y;  
                 this.seats[i] = new Seat(xV, yV, this, i);
             }
+        }else if(parentTable.returnType() =="koronaPerson"){
+            //Korona person table to contain a person and display korona distance
+            this.seats[0] = new Seat(0, 0, this, 0);
         }
     }
     addGuestWithSeatNumber(person, seatNumber){
@@ -237,6 +240,24 @@ class Seat{
     }
     //50cm?
     async drawMyself(){
+        if(this.seatController.getTable().returnType() =="koronaPerson"){
+            //console.log(this);git add
+            ctx.fillStyle = drawSettings.korona.occupied;ctx.strokeStyle = drawSettings.standard.strokeColor;
+            ctx.lineWidth = drawSettings.korona.lineWidth;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, drawSettings.korona.width, 0, 2*Math.PI, false);
+            //console.log(this.x, this.y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            //console.log("DRAWING SEATS");
+            if(!this.person){
+                ctx.fillStyle = "black";
+                ctx.fillText(this.id, this.x, this.y);
+            }
+            ctx.fillStyle = drawSettings.standard.fillColor;  
+            ctx.lineWidth = drawSettings.standard.lineWidth;
+        }
 
         if(!this.person){
             //console.log(this);git add

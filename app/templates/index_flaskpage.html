@@ -358,6 +358,7 @@
                         <div>
                             <button onclick="makePerson()">Legg til [+]</button>
                             <button onclick="changePerson()">Endre ✎</button>
+                            <button onclick="createKoronaTableAndAddPersonToTable()">Legg til Koronaperson</button>
                         </div>
                         <div class="allergyListDiv" id="allergyListDiv">
 
@@ -391,6 +392,8 @@
                         <br>
                         <h2 onclick="addTable('lang')">Langbord [+]</h2>
                         <h2 onclick="addTable('rund')">Rundbord [+]</h2>
+                        <h2 onclick="addTable('koronaPerson')">Korona person bord [+]</h2>
+
                         <h3>Bordfarge<input type="color" id="color-for-table" oninput="changeSelectedTableColor()"></h3>
                         <h3>SeteFarge<input type="color" id="color-for-seat" oninput="changeSeatColor()"></h3>
                     </div>
@@ -425,7 +428,8 @@
 
         </div>
     </div>
-    <canvas id="canvas" class="canvas" style="display: none;" onmouseup="deleteBord(event)" onmousedown="setBord(event)" onmousemove="update(event)" >You need to update your browser to run canvas</canvas>
+    <!-- <canvas id="canvas" class="canvas" style="display: none;" onmouseup="deleteBord(event)" onmousedown="setBord(event)" onmousemove="update(event)" >You need to update your browser to run canvas</canvas> -->
+    <canvas id="canvas" class="canvas" style="display: none;" >You need to update your browser to run canvas</canvas>
     <canvas id="backgroundCanvas" class="backgroundCanvas" style="display: none;">You need to update your browser to run canvas</canvas>
 
     

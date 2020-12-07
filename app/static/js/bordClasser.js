@@ -43,6 +43,11 @@ class Bord{
             this.total = 6;
             this.descriptorX = (this.x + this.width/2);
             this.descriptorY = this.y + this.height/2;
+        }else if(bordType =="koronaPerson"){
+            this.height = this.width= tableScales.korona.width;
+            this.total = 1;
+            this.descriptorX = (this.x + this.width/2);
+            this.descriptorY = this.y + this.height/2;
         }
         
         this.seats = new SeatController(this);
@@ -100,6 +105,8 @@ class Bord{
             tempType =  "rect";
         }else if(this.bordType == "rundbord"){
             tempType = "circle";
+        }else if(this.bordType == "koronaPerson"){
+            tempType = "koronaPerson";
         }
         let tempArray = [this.x, this.y, this.width, this.height, tempType];
         return tempArray;
@@ -112,6 +119,9 @@ class Bord{
             tempArray = [tempType, this.drawPoints, this.angle];
         }else if(this.bordType == "rundbord"){
             tempType = "circle";
+            tempArray = [tempType, this.x, this.y, this.width, this.height];
+        }else if(this.bordType == "koronaPerson"){
+            tempType = "koronaPerson";
             tempArray = [tempType, this.x, this.y, this.width, this.height];
         }
         return tempArray;
@@ -139,6 +149,9 @@ class Bord{
             centerX = this.descriptorX;
             centerY = this.descriptorY;
         }else if(this.bordType == "rundbord"){
+            centerX = this.x;
+            centerY = this.y;
+        }else if(this.bordType == "koronaPerson"){
             centerX = this.x;
             centerY = this.y;
         }
@@ -251,12 +264,29 @@ class Bord{
         this.fillColor = color;
     }
     checkSelf(x,y){
-        if(this.bordType !="rundbord"){
+        if(this.bordType =="langbord"){
             if(x >= this.x && x <= (this.x+this.width)){
                 if(y >= this.y && y <= (this.y+this.height)){
                     var difference = [this.x-x, this.y-y];
                     return difference;
                 }
+            }
+        }else if(this.bordType =="koronaPerson"){
+            /*
+            ctx.beginPath();
+            ctx.moveTo(x,y);
+            ctx.lineTo(this.x, this.y);
+            ctx.closePath();
+            ctx.stroke();
+            */
+            let distanceCheck = drawSettings.seat.width+drawSettings.seatController.radius + tableScales.korona.width + drawSettings.seatController.extraHitbox;
+            let difx = x-this.x;
+            let dify = y-this.y;
+            let distanceToMouse = Math.sqrt(difx*difx + dify*dify);
+                        // console.log(distanceToMouse<=tableScales.korona.width);
+            // console.log(distanceToMouse);
+            if(distanceToMouse <= tableScales.korona.width){
+                return distanceToMouse;
             }
         }else{
             /*
@@ -307,6 +337,15 @@ class Bord{
                 console.log("[TRUE]");
                 return true
             }
+        }else if(this.bordType =="koronaPerson"){
+            let distanceCheck = drawSettings.seat.width+drawSettings.seatController.radius + tableScales.korona.width + drawSettings.seatController.extraHitbox;
+            distanceCheck = tableScales.korona.width;
+            let difx = x-this.x;
+            let dify = y-this.y;
+            let distanceToMouse = Math.sqrt(difx*difx + dify*dify);
+            if(distanceToMouse <= distanceCheck){
+                return distanceToMouse;
+            }   
         }else{
             let distanceCheck = drawSettings.seat.width+drawSettings.seatController.radius + tableScales.circle.width + drawSettings.seatController.extraHitbox;
             let difx = x-this.x;
@@ -361,7 +400,29 @@ class Bord{
             ctx.fillStyle = red;
             ctx.fillText(this.descriptor, this.x-halvparten, this.y);
             ctx.fillStyle ="white";
+        }else if(this.bordType =="koronaPerson"){
+            ctx.lineWidth = this.lineWidth;
+            ctx.strokeStyle = this.strokeColor;
+            ctx.fillStyle = this.fillColor;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.height, 0, 2*Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            /*
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(mouseX, mouseY);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            */
+            ctx.fillStyle = red;
+            ctx.fillText(this.descriptor, this.x-halvparten, this.y);
+            ctx.fillStyle ="white";
         }
+
+        
         ctx.lineWidth ="7";
         this.seats.drawSeats();
 

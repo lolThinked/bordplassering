@@ -103,6 +103,7 @@ function selectPoint(pointX, pointY){
     tableInSelectedGroup = false;
     for(let i=0; i<bord.length; i++){
         let infoAboutTable = bord[i].returnPositionInfo();
+        console.log(infoAboutTable);
         if(infoAboutTable[0] =="rect"){
             //console.log(bord[i].getId());
             if(ifPointInRectangle(pointX, pointY, infoAboutTable[1])){
@@ -150,6 +151,19 @@ function selectPoint(pointX, pointY){
                 notSelected = false;
                 console.log(bord[i]);
                 clearPersonFromSeat(bord[i]);
+            }
+        }else if(infoAboutTable[0] =="koronaPerson"){
+            console.log("KORONA PERSON TABLE SELECTED");
+            if(bord[i].checkSelf(mouseX,mouseY) != false){
+                if(ifTableInSelected(bord[i])){
+                    tableInSelectedGroup = true;
+                }else{
+                    addTableToSelected(bord[i], "selected");
+                    console.log(selected);
+                    console.log("SET TABLE SELECTED AS False 2");
+                    tableInSelectedGroup = true;
+                }
+                notSelected = false;
             }
         }
     }
@@ -560,6 +574,12 @@ function checkIfTable(mouseX, mouseY){
                 //console.log(mouseX, mouseY, bord[i].returnPositionInfo()[1]);
                 return true;
             }
+        }else if(bord[i].returnPositionInfo()[0] =="koronaPerson"){
+            //console.log(bord[i]);
+            if(bord[i].checkSelf(mouseX, mouseY)){
+                return true;
+            }
+
         }
     }
     return false;
@@ -681,6 +701,8 @@ function addTable(bordType){
         bord.push(new Bord(200+addTableStacking, 200, "rundbord"));
     }else if(bordType =="person"){
         
+    }else if(bordType =="koronaPerson"){
+        bord.push(new Bord(200+addTableStacking, 200, "koronaPerson"));
     }
     addTableStacking+=20;
     sorterBord();
@@ -1205,18 +1227,26 @@ function exportTables(){
     return tablesList;
 }
 function loadTables(list){
+    console.log(list);
     for(tables in list){
         tbl = list[tables];
+        //console.log(tbl.type);
         if(tbl.id != undefined){
 
         }
         if(tbl.type==undefined){
-            bord.push(new Bord(tbl.x, tbl.y, tbl.bordType, tbl.rotation, tbl.descriptor, tbl.name || "gi Navn", tbl.id || undefined));
+            if(tbl.bordType =="koronaPerson"){
+                console.log("TESTING");
+                bord.push(new Bord(tbl.x, tbl.y, tbl.bordType, tbl.rotation, tbl.descriptor, tbl.name || "gi Navn", tbl.id || undefined));
+            }else{
+                bord.push(new Bord(tbl.x, tbl.y, tbl.bordType, tbl.rotation, tbl.descriptor, tbl.name || "gi Navn", tbl.id || undefined));
+            }
+            
 
         }else if(tbl.type =="person"){
             //drawingObjects.push(new drawingObject())
-        }  
-                //console.log(idCounter);
+        }
+       //console.log(idCounter);
     }
 }
 function loadPeopleIntoDrawing(list, projectReference){
@@ -2476,3 +2506,23 @@ function getAllergyById(id){
     }
 }
 
+
+function createKoronaTableAndAddPersonToTable(){
+    //Korona bord
+    let koronaTableReference = new Bord(200+50, 240, "koronaPerson")
+    bord.push(koronaTableReference);
+
+    let iEls = document.querySelectorAll(".personInput");
+    console.log(iEls);
+    //navn, etternavn, alder, kjønn
+    let person = new Person(iEls[0].value, iEls[1].value, iEls[2].value, iEls[3].value);
+    //console.log(person);
+    project.addGuest(person);
+    addPersonToDrawing(person, project);
+
+
+    
+    koronaTableReference.addGuest(person);
+    person.setTable(koronaTableReference);
+    update();
+}
