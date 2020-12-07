@@ -22,6 +22,7 @@ class Bord{
         this.persons = [];
         this.unseatedPersons =[];
         this.seats = [];
+        this.opacity = 1.0;
         
         if(bordType == "langbord"){
             this.width = tableScales.rect.width;
@@ -48,6 +49,10 @@ class Bord{
             this.total = 1;
             this.descriptorX = (this.x + this.width/2);
             this.descriptorY = this.y + this.height/2;
+            this.lineWidth = drawSettings.korona.defaultTable.linewidth;
+            this.fillColor = drawSettings.korona.defaultTable.fillColor;
+            this.strokeColor = drawSettings.korona.defaultTable.strokecolor;
+            this.opacity = drawSettings.korona.defaultTable.opacity;
         }
         
         this.seats = new SeatController(this);
@@ -364,6 +369,7 @@ class Bord{
         let halvparten =(ctx.measureText(this.descriptor).width/2);
         if(this.bordType =="langbord"){
             //RECTANGLE
+            
             ctx.lineWidth = this.lineWidth;
             //ctx.fillStyle = "white";
             //ctx.strokeStyle = this.strokeColor;
@@ -388,6 +394,7 @@ class Bord{
             ctx.fillText(this.descriptor, this.descriptorX-halvparten, this.descriptorY);
         }else if(this.bordType =="rundbord"){
             //CIRCLE
+            
             ctx.lineWidth = this.lineWidth;
             ctx.strokeStyle = this.strokeColor;
             ctx.fillStyle = this.fillColor;
@@ -404,6 +411,7 @@ class Bord{
             ctx.lineWidth = this.lineWidth;
             ctx.strokeStyle = this.strokeColor;
             ctx.fillStyle = this.fillColor;
+            ctx.globalAlpha = this.opacity;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.height, 0, 2*Math.PI, false);
             ctx.closePath();
@@ -420,6 +428,7 @@ class Bord{
             ctx.fillStyle = red;
             ctx.fillText(this.descriptor, this.x-halvparten, this.y);
             ctx.fillStyle ="white";
+            ctx.globalAlpha = drawSettings.standard.opacity;
         }
 
         

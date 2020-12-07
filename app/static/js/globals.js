@@ -38,7 +38,8 @@ let drawSettings = {
         "strokeColor": "black",
         "lineWidth":7,
         "fillColor":"white",
-        "font": "25px Arial"
+        "font": "25px Arial",
+        "opacity":1.0
     },
     "table":{
         "selectedColor":"#28313E",
@@ -68,7 +69,13 @@ let drawSettings = {
         "height":100,
         "occupied":"#a3322a",
         "free":"#237796",
-        "linewidth":2
+        "linewidth":2, 
+        "defaultTable":{
+            "linewidth":1,
+            "fillcolor":"#237796",
+            "strokecolor":"#a3322a",
+            "opacity":0.7
+        }
     }
 };
 let allergies =[];

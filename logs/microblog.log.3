@@ -1,17 +1,4 @@
-2020-08-23 15:01:37,030 ERROR: Exception on /project/c794be3693a30ba6 [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1967, in finalize_request
-    response = self.make_response(rv)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2097, in make_response
-    "The view function did not return a valid response. The"
-TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
-2020-08-23 15:01:55,473 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-08-23 15:02:17,052 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-08-23 15:02:18,269 ERROR: Exception on /project/c794be3693a30ba6 [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+2020-09-01 12:04:47,116 ERROR: Exception on /save [POST] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -25,48 +12,25 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-TypeError: wrapper_requires_project() missing 1 required positional argument: 'func'
-2020-08-23 15:02:43,163 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-08-23 15:02:46,205 ERROR: Exception on /project/c794be3693a30ba6 [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 52, in wrapper_requires_project
-    func()
-TypeError: loadProjectHtml() missing 1 required positional argument: 'identifier'
-2020-08-23 15:03:08,213 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-08-23 15:03:09,068 ERROR: Exception on /project/c794be3693a30ba6 [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1967, in finalize_request
-    response = self.make_response(rv)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2097, in make_response
-    "The view function did not return a valid response. The"
-TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
-2020-08-23 15:05:38,520 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-08-23 15:09:18,107 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-08-23 16:07:46,585 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-08-23 16:11:52,161 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-08-23 16:12:56,784 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-08-29 19:11:21,091 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-08-30 16:46:28,587 ERROR: Exception on /champselect [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 192, in saveData
+    dic = eval(inData)
+  File "<string>", line 1, in <module>
+NameError: name 'null' is not defined
+2020-09-01 12:07:13,102 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:37:04,165 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:37:34,359 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:38:59,361 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:41:16,671 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:42:02,259 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:45:33,438 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:45:45,721 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:46:20,145 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:48:53,246 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:49:41,650 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:50:47,043 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:52:33,651 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 19:57:21,522 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-01 23:24:08,698 ERROR: Exception on /champselect [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -81,24 +45,34 @@ Traceback (most recent call last):
   File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
   File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 221, in found
-    return render_template("index_flaskpage.html", obj=overView[identifier],user= current_user)
+    return render_template("index_flaskpage.html", obj=overView[identifier],user= current_user,allergiesList=allergyOverview)
 KeyError: 'champselect'
-2020-08-31 21:04:48,431 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
-2020-08-31 23:53:14,076 ERROR: Exception on /champselect [GET] [in E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "E:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\lib\site-packages\flask\app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\routes.py", line 221, in found
-    return render_template("index_flaskpage.html", obj=overView[identifier],user= current_user)
-KeyError: 'champselect'
-2020-09-01 11:25:41,859 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:17:04,318 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:18:04,270 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:19:49,861 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:23:46,906 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:25:26,264 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:31:01,693 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:33:05,574 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:35:11,574 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:38:41,752 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:39:11,932 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:39:29,427 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:42:17,394 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:47:42,878 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:56:25,505 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 01:59:56,944 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 02:00:55,731 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 02:06:09,629 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 02:07:28,603 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 02:07:51,868 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 02:10:39,646 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 02:19:49,461 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 02:32:16,632 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-02 02:37:07,354 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-03 22:15:38,834 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-09-09 15:48:58,996 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopland Digital\Prosjekter\bordplassering\app\__init__.py:73]
+2020-10-13 16:01:32,301 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopdi\Prosjekter\bordplassering\app\__init__.py:73]
+2020-10-13 16:01:38,670 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopdi\Prosjekter\bordplassering\app\__init__.py:73]
+2020-10-23 23:48:27,162 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopdi\Prosjekter\bordplassering\app\__init__.py:73]
+2020-10-23 23:48:32,166 INFO: Microblog startup [in C:\Users\Fabian\Desktop\Hopdi\Prosjekter\bordplassering\app\__init__.py:73]

@@ -200,6 +200,10 @@ function getTableWitdhSeatHitboxOfSelectedPoint(pointX, pointY){
             if(bord[i].checkSelfWidthSeatRange(mouseX,mouseY) != false){
                 return bord[i];
             }
+        }else if(infoAboutTable[0] =="koronaPerson"){
+            if(bord[i].checkSelfWidthSeatRange(mouseX,mouseY) != false){
+                return bord[i];
+            }
         }else if(infoAboutTable[0] =="circle"){
             if(bord[i].checkSelfWidthSeatRange(mouseX,mouseY) != false){
                 return bord[i];
@@ -411,7 +415,7 @@ function addPersonToTable(){
     //let table = returnTableOfSelectedPoint(mouseX, mouseY);
     let table = getTableWitdhSeatHitboxOfSelectedPoint(mouseX, mouseY);
     if(table!=false){
-        console.log(table);
+        console.log(table);//
         for(guest in listOfPersons){
             let personDrawing = listOfPersons[guest];
             let person = personDrawing.getReferenceObject();
